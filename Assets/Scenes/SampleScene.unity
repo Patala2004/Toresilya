@@ -19104,7 +19104,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animacion: {fileID: 1676109823}
   arma: {fileID: 1594147384}
-  vel: 40
+  vel: 6
   recoil: 10
   ang: 0
   attacking: 0
