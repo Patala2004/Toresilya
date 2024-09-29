@@ -5,13 +5,14 @@ using UnityEngine.Rendering;
 
 public class jugador : MonoBehaviour
 {
-    public animacion animacion;
     public arma arma;
+    public animacion animacion;
     Rigidbody2D rb;
     public float vel = 5f;
     public float recoil = 300f;
     public float ang;
     public bool attacking = false;
+    public float attackSpeed = 0.2f;
     Vector2 vel2;
     // Start is called before the first frame update
     void Start()
@@ -28,7 +29,8 @@ public class jugador : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0) && !attacking)
         {
-            StartCoroutine(atacar(0.2f));
+            attacking = true;
+            StartCoroutine(atacar(attackSpeed));
         }
         ang = angulo();
     }
@@ -53,16 +55,18 @@ public class jugador : MonoBehaviour
     IEnumerator atacar(float waitseconds)
     {
         float elapsedTime = 0;
-        attacking = true;
-        animacion.comenzar();
         Vector2 dir = new Vector3(Mathf.Cos(ang * Mathf.Deg2Rad), Mathf.Sin(ang * Mathf.Deg2Rad));
+        arma.atacar();
+        animacion.comenzar();
         while (elapsedTime < waitseconds)
         {
             vel2 = recoil * (dir * (1 - elapsedTime / waitseconds));
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        animacion.finalizar();
         vel2 = Vector2.zero;
         attacking = false;
     }
+    
 }
