@@ -19098,8 +19098,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fa6ac015e0d24d94786095c50080783b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+<<<<<<< HEAD
 --- !u!1001 &5205912820302518825
 PrefabInstance:
+=======
+  animacion: {fileID: 1676109823}
+  arma: {fileID: 1594147384}
+  vel: 6
+  recoil: 10
+  ang: 0
+  attacking: 0
+--- !u!50 &1509469443
+Rigidbody2D:
+  serializedVersion: 4
+>>>>>>> db9ba39eb90709c7e9cdddb654f392a6067b9b26
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
