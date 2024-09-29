@@ -19,7 +19,7 @@ public class MapGen: MonoBehaviour{
 
     public GameObject rooms;
 
-    private AStar mapGenerator;
+    public AStar mapGenerator;
     void Start(){
         rooms = new GameObject();
         rooms.name = "Rooms";
@@ -32,6 +32,8 @@ public class MapGen: MonoBehaviour{
         // TEMP -> draw other collor at start and endnode
         floorMap.SetTile(new Vector3Int((mapGenerator.startNode.x - mapGenerator.offset[0]) * 40 + 10, (mapGenerator.startNode.y - mapGenerator.offset[1]) * 40 + 10, 0),corridorTile);
         floorMap.SetTile(new Vector3Int((mapGenerator.endNode.x - mapGenerator.offset[0]) * 40 + 10, (mapGenerator.endNode.y - mapGenerator.offset[1]) * 40 + 10, 0),corridorTile);
+
+        GameObject.Find("player").transform.position = new Vector3((mapGenerator.startNode.x - mapGenerator.offset[0]) * 40 + 10 + 10, (mapGenerator.startNode.y - mapGenerator.offset[1]) * 40 + 10 + 10, 0);
 
     }
 }
@@ -271,19 +273,17 @@ public class AStar{
 public class MapPainter{
 
     private MapGen mapGen;
-    public const int MAX_ROOM_SIZE = 20;
-    public const int CORRIDOR_LENGTH = 10;
-    public const int CORRIDOR_WIDTH = 4;
-    public const int NORMAL_ROOM_SIZE = 20;
+    private System.Random rand;
 
     public MapPainter(MapGen mapGen){
         this.mapGen = mapGen;
+        rand = new System.Random();
     }
 
     public void paintNode(List<Node> nodes, int xoffset, int yoffset){
         foreach(Node node in nodes){
-            int x = (node.x - xoffset) * (MAX_ROOM_SIZE + 2*CORRIDOR_LENGTH) + CORRIDOR_LENGTH;
-            int y = (node.y - yoffset) * (MAX_ROOM_SIZE + 2*CORRIDOR_LENGTH) + CORRIDOR_LENGTH;
+            int x = (node.x - xoffset) * (RoomType.MAX_ROOM_SIZE + 2*RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH;
+            int y = (node.y - yoffset) * (RoomType.MAX_ROOM_SIZE + 2*RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH;
             // Make gameobject and put it in "rooms"
             GameObject room = new GameObject();
             room.name = "room " + (node.x - xoffset) + "," + (node.y - yoffset); // Put descriptive name
@@ -291,12 +291,106 @@ public class MapPainter{
             Room roomScript = room.AddComponent<Room>();
             roomScript.x = x;
             roomScript.y = y;
-            roomScript.width = NORMAL_ROOM_SIZE;
-            roomScript.length = NORMAL_ROOM_SIZE;
+            // Decide on room type
+            if(node == mapGen.mapGenerator.startNode){
+                roomScript.roomType = "StartRoom";
+                roomScript.width = RoomType.NORMAL_ROOM_WIDTH;
+                roomScript.length = RoomType.NORMAL_ROOM_LENGTH;
+                roomScript.corridor_length_h = RoomType.NORMAL_CORRIDOR_LENGTH;
+                roomScript.corridor_length_v = RoomType.NORMAL_CORRIDOR_LENGTH;
+                roomScript.corridor_width = RoomType.CORRIDOR_WIDTH;
+            }
+            else if(node == mapGen.mapGenerator.endNode){
+                roomScript.roomType = "EndRoom";
+                roomScript.width = RoomType.NORMAL_ROOM_WIDTH;
+                roomScript.length = RoomType.NORMAL_ROOM_LENGTH;
+                roomScript.corridor_length_h = RoomType.NORMAL_CORRIDOR_LENGTH;
+                roomScript.corridor_length_v = RoomType.NORMAL_CORRIDOR_LENGTH;
+                roomScript.corridor_width = RoomType.CORRIDOR_WIDTH;
+            }
+            else{
+                // Decide random Room type
+                // Room types -> Enemy Room, Large Enemy Room, Streched Enemy Room H, Streched Enemy Room V, Chest room, store room, healing room
+                // Enemy Room -> 70% -> Normal = 40%, large = 10%, streched h = 10%, streched v = 10%
+                // chest room = 15%
+                // store room = 10%
+                // healing room = 5%
+                int roomRandNum = rand.Next(0,100);
+                if(roomRandNum <= 40){
+                    roomScript.roomType = "NormalEnemyRoom";
+                    roomScript.width = RoomType.NORMAL_ROOM_WIDTH;
+                    roomScript.length = RoomType.NORMAL_ROOM_LENGTH;
+                    roomScript.corridor_length_h = RoomType.NORMAL_CORRIDOR_LENGTH;
+                    roomScript.corridor_length_v = RoomType.NORMAL_CORRIDOR_LENGTH;
+                    roomScript.corridor_width = RoomType.CORRIDOR_WIDTH;
+                }
+                else if(roomRandNum <= 50){
+                    roomScript.roomType = "LargeEnemyRoom";
+                    roomScript.width = RoomType.LARGE_ROOM_WIDTH;
+                    roomScript.length = RoomType.LARGE_ROOM_LENGTH;
+                    roomScript.corridor_length_h = RoomType.LARGE_ROOM_CORRIDOR_LENGTH;
+                    roomScript.corridor_length_v = RoomType.LARGE_ROOM_CORRIDOR_LENGTH;
+                    roomScript.corridor_width = RoomType.CORRIDOR_WIDTH;
+                    roomScript.x -= 5;
+                    roomScript.y -= 5;
+                    x-= 5;
+                    y-=5;
+                }
+                else if(roomRandNum <= 60){
+                    roomScript.roomType = "StrechedEnemyRoom_H";
+                    roomScript.roomType = "LargeEnemyRoom";
+                    roomScript.width = RoomType.LARGE_ROOM_WIDTH;
+                    roomScript.length = RoomType.NORMAL_ROOM_LENGTH;
+                    roomScript.corridor_length_h = RoomType.LARGE_ROOM_CORRIDOR_LENGTH;
+                    roomScript.corridor_length_v = RoomType.NORMAL_CORRIDOR_LENGTH;
+                    roomScript.corridor_width = RoomType.CORRIDOR_WIDTH;
+                    roomScript.x -= 5;
+                    x-= 5;
+                }
+                else if(roomRandNum <= 70){
+                    roomScript.roomType = "StrechedEnemyRoom_V";
+                    roomScript.roomType = "LargeEnemyRoom";
+                    roomScript.width = RoomType.NORMAL_ROOM_WIDTH;
+                    roomScript.length = RoomType.LARGE_ROOM_LENGTH;
+                    roomScript.corridor_length_h = RoomType.NORMAL_CORRIDOR_LENGTH;
+                    roomScript.corridor_length_v = RoomType.LARGE_ROOM_CORRIDOR_LENGTH;
+                    roomScript.corridor_width = RoomType.CORRIDOR_WIDTH;
+                    roomScript.y -= 5;
+                    y-=5;
+                }
+                // Chest Room
+                else if(roomRandNum <= 85){
+                    roomScript.roomType = "ChestRoom";
+                    roomScript.width = RoomType.NORMAL_ROOM_WIDTH;
+                    roomScript.length = RoomType.NORMAL_ROOM_LENGTH;
+                    roomScript.corridor_length_h = RoomType.NORMAL_CORRIDOR_LENGTH;
+                    roomScript.corridor_length_v = RoomType.NORMAL_CORRIDOR_LENGTH;
+                    roomScript.corridor_width = RoomType.CORRIDOR_WIDTH;
+                }
+                // Store room
+                else if(roomRandNum <= 95){
+                    roomScript.roomType = "StoreRoom";
+                    roomScript.width = RoomType.NORMAL_ROOM_WIDTH;
+                    roomScript.length = RoomType.NORMAL_ROOM_LENGTH;
+                    roomScript.corridor_length_h = RoomType.NORMAL_CORRIDOR_LENGTH;
+                    roomScript.corridor_length_v = RoomType.NORMAL_CORRIDOR_LENGTH;
+                    roomScript.corridor_width = RoomType.CORRIDOR_WIDTH;
+                }
+                // Healing room
+                else if(roomRandNum <= 100){
+                    roomScript.roomType = "HealingRoom";
+                    roomScript.width = RoomType.NORMAL_ROOM_WIDTH;
+                    roomScript.length = RoomType.NORMAL_ROOM_LENGTH;
+                    roomScript.corridor_length_h = RoomType.NORMAL_CORRIDOR_LENGTH;
+                    roomScript.corridor_length_v = RoomType.NORMAL_CORRIDOR_LENGTH;
+                    roomScript.corridor_width = RoomType.CORRIDOR_WIDTH;
+                }
+            }
+
             roomScript.createCollider(); // Create room collider after adding parameters
             // Draw floors
-            for(int i = 0; i < NORMAL_ROOM_SIZE; i++){
-                for(int j = 0; j < NORMAL_ROOM_SIZE; j++){
+            for(int i = 0; i < roomScript.width; i++){
+                for(int j = 0; j < roomScript.length; j++){
                     mapGen.floorMap.SetTile(new Vector3Int(x + i,y + j,0), mapGen.floorTile);
                 }
             }
@@ -314,30 +408,30 @@ public class MapPainter{
 
     private void drawCorridors(int x, int y, Room roomScript){
         if(roomScript.north){
-            for(int i = 0; i < CORRIDOR_WIDTH; i++){
-                for(int j = 0; j < CORRIDOR_LENGTH; j++){
-                    mapGen.floorMap.SetTile(new Vector3Int(x + (NORMAL_ROOM_SIZE - CORRIDOR_WIDTH)/2 + i,y + NORMAL_ROOM_SIZE + j,0), mapGen.corridorTile);
+            for(int i = 0; i < roomScript.corridor_width; i++){
+                for(int j = 0; j < roomScript.corridor_length_v; j++){
+                    mapGen.floorMap.SetTile(new Vector3Int(x + (roomScript.width - roomScript.corridor_width)/2 + i,y + roomScript.length + j,0), mapGen.corridorTile);
                 }
             }
         }
         if(roomScript.south){
-            for(int i = 0; i < CORRIDOR_WIDTH; i++){
-                for(int j = 0; j < CORRIDOR_LENGTH; j++){
-                    mapGen.floorMap.SetTile(new Vector3Int(x + (NORMAL_ROOM_SIZE - CORRIDOR_WIDTH)/2 + i,y - 1 - j,0), mapGen.corridorTile);
+            for(int i = 0; i < roomScript.corridor_width; i++){
+                for(int j = 0; j < roomScript.corridor_length_v; j++){
+                    mapGen.floorMap.SetTile(new Vector3Int(x + (roomScript.width - roomScript.corridor_width)/2 + i,y - 1 - j,0), mapGen.corridorTile);
                 }
             } 
         }
         if(roomScript.east){
-            for(int i = 0; i < CORRIDOR_LENGTH; i++){
-                for(int j = 0; j < CORRIDOR_WIDTH; j++){
-                    mapGen.floorMap.SetTile(new Vector3Int(x + NORMAL_ROOM_SIZE + i,y + (NORMAL_ROOM_SIZE - CORRIDOR_WIDTH)/2 + j,0), mapGen.corridorTile);
+            for(int i = 0; i < roomScript.corridor_length_h; i++){
+                for(int j = 0; j < roomScript.corridor_width; j++){
+                    mapGen.floorMap.SetTile(new Vector3Int(x + roomScript.width + i,y + (roomScript.length - roomScript.corridor_width)/2 + j,0), mapGen.corridorTile);
                 }
             } 
         }
         if(roomScript.west){
-            for(int i = 0; i < CORRIDOR_LENGTH; i++){
-                for(int j = 0; j < CORRIDOR_WIDTH; j++){
-                    mapGen.floorMap.SetTile(new Vector3Int(x - 1 - i,y + (NORMAL_ROOM_SIZE - CORRIDOR_WIDTH)/2 + j,0), mapGen.corridorTile);
+            for(int i = 0; i < roomScript.corridor_length_h; i++){
+                for(int j = 0; j < roomScript.corridor_width; j++){
+                    mapGen.floorMap.SetTile(new Vector3Int(x - 1 - i,y + (roomScript.length - roomScript.corridor_width)/2 + j,0), mapGen.corridorTile);
                 }
             } 
         }
@@ -346,71 +440,71 @@ public class MapPainter{
     private void drawWalls(int x, int y, Room roomScript){
         if(roomScript.north){ // If it has a corridor on the north -> Dont draw walls where the hallway will pass trough (leave an empty space)
             // room northern wall with space
-            for(int i = -1; i < (NORMAL_ROOM_SIZE - CORRIDOR_WIDTH)/2; i++){
-                mapGen.wallMap.SetTile(new Vector3Int(x + i, y + NORMAL_ROOM_SIZE, 0), mapGen.wallTile);
+            for(int i = -1; i < (roomScript.width - roomScript.corridor_width)/2; i++){
+                mapGen.wallMap.SetTile(new Vector3Int(x + i, y + roomScript.length, 0), mapGen.wallTile);
             }
-            for(int i = (NORMAL_ROOM_SIZE - CORRIDOR_WIDTH)/2 + CORRIDOR_WIDTH; i < NORMAL_ROOM_SIZE + 1; i++){
-                mapGen.wallMap.SetTile(new Vector3Int(x + i, y + NORMAL_ROOM_SIZE, 0), mapGen.wallTile);
+            for(int i = (roomScript.width - roomScript.corridor_width)/2 + roomScript.corridor_width; i < roomScript.width + 1; i++){
+                mapGen.wallMap.SetTile(new Vector3Int(x + i, y + roomScript.length, 0), mapGen.wallTile);
             }
             // corridor walls
-            for(int i = 0; i < CORRIDOR_LENGTH; i++){
-                mapGen.wallMap.SetTile(new Vector3Int(x + (NORMAL_ROOM_SIZE - CORRIDOR_WIDTH)/2 - 1, y + NORMAL_ROOM_SIZE + i, 0), mapGen.wallTile);
-                mapGen.wallMap.SetTile(new Vector3Int(x + (NORMAL_ROOM_SIZE - CORRIDOR_WIDTH)/2 + CORRIDOR_WIDTH, y + NORMAL_ROOM_SIZE + i, 0), mapGen.wallTile);
+            for(int i = 0; i < roomScript.corridor_length_v; i++){
+                mapGen.wallMap.SetTile(new Vector3Int(x + (roomScript.width - roomScript.corridor_width)/2 - 1, y + roomScript.length + i, 0), mapGen.wallTile);
+                mapGen.wallMap.SetTile(new Vector3Int(x + (roomScript.width - roomScript.corridor_width)/2 + roomScript.corridor_width, y + roomScript.length + i, 0), mapGen.wallTile);
             }
         }
         else{
-            for(int i = -1; i < NORMAL_ROOM_SIZE + 1; i++){
-                mapGen.wallMap.SetTile(new Vector3Int(x + i, y + NORMAL_ROOM_SIZE, 0), mapGen.wallTile);
+            for(int i = -1; i < roomScript.width + 1; i++){
+                mapGen.wallMap.SetTile(new Vector3Int(x + i, y + roomScript.length, 0), mapGen.wallTile);
             }
         }
         if(roomScript.south){ // If it has a corridor on the north -> Dont draw walls where the hallway will pass trough (leave an empty space)
-            for(int i = -1; i < (NORMAL_ROOM_SIZE - CORRIDOR_WIDTH)/2; i++){
+            for(int i = -1; i < (roomScript.width - roomScript.corridor_width)/2; i++){
                 mapGen.wallMap.SetTile(new Vector3Int(x + i, y - 1, 0), mapGen.wallTile);
             }
-            for(int i = (NORMAL_ROOM_SIZE - CORRIDOR_WIDTH)/2 + CORRIDOR_WIDTH; i < NORMAL_ROOM_SIZE + 1; i++){
+            for(int i = (roomScript.width - roomScript.corridor_width)/2 + roomScript.corridor_width; i < roomScript.width + 1; i++){
                 mapGen.wallMap.SetTile(new Vector3Int(x + i, y - 1, 0), mapGen.wallTile);
             }
-            for(int i = 1; i < CORRIDOR_LENGTH + 1; i++){
-                mapGen.wallMap.SetTile(new Vector3Int(x + (NORMAL_ROOM_SIZE - CORRIDOR_WIDTH)/2 - 1, y - i, 0), mapGen.wallTile);
-                mapGen.wallMap.SetTile(new Vector3Int(x + (NORMAL_ROOM_SIZE - CORRIDOR_WIDTH)/2 + CORRIDOR_WIDTH, y - i, 0), mapGen.wallTile);
+            for(int i = 1; i < roomScript.corridor_length_v + 1; i++){
+                mapGen.wallMap.SetTile(new Vector3Int(x + (roomScript.width - roomScript.corridor_width)/2 - 1, y - i, 0), mapGen.wallTile);
+                mapGen.wallMap.SetTile(new Vector3Int(x + (roomScript.width - roomScript.corridor_width)/2 + roomScript.corridor_width, y - i, 0), mapGen.wallTile);
             }
         }
         else{
-            for(int i = -1; i < NORMAL_ROOM_SIZE + 1; i++){
+            for(int i = -1; i < roomScript.width + 1; i++){
                 mapGen.wallMap.SetTile(new Vector3Int(x + i, y - 1, 0), mapGen.wallTile);
             }
         }
         if(roomScript.east){ // If it has a corridor on the north -> Dont draw walls where the hallway will pass trough (leave an empty space)
-            for(int i = -1; i < (NORMAL_ROOM_SIZE - CORRIDOR_WIDTH)/2; i++){
-                mapGen.wallMap.SetTile(new Vector3Int(x+NORMAL_ROOM_SIZE, y + i, 0), mapGen.wallTile);
+            for(int i = -1; i < (roomScript.length - roomScript.corridor_width)/2; i++){
+                mapGen.wallMap.SetTile(new Vector3Int(x+roomScript.width, y + i, 0), mapGen.wallTile);
             }
-            for(int i = (NORMAL_ROOM_SIZE - CORRIDOR_WIDTH)/2 + CORRIDOR_WIDTH; i < NORMAL_ROOM_SIZE + 1; i++){
-                mapGen.wallMap.SetTile(new Vector3Int(x+NORMAL_ROOM_SIZE, y + i, 0), mapGen.wallTile);
+            for(int i = (roomScript.length - roomScript.corridor_width)/2 + roomScript.corridor_width; i < roomScript.length + 1; i++){
+                mapGen.wallMap.SetTile(new Vector3Int(x+roomScript.width, y + i, 0), mapGen.wallTile);
             }
-            for(int i = 1; i < CORRIDOR_LENGTH + 1; i++){
-                mapGen.wallMap.SetTile(new Vector3Int(x + NORMAL_ROOM_SIZE + i, y + (NORMAL_ROOM_SIZE - CORRIDOR_WIDTH)/2 -1, 0), mapGen.wallTile);
-                mapGen.wallMap.SetTile(new Vector3Int(x + NORMAL_ROOM_SIZE + i, y + (NORMAL_ROOM_SIZE - CORRIDOR_WIDTH)/2 + CORRIDOR_WIDTH, 0), mapGen.wallTile);
+            for(int i = 1; i < roomScript.corridor_length_h + 1; i++){
+                mapGen.wallMap.SetTile(new Vector3Int(x + roomScript.width + i, y + (roomScript.length - roomScript.corridor_width)/2 -1, 0), mapGen.wallTile);
+                mapGen.wallMap.SetTile(new Vector3Int(x + roomScript.width + i, y + (roomScript.length - roomScript.corridor_width)/2 + roomScript.corridor_width, 0), mapGen.wallTile);
             }
         }
         else{
-            for(int i = -1; i < NORMAL_ROOM_SIZE + 1; i++){
-                mapGen.wallMap.SetTile(new Vector3Int(x+NORMAL_ROOM_SIZE, y + i, 0), mapGen.wallTile);
+            for(int i = -1; i < roomScript.length + 1; i++){
+                mapGen.wallMap.SetTile(new Vector3Int(x+roomScript.width, y + i, 0), mapGen.wallTile);
             }
         }
         if(roomScript.west){ // If it has a corridor on the north -> Dont draw walls where the hallway will pass trough (leave an empty space)
-            for(int i = -1; i < (NORMAL_ROOM_SIZE - CORRIDOR_WIDTH)/2; i++){
+            for(int i = -1; i < (roomScript.length - roomScript.corridor_width)/2; i++){
                 mapGen.wallMap.SetTile(new Vector3Int(x-1, y + i, 0), mapGen.wallTile);
             }
-            for(int i = (NORMAL_ROOM_SIZE - CORRIDOR_WIDTH)/2 + CORRIDOR_WIDTH; i < NORMAL_ROOM_SIZE + 1; i++){
+            for(int i = (roomScript.length - roomScript.corridor_width)/2 + roomScript.corridor_width; i < roomScript.length + 1; i++){
                 mapGen.wallMap.SetTile(new Vector3Int(x-1, y + i, 0), mapGen.wallTile);
             }
-            for(int i = 1; i < CORRIDOR_LENGTH; i++){
-                mapGen.wallMap.SetTile(new Vector3Int(x - i, y + (NORMAL_ROOM_SIZE - CORRIDOR_WIDTH)/2 -1, 0), mapGen.wallTile);
-                mapGen.wallMap.SetTile(new Vector3Int(x - i, y + (NORMAL_ROOM_SIZE - CORRIDOR_WIDTH)/2 + CORRIDOR_WIDTH, 0), mapGen.wallTile);
+            for(int i = 1; i < roomScript.corridor_length_h; i++){
+                mapGen.wallMap.SetTile(new Vector3Int(x - i, y + (roomScript.length - roomScript.corridor_width)/2 -1, 0), mapGen.wallTile);
+                mapGen.wallMap.SetTile(new Vector3Int(x - i, y + (roomScript.length - roomScript.corridor_width)/2 + roomScript.corridor_width, 0), mapGen.wallTile);
             }
         }
         else{
-            for(int i = -1; i < NORMAL_ROOM_SIZE + 1; i++){
+            for(int i = -1; i < roomScript.length + 1; i++){
                 mapGen.wallMap.SetTile(new Vector3Int(x-1, y + i, 0), mapGen.wallTile);
             }
         }
@@ -449,6 +543,18 @@ public class MapPainter{
             }
         }
     }
+}
+
+public static class RoomType{
+    public const int MAX_ROOM_SIZE = 20;
+    public const int NORMAL_CORRIDOR_LENGTH = 10;
+    public const int LARGE_ROOM_CORRIDOR_LENGTH = 5;
+    public const int CORRIDOR_WIDTH = 4;
+    public const int NORMAL_ROOM_WIDTH = 20;
+    public const int NORMAL_ROOM_LENGTH = 20;
+
+    public const int LARGE_ROOM_WIDTH = 30;
+    public const int LARGE_ROOM_LENGTH = 30;
 }
 
 

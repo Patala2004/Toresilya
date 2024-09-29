@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -16,9 +17,14 @@ public class Room : MonoBehaviour
 
     public int width; // x size
     public int length; // y size
+    public int corridor_width;
+    public int corridor_length_v; // Length for corridors that go north / south
+    public int corridor_length_h; // Length for corridors that go west / east
 
     public int x;
     public int y; // Coordinates
+
+    public String roomType;
 
     public BoxCollider2D collider;
     // Start is called before the first frame update
