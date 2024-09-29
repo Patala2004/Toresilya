@@ -317,6 +317,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1441436495582876202, guid: d2ab2af85bca0d841abf98c828236585, type: 3}
+      propertyPath: box
+      value: 
+      objectReference: {fileID: 6308568372791392799, guid: 55b1fd497083ac84f8dd809f6e2533fd, type: 3}
+    - target: {fileID: 1441436495582876202, guid: d2ab2af85bca0d841abf98c828236585, type: 3}
       propertyPath: wallMap
       value: 
       objectReference: {fileID: 690542517}

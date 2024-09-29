@@ -16,6 +16,7 @@ public class MapGen: MonoBehaviour{
     public Tile wallTile;
     public Tilemap floorMap;
     public Tilemap wallMap;
+    public GameObject box; // Box prefab
 
     public GameObject rooms;
 
@@ -90,13 +91,6 @@ public class Node
 
         return res;
     }
-
-    private static int invertDir(int dir){
-        int res = dir - 2;
-        if(dir < 0) dir += 4;
-        return dir;
-    }
-
     private List<int[]> avaibleNeightbors(Node[,] grid, int x, int y){
         // Function that return neightbooring spots that are null
         List<int[]> res = new List<int[]>();
@@ -126,7 +120,6 @@ public class Node
     }
 
     public int createChildren(Node[,] grid, int maxChildren){
-        int childrenAmmount = maxChildren; // Get random amm of children
         childrenHaveBeenCreated = true;
         int res = 0; // new children counter
         System.Random rand = new System.Random();
@@ -254,8 +247,6 @@ public class AStar{
     }
 
     public static void printNodeGrid(Node[,] grid, int width, int height){
-        Debug.Log("START");
-        if(grid == null) Debug.Log("ERRORRRRRRRRRRRRR");
         String matrix = "";
         for(int i = 0; i < width; i++){
             
@@ -324,7 +315,7 @@ public class MapPainter{
                     roomScript.corridor_length_v = RoomType.NORMAL_CORRIDOR_LENGTH;
                     roomScript.corridor_width = RoomType.CORRIDOR_WIDTH;
                 }
-                else if(roomRandNum <= 50){
+                else if(roomRandNum <= 55){
                     roomScript.roomType = "LargeEnemyRoom";
                     roomScript.width = RoomType.LARGE_ROOM_WIDTH;
                     roomScript.length = RoomType.LARGE_ROOM_LENGTH;
@@ -336,7 +327,7 @@ public class MapPainter{
                     x-= 5;
                     y-=5;
                 }
-                else if(roomRandNum <= 60){
+                else if(roomRandNum <= 65){
                     roomScript.roomType = "StrechedEnemyRoom_H";
                     roomScript.roomType = "LargeEnemyRoom";
                     roomScript.width = RoomType.LARGE_ROOM_WIDTH;
@@ -347,7 +338,7 @@ public class MapPainter{
                     roomScript.x -= 5;
                     x-= 5;
                 }
-                else if(roomRandNum <= 70){
+                else if(roomRandNum <= 75){
                     roomScript.roomType = "StrechedEnemyRoom_V";
                     roomScript.roomType = "LargeEnemyRoom";
                     roomScript.width = RoomType.NORMAL_ROOM_WIDTH;
@@ -403,6 +394,13 @@ public class MapPainter{
 
             // Draw walls
             drawWalls(x,y,roomScript);
+
+            // If enemy room -> add obstacles
+            // Later do it so it checks for instance of enemyRoom class
+            if(roomScript.roomType.Contains("EnemyRoom")){
+                Debug.Log("ENEMY ROOM");
+                addObstacles(node, roomScript);
+            }
         }
     }
 
@@ -541,6 +539,25 @@ public class MapPainter{
                 case "West": roomScript.west = true; break;
                 default: break;
             }
+        }
+    }
+
+    private void addObstacles(Node node, Room roomScript){
+        // get center coordinates
+        int x = roomScript.x + roomScript.width/2;
+        int y = roomScript.y+ roomScript.length/2;
+        // get size of usable center zone
+        int width = (int) (roomScript.width*0.7);
+        int length = (int) (roomScript.length*0.7);
+        // Place random ammount of boxes there (based on size -> The bigger the room the more boxes)
+        int boxAmmount = rand.Next((width + length)/2, width+length);
+        for(int i = 0; i < boxAmmount; i++){
+            // get random coordinate and place a box in there
+            int boxX = rand.Next(x - width/2, x + width/2);
+            int boxY = rand.Next(y - length/2, y+ length/2);
+            GameObject box = GameObject.Instantiate(mapGen.box);
+            box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
+            box.transform.position = new Vector2(boxX, boxY);
         }
     }
 }
