@@ -4,14 +4,14 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class animacion : MonoBehaviour
+public class hitbox : MonoBehaviour
 {
     // Start is called before the first frame update
     public jugador jugador;
-    SpriteRenderer sR;
+    public float radioHitbox = 1f;
     void Start()
     {
-        sR = GetComponent<SpriteRenderer>();
+        GetComponent<SpriteRenderer>().enabled = false;
     }
 
     // Update is called once per frame
@@ -21,9 +21,9 @@ public class animacion : MonoBehaviour
     }
     public void comenzar()
     {
-        float x = Mathf.Cos(jugador.ang * Mathf.Deg2Rad) * 1.5f;
-        float z = Mathf.Sin(jugador.ang * Mathf.Deg2Rad) * 1.5f;
-        transform.localPosition = new Vector3(x, z, 0);
+        float x = Mathf.Cos(jugador.ang * Mathf.Deg2Rad) * radioHitbox;
+        float z = Mathf.Sin(jugador.ang * Mathf.Deg2Rad) * radioHitbox;
+        transform.localPosition = new Vector3(x, z, 1);
         transform.localEulerAngles = new Vector3(0, 0, jugador.ang);
     }
     public void finalizar()

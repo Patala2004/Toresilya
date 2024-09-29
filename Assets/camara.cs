@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class enemigo : MonoBehaviour
+public class camara : MonoBehaviour
 {
-    public arma arma;
+    public jugador jugador;
     // Start is called before the first frame update
     void Start()
     {
@@ -14,10 +14,6 @@ public class enemigo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-    }
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-
+        transform.position = new Vector3(jugador.transform.position.x, jugador.transform.position.y,-20);
     }
 }
