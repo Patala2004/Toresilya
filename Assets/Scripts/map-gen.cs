@@ -256,7 +256,6 @@ public class AStar{
             }
             matrix += ("\n");
         }
-        Debug.Log(matrix);
     }
 }
 
@@ -398,7 +397,6 @@ public class MapPainter{
             // If enemy room -> add obstacles
             // Later do it so it checks for instance of enemyRoom class
             if(roomScript.roomType.Contains("EnemyRoom")){
-                Debug.Log("ENEMY ROOM");
                 addObstacles(node, roomScript);
             }
         }
@@ -509,7 +507,6 @@ public class MapPainter{
     }
 
     private String getDirection(int x, int y){
-        Debug.Log(x + " - " + y);
         if(x == -1){ // Current node is left of parent node -> draw to the right
             return "East";
         }
@@ -549,16 +546,164 @@ public class MapPainter{
         // get size of usable center zone
         int width = (int) (roomScript.width*0.7);
         int length = (int) (roomScript.length*0.7);
-        // Place random ammount of boxes there (based on size -> The bigger the room the more boxes)
-        int boxAmmount = rand.Next((width + length)/2, width+length);
-        for(int i = 0; i < boxAmmount; i++){
-            // get random coordinate and place a box in there
-            int boxX = rand.Next(x - width/2, x + width/2);
-            int boxY = rand.Next(y - length/2, y+ length/2);
-            GameObject box = GameObject.Instantiate(mapGen.box);
+        // Obstacle types
+        // Boxes
+        //      Normal Box (1x1)
+        //      Box row v (2x4)
+        //      Box row h (4x2)
+        //      Box center (5x5 in the middle of the room)
+        //      Box edges 1 (1 bix in each corner)
+        //      Box corner 2 (3 boxes in each corner doing an L)
+
+        // Calculate extra box spawn chance based on room size
+        const float SIZE_BONUS = 2;
+        float extraBoxChance = ((((float) (roomScript.width+roomScript.length))/(float)((RoomType.NORMAL_ROOM_WIDTH+RoomType.NORMAL_ROOM_LENGTH))) - 1f)*SIZE_BONUS + 1f; // 1 if room is normal, slightly larger if room is bigger
+        // Place Boxes
+        int normalBoxAmmount = rand.Next((int) (5*extraBoxChance),(int) (12*extraBoxChance)); // Random number between 0 and 15 with 15/3 chance of being 0
+        int box_row_vAmmount = rand.Next(0,(int) (5*extraBoxChance)) - 2; // Random number between 0 and 4 with 50% chance of being 0
+        int box_row_hAmmount = rand.Next(0,(int) (5*extraBoxChance)) - 2; // '' ''
+        int boxEdgeType = rand.Next(0,5); // 0 - 2 = Nada (60%), 3 = box edge 1, 4 = box edge 2
+        bool centerBox = rand.Next(0,100)<10? true:false; // 1 10% chance and 0 90%
+
+        // If boxes are placed on the same time its no biggie, just let it
+        // Place normal boxes and box clutters
+        int boxX;
+        int boxY;
+        GameObject box;
+        // normal rand boxes
+        for(int i = 0; i < normalBoxAmmount && !centerBox; i++){
+            boxX = rand.Next(x - width/2, x + width/2);
+            boxY = rand.Next(y - length/2, y + length/2);
+            box = GameObject.Instantiate(mapGen.box);
             box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
-            box.transform.position = new Vector2(boxX, boxY);
+            box.transform.position = new Vector2(boxX + 0.5f, boxY+ 0.5f);            
         }
+        for(int i = 0; i < box_row_vAmmount && !centerBox; i++){
+            boxX = rand.Next(x - width/2, x + width/2) - 1;
+            boxY = rand.Next(y - length/2, y + length/2) - 3;
+            // Places boxes on a 2 x 4 grid
+            for(int a = 0; a < 2; a++){
+                for(int b = 0; b < 4; b++){
+                    box = GameObject.Instantiate(mapGen.box);
+                    box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
+                    box.transform.position = new Vector2(boxX+a+0.5f, boxY+b+0.5f); 
+                }
+            }
+        }
+        for(int i = 0; i < box_row_hAmmount && !centerBox; i++){
+            boxX = rand.Next(x - width/2, x + width/2) - 3;
+            boxY = rand.Next(y - length/2, y + length/2) - 1;
+            // Places boxes on a 4 x 2 grid
+            for(int a = 0; a < 4; a++){
+                for(int b = 0; b < 2; b++){
+                    box = GameObject.Instantiate(mapGen.box);
+                    box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
+                    box.transform.position = new Vector2(boxX+a+0.5f, boxY+b+0.5f); 
+                }
+            }
+        }
+
+        if(centerBox){
+            boxEdgeType++; // Up the chance of a cronerL Box distr
+            // Put a gigant box cluster on the center. Size depends on room size
+            boxX = x - roomScript.width/6;
+            boxY = y - roomScript.length/6;
+            for(int i = 0; i < roomScript.width/3; i++){
+                for(int j = 0; j < roomScript.length/3; j++){
+                    box = GameObject.Instantiate(mapGen.box);
+                    box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
+                    box.transform.position = new Vector2(boxX+i+0.5f, boxY+j+0.5f); 
+                }
+            }
+        }
+
+        Debug.Log(boxEdgeType);
+
+        // Corner boxes
+        if(boxEdgeType == 3){
+            // 11 -> one box on each corner
+            // Edges = room.x, room.y, room.x + room.width, room.y etc
+            boxX = roomScript.x;
+            boxY = roomScript.y;
+            box = GameObject.Instantiate(mapGen.box);
+            box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
+            box.transform.position = new Vector2(boxX+0.5f, boxY+0.5f);
+            boxX = roomScript.x + roomScript.width-1;
+            boxY = roomScript.y;
+            box = GameObject.Instantiate(mapGen.box);
+            box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
+            box.transform.position = new Vector2(boxX+0.5f, boxY+0.5f);
+            boxX = roomScript.x + roomScript.width-1;
+            boxY = roomScript.y + roomScript.length-1;
+            box = GameObject.Instantiate(mapGen.box);
+            box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
+            box.transform.position = new Vector2(boxX+0.5f, boxY+0.5f);
+            boxX = roomScript.x;
+            boxY = roomScript.y + roomScript.length-1;
+            box = GameObject.Instantiate(mapGen.box);
+            box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
+            box.transform.position = new Vector2(boxX+0.5f, boxY+0.5f);
+        }
+        else if(boxEdgeType >= 4){
+            boxX = roomScript.x;
+            boxY = roomScript.y;
+
+            // Pintar una L en esa esquina
+            box = GameObject.Instantiate(mapGen.box);
+            box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
+            box.transform.position = new Vector2(boxX+0.5f, boxY+0.5f);
+            for(int i = 1; i < (roomScript.width-roomScript.corridor_width)/4; i++){
+                box = GameObject.Instantiate(mapGen.box);
+                box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
+                box.transform.position = new Vector2(boxX+0.5f + i, boxY+0.5f);
+            }
+            for(int i = 1; i < (roomScript.length-roomScript.corridor_width)/4; i++){
+                box = GameObject.Instantiate(mapGen.box);
+                box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
+                box.transform.position = new Vector2(boxX+0.5f, boxY+0.5f + i);
+            }
+            boxX = roomScript.x + roomScript.width-1;
+            boxY = roomScript.y;
+            box.transform.position = new Vector2(boxX+0.5f, boxY+0.5f);
+            for(int i = 1; i < (roomScript.width-roomScript.corridor_width)/4; i++){
+                box = GameObject.Instantiate(mapGen.box);
+                box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
+                box.transform.position = new Vector2(boxX+0.5f - i, boxY+0.5f);
+            }
+            for(int i = 1; i < (roomScript.length-roomScript.corridor_width)/4; i++){
+                box = GameObject.Instantiate(mapGen.box);
+                box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
+                box.transform.position = new Vector2(boxX+0.5f, boxY+0.5f + i);
+            }
+            boxX = roomScript.x + roomScript.width-1;
+            boxY = roomScript.y + roomScript.length-1;
+            box.transform.position = new Vector2(boxX+0.5f, boxY+0.5f);
+            for(int i = 1; i < (roomScript.width-roomScript.corridor_width)/4; i++){
+                box = GameObject.Instantiate(mapGen.box);
+                box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
+                box.transform.position = new Vector2(boxX+0.5f - i, boxY+0.5f);
+            }
+            for(int i = 1; i < (roomScript.length-roomScript.corridor_width)/4; i++){
+                box = GameObject.Instantiate(mapGen.box);
+                box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
+                box.transform.position = new Vector2(boxX+0.5f, boxY+0.5f - i);
+            }
+            boxX = roomScript.x;
+            boxY = roomScript.y + roomScript.length-1;
+            box.transform.position = new Vector2(boxX+0.5f, boxY+0.5f);
+            for(int i = 1; i < (roomScript.width-roomScript.corridor_width)/4; i++){
+                box = GameObject.Instantiate(mapGen.box);
+                box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
+                box.transform.position = new Vector2(boxX+0.5f + i, boxY+0.5f);
+            }
+            for(int i = 1; i < (roomScript.length-roomScript.corridor_width)/4; i++){
+                box = GameObject.Instantiate(mapGen.box);
+                box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
+                box.transform.position = new Vector2(boxX+0.5f, boxY+0.5f - i);
+            }
+        }
+
+     
     }
 }
 
