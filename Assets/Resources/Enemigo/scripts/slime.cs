@@ -1,28 +1,44 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class enemigo : MonoBehaviour
+public class slime : enemigo
 {
-    public jugador jugador;
-    protected Rigidbody2D rb;
-    Vector2 vel2 = Vector2.zero;
+	public float persecutionRadius = 5.0f;
+
+	public float jumpForce = 120f, jumpTimerInit = 1f, jumpTimer;
+
     // Start is called before the first frame update
-    public void Start()
+    new void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
-        jugador = GameObject.Find("player").GetComponent<jugador>();
+        base.Start();
+		jumpTimer = jumpTimerInit;
     }
     private void FixedUpdate()
     {
-        rb.velocity = vel2;
+		float magnitude = (jugador.gameObject.transform.position - gameObject.transform.position).magnitude;
+		
+
+        if(magnitude <= persecutionRadius) {
+			jumpTimer -= Time.fixedDeltaTime;
+			Debug.Log("jumpTimer: " + jumpTimer);
+			if(jumpTimer <= 0f) {
+				Vector2 dir = jugador.transform.position - gameObject.transform.position;
+				rb.AddForce(dir*jumpForce);
+
+				jumpTimer = jumpTimerInit;
+			}
+		} else {
+			jumpTimer = jumpTimerInit;
+		}
     }
     // Update is called once per frame
     void Update()
     {
         
     }
-    private void OnTriggerEnter2D(Collider2D collision)
+    /*private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("hitboxAmigo"))
         {
@@ -41,5 +57,5 @@ public class enemigo : MonoBehaviour
             yield return null;
         }
         vel2 = Vector2.zero;
-    }
+    }*/
 }

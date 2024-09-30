@@ -11,7 +11,7 @@ public class cursor : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         Vector2 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         transform.position = MousePos;
