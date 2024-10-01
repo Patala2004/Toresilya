@@ -19,12 +19,10 @@ public class slime : enemigo
     {
 		float magnitude = (jugador.gameObject.transform.position - gameObject.transform.position).magnitude;
 		
-
         if(magnitude <= persecutionRadius) {
 			jumpTimer -= Time.fixedDeltaTime;
-			Debug.Log("jumpTimer: " + jumpTimer);
 			if(jumpTimer <= 0f) {
-				Vector2 dir = jugador.transform.position - gameObject.transform.position;
+				Vector2 dir = (jugador.transform.position - gameObject.transform.position).normalized;
 				rb.AddForce(dir*jumpForce);
 
 				jumpTimer = jumpTimerInit;
