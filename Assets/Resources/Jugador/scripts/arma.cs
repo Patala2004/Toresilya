@@ -12,6 +12,7 @@ public class arma : MonoBehaviour
     public float attackKnockback = 1.5f;
     public float attackSpeed = 0.2f;
     public float attackAlter = 90;
+	public float[] attackDamage = new float[2];
     // Start is called before the first frame update
     void Start()
     {

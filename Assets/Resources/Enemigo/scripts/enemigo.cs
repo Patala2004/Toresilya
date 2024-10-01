@@ -28,6 +28,8 @@ public class enemigo : MonoBehaviour
         {
             Debug.Log("golpeado!!");
             StartCoroutine(golpeado(jugador.arma.attackSpeed,jugador.ang, jugador.arma.recoil,jugador.arma.attackKnockback));
+			int damage = (int)Random.Range(jugador.arma.attackDamage[0], jugador.arma.attackDamage[1] + 1);
+            GetComponent<genParticulaTexto>().comenzar(damage,jugador.ang, jugador.arma.attackKnockback);
         }
     }
     IEnumerator golpeado(float waitseconds,float ang,float recoil,float attackKnockback)

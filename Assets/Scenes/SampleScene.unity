@@ -366,6 +366,14 @@ PrefabInstance:
       propertyPath: recoil
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 4828342796627309653, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
+      propertyPath: attackDamage.Array.data[0]
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4828342796627309653, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
+      propertyPath: attackDamage.Array.data[1]
+      value: 1628
+      objectReference: {fileID: 0}
     - target: {fileID: 6598799784440926643, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: m_TagString
       value: hitboxAmigo
@@ -563,6 +571,7 @@ GameObject:
   - component: {fileID: 1041381161}
   - component: {fileID: 1041381163}
   - component: {fileID: 1041381164}
+  - component: {fileID: 1041381165}
   m_Layer: 0
   m_Name: Enemigo
   m_TagString: Untagged
@@ -747,6 +756,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1041381165
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1041381157}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 303e6bf360c773f49a9dadb9a4f28ce7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particula: {fileID: 228590356228647377, guid: e1c4e8c11428d3241a7283d071b176ca, type: 3}
+  particulaVel: 5
+  particulaDispersion: 40
 --- !u!1 &1199260586 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3851222254810370747, guid: a39907273a1c3954586d131013b71315, type: 3}
