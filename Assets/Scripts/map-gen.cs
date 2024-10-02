@@ -10,6 +10,8 @@ using Unity.VisualScripting.FullSerializer;
 using System.Data;
 using System.Linq;
 using UnityEditor.Tilemaps;
+using Unity.Jobs;
+using Unity.Burst;
 
 
 
@@ -35,7 +37,9 @@ public class MapGen: MonoBehaviour{
     IEnumerator generateMap(){
         //mapGenerator = new AStar(10,10,14);
         System.Random seedGen = new System.Random();
-        Unity.Mathematics.Random rand = new Unity.Mathematics.Random((uint) seedGen.Next(1,999999999));
+        uint seed = (uint) seedGen.Next(1,999999999);
+        Debug.Log("SEED " + seed);
+        Unity.Mathematics.Random rand = new Unity.Mathematics.Random(seed);
         int gridSize = 31;
         NativeArray<NodeStruct> girdStruct = new NativeArray<NodeStruct>(gridSize*gridSize, Allocator.Persistent);
         NativeList<NodeStruct> openSet = new NativeList<NodeStruct>(Allocator.Persistent);
@@ -44,40 +48,178 @@ public class MapGen: MonoBehaviour{
         NativeArray<bool> booleanArray_s4 = new NativeArray<bool>(4, Allocator.Persistent);
         NativeList<NodeStruct> nativeListNodeStruc = new NativeList<NodeStruct>(Allocator.Persistent);
         AStarStruct mapGenerator2 = new AStarStruct(gridSize,rand,14, girdStruct,allNodes, openSet, closedSet, booleanArray_s4, nativeListNodeStruc, new NodeStruct());
-        MapPainter renderer = new MapPainter(this, girdStruct, gridSize);
-        mapGenerator2.createMap();
 
-        Debug.Log("ENDNODE " + mapGenerator2.endNode.x + " " + mapGenerator2.endNode.y);
-        Debug.Log("START " + mapGenerator2.startNode.x + " " + mapGenerator2.startNode.y);
-        String a = "";
-        // print grid of mapGenerator2
-        Debug.Log(mapGenerator2.allNodes.Length);
+        NativeArray<int> startNodeCoords = new NativeArray<int>(2, Allocator.Persistent);
+        NativeArray<int> endNodeCoords = new NativeArray<int>(2, Allocator.Persistent);
+        //mapGenerator2.createMap();
 
-        for(int i = 0; i < girdStruct.Length; i++){
-            a += girdStruct[i].hasBeenCreated? 1 : 0 + " ";
-            if(i%gridSize == 0) a+="\n";
+        MapNodeGenerationJob newJob = new MapNodeGenerationJob
+        {
+            mapGenerator3 = mapGenerator2,
+            startNodeCoords = startNodeCoords,
+            endNodeCoords = endNodeCoords,
+        };
 
+        JobHandle jobhandle = newJob.Schedule();
+
+        while(!jobhandle.IsCompleted){
+            yield return null;
         }
-        Debug.Log(a);
-        renderer.paintNode(mapGenerator2.allNodes, mapGenerator2.xoffset, mapGenerator2.yoffset, nativeListNodeStruc);
+        jobhandle.Complete();
 
+        // job is completed!
         girdStruct.Dispose();
         openSet.Dispose();
-        allNodes.Dispose();
         closedSet.Dispose();
         booleanArray_s4.Dispose();
         nativeListNodeStruc.Dispose();
 
+        int xoffset = allNodes[0].x;
+        int yoffset = allNodes[0].y;
+        foreach(NodeStruct node in allNodes){
+            if(node.x < xoffset) xoffset = node.x;
+            if(node.y < yoffset) yoffset = node.y;
+        }
+
+
+        NativeList<int> roomTypes = new NativeList<int>(Allocator.Persistent);
+        NativeList<int> xFloorCoords = new NativeList<int>(Allocator.Persistent);
+        NativeList<int> yFloorCoords = new NativeList<int>(Allocator.Persistent);
+        NativeList<int> xCorridorCoords = new NativeList<int>(Allocator.Persistent);
+        NativeList<int> yCorridorCoords = new NativeList<int>(Allocator.Persistent);
+        NativeList<int> xWallCoords = new NativeList<int>(Allocator.Persistent);
+        NativeList<int> yWallCoords = new NativeList<int>(Allocator.Persistent);
+
+        RoomTypeGetter roomTypeGetter = new RoomTypeGetter(allNodes, rand, roomTypes, startNodeCoords[0], startNodeCoords[1], endNodeCoords[0], endNodeCoords[1]);
+        FloorCoordinateGetter floorCoordinateGetter = new FloorCoordinateGetter(allNodes,roomTypes, xFloorCoords, yFloorCoords,xoffset, yoffset);
+        CorridorCoordinateGetter corridorCoordinateGetter = new CorridorCoordinateGetter(allNodes,roomTypes, xCorridorCoords, yCorridorCoords,xoffset, yoffset);
+        WallCoordinateGetter wallCoordinateGetter = new WallCoordinateGetter(allNodes,roomTypes, xWallCoords, yWallCoords, xoffset, yoffset);
+
+        RoomTypeGeneratorJob roomTypeGenJob = new RoomTypeGeneratorJob{
+            roomTypeGetter = roomTypeGetter,
+        };
+
+        FloorCoordinatesCalculatorJob floorCoordJob = new FloorCoordinatesCalculatorJob{
+            floorCoordGetter = floorCoordinateGetter,
+        };
+
+        CorridorCoordinatesCalculatorJob corrCoordJob = new CorridorCoordinatesCalculatorJob{
+            corridorCoordGetter = corridorCoordinateGetter,
+        };
+
+        WallCoordinatesCalculatorJob wallCoordJob = new WallCoordinatesCalculatorJob{
+            wallCoordGetter = wallCoordinateGetter,
+        };
+
+        JobHandle roomTypeGen = roomTypeGenJob.Schedule();
+        roomTypeGen.Complete(); // Room Types have to be generated before the rest can be done
+
+
+
+        JobHandle floorJob = floorCoordJob.Schedule();
+        JobHandle coorJob = corrCoordJob.Schedule();
+        JobHandle wallJob = wallCoordJob.Schedule();
+        while(!floorJob.IsCompleted || !coorJob.IsCompleted || !wallJob.IsCompleted){
+            // Dont block main thread while jobs are running
+            yield return null;
+        }
+        // Syncronize the three already completed jobs with main thread
+        floorJob.Complete();
+        coorJob.Complete();
+        wallJob.Complete();
+        // Three jobs are completed        
+
+        TileRenderer tileRenderer = new TileRenderer(xFloorCoords, yFloorCoords, xCorridorCoords, yCorridorCoords, xWallCoords, yWallCoords, 
+        floorTile, corridorTile, wallTile, roomTypes);
+        
+        floorMap.SetTiles(tileRenderer.vectorCoordinates, tileRenderer.tileArr);
+        wallMap.SetTiles(tileRenderer.wallVectorCoordinates, tileRenderer.wallTileArr);
+
+
 
         // TEMP -> draw other collor at start and endnode
-        floorMap.SetTile(new Vector3Int((mapGenerator2.startNode.x - mapGenerator2.xoffset) * 40 + 10, (mapGenerator2.startNode.y - mapGenerator2.yoffset) * 40 + 10, 0),corridorTile);
-        floorMap.SetTile(new Vector3Int((mapGenerator2.endNode.x - mapGenerator2.xoffset) * 40 + 10, (mapGenerator2.endNode.y - mapGenerator2.yoffset) * 40 + 10, 0),corridorTile);
+        floorMap.SetTile(new Vector3Int((startNodeCoords[0] - xoffset) * 40 + 10, (startNodeCoords[1] - yoffset) * 40 + 10, 0),corridorTile);
+        floorMap.SetTile(new Vector3Int((endNodeCoords[0] - xoffset) * 40 + 10, (endNodeCoords[1] - yoffset) * 40 + 10, 0),corridorTile);
+
+        roomTypes.Dispose();
+        xFloorCoords.Dispose();
+        yFloorCoords.Dispose();
+        xCorridorCoords.Dispose();
+        yCorridorCoords.Dispose();
+        xWallCoords.Dispose();
+        yWallCoords.Dispose();
+        allNodes.Dispose();
+        startNodeCoords.Dispose();
+
+        
 
         //GameObject.Find("player").transform.position = new Vector3((mapGenerator.startNode.x - mapGenerator.offset[0]) * 40 + 10 + 10, (mapGenerator.startNode.y - mapGenerator.offset[1]) * 40 + 10 + 10, 0);
 
         yield return null;
     }
+
+    [BurstCompile]
+    struct MapNodeGenerationJob : IJob{
+        public AStarStruct mapGenerator3;
+        public int xoffset;
+        public int yoffset;
+
+        public NativeArray<int> startNodeCoords;
+        public NativeArray<int> endNodeCoords;
+
+        public void Execute(){
+            mapGenerator3.createMap();
+            startNodeCoords[0] = mapGenerator3.startNode.x;
+            startNodeCoords[1] = mapGenerator3.startNode.y;
+            endNodeCoords[0] = mapGenerator3.endNode.x;
+            endNodeCoords[1] = mapGenerator3.endNode.y;
+        }
+    }
+
+    [BurstCompile]
+    struct RoomTypeGeneratorJob : IJob{
+
+        public RoomTypeGetter roomTypeGetter;
+        // xcoordinates and ycoordinates gets passed to the NativeLists passed to the constructor of the coordGetter 
+        
+        public void Execute(){
+            roomTypeGetter.getRoomTypes();
+        }
+    }
+
+    [BurstCompile]
+    struct FloorCoordinatesCalculatorJob : IJob{
+
+        public FloorCoordinateGetter floorCoordGetter;
+        // xcoordinates and ycoordinates gets passed to the NativeLists passed to the constructor of the coordGetter 
+        
+        public void Execute(){
+            floorCoordGetter.getFloorCoordinates();
+        }
+    }
+
+    [BurstCompile]
+    struct CorridorCoordinatesCalculatorJob : IJob{
+
+        public CorridorCoordinateGetter corridorCoordGetter;
+        // xcoordinates and ycoordinates gets passed to the NativeLists passed to the constructor of the coordGetter 
+        
+        public void Execute(){
+            corridorCoordGetter.getCorridorCoordinates();
+        }
+    }
+
+    [BurstCompile]
+    struct WallCoordinatesCalculatorJob : IJob{
+        public WallCoordinateGetter wallCoordGetter;
+        // xcoordinates and ycoordinates gets passed to the NativeLists passed to the constructor of the coordGetter 
+        
+        public void Execute(){
+            wallCoordGetter.getWallCoordinates();
+        }
+    }
 }
+
 
 public struct NodeStruct : IEquatable<NodeStruct>{
     public int x, y;
@@ -164,32 +306,8 @@ public struct NodeStruct : IEquatable<NodeStruct>{
             if(availableNeighbors[i]) availableNeighborsCounter++;
         }
 
-
-
-
-        // AQUI OCURRE ERROR
-
-
-        // ABAJO
-
-
-        // HAY QUE HACER QUE NO PUEDA ENTRAR EN BUCLE INFINITO
-
-
-
-        // NO ME SORPRENDE; MENUDA MIERDA DE CODIGO QUE ES ESTO
-
-
-
-
-
-
-
-        int ii = 0;
         while(availableNeighborsCounter > 0 && remaindingChildren > 0){
-            ii++;
-            if(ii > 10){Debug.Log("ERROR C"); return 0;}
-            int i = rand.NextInt(0,3); // Random direction
+            int i = rand.NextInt(0,4); // Random direction -> 4 instead of 3 because MAX value is exclusive (cannot be generated)
             if(availableNeighbors[i]){
                 // Update counters and values
                 availableNeighbors[i]=false;
@@ -234,111 +352,6 @@ public struct NodeStruct : IEquatable<NodeStruct>{
         return res;
     }
 }
-
-public class Node
-{
-
-    /*
-        North = 0
-        East = 1
-        South = 2
-        West = 3  
-
-          0
-        3<^>1
-          2
-
-    */
-
-    public int x, y; // node coordinates
-    public int cost;  // distance from start node / cost
-    public int heuristic;  // node heuristic (will be random)
-    public Node parent;  // pointer to parent node
-    public List<Node> children; // pointer to all children (so each room can handle their own part of the corridor)
-
-    public bool childrenHaveBeenCreated = false;
-    public bool isWalkable; // Check if a node has already been designed as not Walkable during the execution of A* algorithm
-
-    public int funcCost => cost + heuristic; // functional cost
-
-    public Node(int x, int y, bool isWalkable)
-    {
-        this.x = x;
-        this.y = y;
-        this.isWalkable = isWalkable;
-        children = new List<Node>();
-        
-    }
-
-    private static int[] getDir(int dir){
-        int[] res = new int[2];
-        switch (dir){
-            case 0:
-                res[0] = 0; res[1] = 1; break; // North = x+0, y+1
-            case 1:
-                res[0] = 1; res[1] = 0; break; // East = x+1, y+0
-            case 2:
-                res[0] = 0; res[1] = -1; break; // South = x+0, y-1
-            case 3:
-                res[0] = -1; res[1] = 0; break; // West = x-1, y+0
-            default:
-                break;
-        }
-
-        return res;
-    }
-    private List<int[]> avaibleNeightbors(Node[,] grid, int x, int y){
-        // Function that return neightbooring spots that are null
-        List<int[]> res = new List<int[]>();
-        for(int i = 0; i < 4; i++){
-            int[] newCoords = new int[2];
-            newCoords[0] = x + getDir(i)[0];
-            newCoords[1] = y + getDir(i)[1];
-            if(grid[newCoords[0], newCoords[1]] == null){
-                res.Add(newCoords);
-            }
-        }
-        return res;
-    }
-
-    public List<Node> getNeightbors(Node[,] grid){
-        // Function that return neightbooring spots that aren't null
-        List<Node> res = new List<Node>();
-        for(int i = 0; i < 4; i++){
-            int[] newCoords = new int[2];
-            newCoords[0] = x + getDir(i)[0];
-            newCoords[1] = y + getDir(i)[1];
-            if(grid[newCoords[0], newCoords[1]] != null){
-                res.Add(grid[newCoords[0], newCoords[1]]);
-            }
-        }
-        return res;
-    }
-
-    public int createChildren(Node[,] grid, int maxChildren){
-        childrenHaveBeenCreated = true;
-        int res = 0; // new children counter
-        System.Random rand = new System.Random();
-
-        List<int[]> availableCoords = avaibleNeightbors(grid,x,y);
-        int availableCoordsNum = availableCoords.Count;
-        for(int i = 0; i < availableCoordsNum && i < maxChildren; i++){
-            // Take random coord out of list
-            int[] randCoord = availableCoords[rand.Next(0,availableCoords.Count-1)];
-            availableCoords.Remove(randCoord);
-            // Put new node in random coordinate
-            Node newNode = new Node(randCoord[0], randCoord[1],true);
-            newNode.parent = this;
-            this.children.Add(newNode);
-            newNode.children.Add(this); // Add parent to children array of child so it can be used later to iterate trough neighbors
-            grid[randCoord[0], randCoord[1]] = newNode;
-            res++;
-        }
-        AStar.printNodeGrid(grid, (int) Mathf.Sqrt(grid.Length),(int) Mathf.Sqrt(grid.Length));
-        return res;
-    }
-}
-
 public struct AStarStruct{
     private int grid_size;
     public NodeStruct startNode;
@@ -383,8 +396,8 @@ public struct AStarStruct{
         int roomCounter = 0;
         int remainingRooms = roomAmmount;
         // Create start node in random part of the center map (width - maxRooms * 2)
-        int x = rand.NextInt(roomAmmount + 1, grid_size - roomAmmount);
-        int y = rand.NextInt(roomAmmount + 1, grid_size - roomAmmount);
+        int x = rand.NextInt(roomAmmount + 1, grid_size - roomAmmount+1);
+        int y = rand.NextInt(roomAmmount + 1, grid_size - roomAmmount+1); // +1 because maxValue is exclusive
 
         startNode = grid[x*grid_size + y]; // STRUCTS ARE PASSED BY VALUE NOT POINTER -> MODIFYING THIS DOESNT MODIFY THE VALUE INSIDE OF THE ARRAY
         startNode.initialize(x,y);
@@ -416,7 +429,7 @@ public struct AStarStruct{
             //closedSet.Add(current); // Have to add at the end
 
             if(!current.childrenHaveBeenCreated){
-                int roomCount = rand.NextInt(2,3);
+                int roomCount = rand.NextInt(2,4); // rand room ammount between 2 and 3 (4 because max value is exclusive so cant be chosen)
                 if(current == startNode || remainingRooms == 1) roomCount = 1;
                 else if(remainingRooms == 2) roomCount = 2;
                 roomCounter+= current.createChildren(grid, grid_size, roomCount, rand, booleanArray_s4);
@@ -435,7 +448,7 @@ public struct AStarStruct{
                 NodeStruct neighbor = neighborList[i];
                 if(!neighbor.hasBeenCreated || !neighbor.isWalkable || closedSet.Contains(neighbor)) continue;
                 neighbor.cost = current.cost;
-                neighbor.heuristic = rand.NextInt(0, remainingRooms * 10);
+                neighbor.heuristic = rand.NextInt(0, remainingRooms * 10 + 1);
                 if(!openSet.Contains(neighbor)) openSet.Add(neighbor);
             }
 
@@ -448,7 +461,7 @@ public struct AStarStruct{
                 // neightborList contains all neighbors of current
                 if(neighborList.Length > 0){
                     // Select random child 
-                    int neighborRandIndex = rand.NextInt(0, neighborList.Length - 1);
+                    int neighborRandIndex = rand.NextInt(0, neighborList.Length);
                     endNode = grid[neighborList[neighborRandIndex].x * grid_size + neighborList[neighborRandIndex].y];
                 }
                 else{
@@ -471,120 +484,397 @@ public struct AStarStruct{
     }
 }
 
-public class AStar{
+public struct RoomTypeGetter{
 
-    private int width, height;
+    [ReadOnly] public NativeList<NodeStruct> allNodes;
+    public NativeList<int> roomType;
+    public Unity.Mathematics.Random rand;
 
-    public Node startNode;
-    public Node endNode;
+    [ReadOnly] int startx, starty, endx, endy;
 
-    private System.Random rand = new System.Random();
+    public RoomTypeGetter(NativeList<NodeStruct> allNodes, Unity.Mathematics.Random rand, NativeList<int> roomType,
+    int startx, int starty, int endx, int endy){
+        this.allNodes = allNodes;
+        this.rand = rand;
+        this.roomType = roomType;
+        this.startx = startx;
+        this.starty = starty;
+        this.endx = endx;
+        this.endy = endy;
+        getRoomTypes(); // So the same struct can be used in many Jobs
+    }
+
     
-    private int roomAmmount; 
-    private Node[,] grid; // matrix to find if a node already exists fast // Nodes initialized to null
 
-    public List<Node> allNodes;
-    public int[] offset = new int[2]; // calculated x and y offset so the map is created always on 0,0 even if its not like that on the generated grid
-
-    public AStar(int width, int height, int roomAmmount)
-    {
-        this.roomAmmount = roomAmmount;
-        this.width = width + roomAmmount * 2 + 2;
-        this.height = height + roomAmmount * 2 + 2; // Add borders based on max Room ammt so we dont have to think about managing border/edge cases
-        grid = new Node[this.width, this.height];
-    }
-
-    public List<Node> createMap(){
-        int roomCounter = 0;
-        int remainingRooms = roomAmmount;
-        // Create startNode in random part of the center map (width - maxRooms * 2)
-        int x = rand.Next(roomAmmount + 1, width-roomAmmount);
-        int y = rand.Next(roomAmmount + 1, height-roomAmmount);
-
-
-        List<Node> openSet = new List<Node>();
-        allNodes = new List<Node>();
-        HashSet<Node> closedSet = new HashSet<Node>();
-
-        startNode = new Node(x,y,true);
-        startNode.heuristic = rand.Next(roomAmmount, 100);
-        startNode.cost = 0; // Set total cost from start node to 0
-        grid[x,y] = startNode; // Create startNode and add it to the grid
-        offset[0] = x; offset[1] = y; // Add start offset. Real one will be calculated later (offset = min distance from 0,0)
-        remainingRooms--;
-
-        openSet.Add(grid[x,y]); // Add startNode to the openSet
-
-        if(remainingRooms <= 0){
-            Debug.Log("PLEASE SET ROOM AMMOUNT TO AT LEAST TWO");
-        }
-
-
-        // Get open Node with smallest functional Cost (cost from distance + heuristic / predicted cost till end)
-        while(openSet.Count > 0){
-            Node current = openSet[0];
-            for(int i = 1; i<openSet.Count; i++){
-                if(openSet[i].funcCost < current.funcCost || openSet[i].funcCost == current.funcCost && openSet[i].heuristic < current.heuristic){
-                    current = openSet[i];
+    // Using rand calculate the room Types
+    public void getRoomTypes(){
+        foreach(NodeStruct node in allNodes){
+            // Check if node is start or endnode
+            if(node.x == startx && node.y == starty){
+                roomType.Add(RoomType.START_ROOM_CODE);
+            }
+            else if(node.x == endx && node.y == endy){
+                roomType.Add(RoomType.END_ROOM_CODE);
+            }
+            else{
+                // Generate random room Type
+                // Room types -> Enemy Room, Large Enemy Room, Streched Enemy Room H, Streched Enemy Room V, Chest room, store room, healing room
+                // Enemy Room -> 70% -> Normal = 40%, large = 10%, streched h = 10%, streched v = 10%
+                // chest room = 15%
+                // store room = 10%
+                // healing room = 5%
+                int roomRandNum = rand.NextInt(0,101); // random value between 0 and 100
+                if(roomRandNum < 40){ // Normal enemy room
+                    roomType.Add(RoomType.NORMAL_ENEMY_ROOM_CODE);
+                }
+                else if(roomRandNum < 50){
+                    roomType.Add(RoomType.LARGE_ENEMY_ROOM_CODE);
+                }
+                else if(roomRandNum < 60){
+                    roomType.Add(RoomType.STRECHED_ENEMY_ROOM_H_CODE);
+                }
+                else if(roomRandNum < 70){
+                    roomType.Add(RoomType.STRECHED_ENEMY_ROOM_V_CODE);
+                }
+                else if(roomRandNum < 85){
+                    roomType.Add(RoomType.CHEST_ROOM_CODE);
+                }
+                else if(roomRandNum < 95){
+                    roomType.Add(RoomType.STORE_ROOM_CODE);
+                }
+                else if(roomRandNum <= 100){
+                    roomType.Add(RoomType.HEALING_ROOM_CODE);
                 }
             }
-            openSet.Remove(current);
-            closedSet.Add(current);
-
-            if(!current.childrenHaveBeenCreated){
-                int roomCount = rand.Next(2,3);
-                if(current == startNode || remainingRooms == 1) roomCount = 1;
-                else if(remainingRooms == 2) roomCount = 2;
-                roomCounter += current.createChildren(grid,roomCount);
-            }
-
-            foreach (Node neightbor in current.getNeightbors(grid)){
-                if(neightbor == null || !neightbor.isWalkable || closedSet.Contains(neightbor)) continue;
-                neightbor.cost = current.cost; // 100 = distance between nodes
-                neightbor.heuristic = rand.Next(10, (remainingRooms)*100);
-                if(!openSet.Contains(neightbor)) openSet.Add(neightbor);
-            }
-
-            remainingRooms -= roomCounter;
-            roomCounter=0;
-
-            if(remainingRooms <= 0){
-                // Select random child of current (one of the last rooms created -> only has one entry) as endRoom
-                if(current.children.Count > 0){
-                    endNode = current.children[rand.Next(0, current.children.Count - 1)];
-                }
-                else{
-                    endNode = current;
-                }
-                // Add all nodes to allNode list
-                foreach(Node node in closedSet){
-                    if(node.x < offset[0]) offset[0] = node.x;
-                    if(node.y < offset[1]) offset[1] = node.y;
-                    allNodes.Add(node);
-                }
-                foreach(Node node in openSet){
-                    if(node.x < offset[0]) offset[0] = node.x;
-                    if(node.y < offset[1]) offset[1] = node.y;
-                    allNodes.Add(node);
-                }
-                return allNodes; // HAVE TO CHANGE
-            }
-        }
-        return null;
-    }
-
-    public static void printNodeGrid(Node[,] grid, int width, int height){
-        String matrix = "";
-        for(int i = 0; i < width; i++){
-            
-            for(int j = 0; j < height; j++){
-                if(grid[i,j] == null) matrix += (0 + " ");
-                else  matrix += (1 + " "); 
-            }
-            matrix += ("\n");
         }
     }
 }
+
+public struct FloorCoordinateGetter{
+
+    [ReadOnly] public NativeList<NodeStruct> allNodes;
+
+    [ReadOnly] public NativeList<int> roomType;
+
+    public NativeList<int> floorxcoordinates;
+    public NativeList<int> floorycoordinates;
+    [ReadOnly] int xoffset, yoffset;
+
+    public FloorCoordinateGetter(NativeList<NodeStruct> allNodes, NativeList<int> roomType, 
+    NativeList<int> floorxcoordinates, NativeList<int> floorycoordinates,
+    int xoffset, int yoffset){
+        this.allNodes = allNodes;
+        this.roomType = roomType;
+        this.floorxcoordinates = floorxcoordinates;
+        this.floorycoordinates = floorycoordinates;
+        this.xoffset = xoffset;
+        this.yoffset = yoffset;
+    }
+    public void getFloorCoordinates(){
+        // allNodes.Length == roomTypes.length
+        for(int i = 0; i < allNodes.Length; i++){
+            int x = allNodes[i].x;
+            int y = allNodes[i].y;
+            int xsizeoffset = 0;
+            int ysizeoffset = 0;
+
+            Debug.Log(x + "   " + y);
+            // Set room sizes
+            int width = RoomType.NORMAL_ROOM_WIDTH;
+            int length = RoomType.NORMAL_ROOM_LENGTH;
+            if(roomType[i] == RoomType.LARGE_ENEMY_ROOM_CODE){
+                width = RoomType.LARGE_ROOM_WIDTH;
+                length = RoomType.LARGE_ROOM_WIDTH; 
+                xsizeoffset -= (RoomType.LARGE_ROOM_WIDTH-RoomType.NORMAL_ROOM_WIDTH)/2;
+                ysizeoffset -= (RoomType.LARGE_ROOM_LENGTH-RoomType.NORMAL_ROOM_LENGTH)/2;
+                
+            }
+            else if(roomType[i] == RoomType.STRECHED_ENEMY_ROOM_H_CODE){
+                width = RoomType.LARGE_ROOM_WIDTH;
+                length = RoomType.NORMAL_ROOM_LENGTH;
+                xsizeoffset -= (RoomType.LARGE_ROOM_WIDTH-RoomType.NORMAL_ROOM_WIDTH)/2;
+            }
+            else if(roomType[i] == RoomType.STRECHED_ENEMY_ROOM_V_CODE){
+                width = RoomType.NORMAL_ROOM_WIDTH;
+                length = RoomType.LARGE_ROOM_WIDTH;      
+                ysizeoffset -= (RoomType.LARGE_ROOM_LENGTH-RoomType.NORMAL_ROOM_LENGTH)/2;    
+            }
+            // Add coordinates based on room size by going from left to right
+            for(int a = 0; a < width; a++){
+                for(int b = 0; b < length; b++){
+                    // Add x and y
+                    floorxcoordinates.Add((x-xoffset)*(RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + xsizeoffset + RoomType.NORMAL_CORRIDOR_LENGTH + a );
+                    floorycoordinates.Add((y-yoffset)*(RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + ysizeoffset + RoomType.NORMAL_CORRIDOR_LENGTH + b);
+                }
+            }
+        }
+    }
+}
+public struct WallCoordinateGetter{
+
+    [ReadOnly] public NativeList<NodeStruct> allNodes;
+    [ReadOnly] public NativeList<int> roomType;
+    public NativeList<int> wallxcoordinates;
+    public NativeList<int> wallycoordinates;
+
+    [ReadOnly] int xoffset, yoffset;
+
+    public WallCoordinateGetter(NativeList<NodeStruct> allNodes, NativeList<int> roomType,
+    NativeList<int> wallxcoordinates, NativeList<int> wallycoordinates,
+    int xoffset, int yoffset){
+        this.allNodes = allNodes;
+        this.roomType = roomType;
+        this.wallxcoordinates = wallxcoordinates;
+        this.wallycoordinates = wallycoordinates;
+        this.xoffset = xoffset;
+        this.yoffset = yoffset;
+    }
+
+    public void getWallCoordinates(){
+        for(int i = 0; i < allNodes.Length; i++){
+            int x = (allNodes[i].x - xoffset)*(RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH;
+            int y = (allNodes[i].y - yoffset)*(RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH;
+
+            // Set room sizes
+            int width = RoomType.NORMAL_ROOM_WIDTH;
+            int length = RoomType.NORMAL_ROOM_LENGTH;
+            if(roomType[i] == RoomType.LARGE_ENEMY_ROOM_CODE){
+                width = RoomType.LARGE_ROOM_WIDTH;
+                length = RoomType.LARGE_ROOM_WIDTH;
+                x -= (RoomType.LARGE_ROOM_WIDTH-RoomType.NORMAL_ROOM_WIDTH)/2;
+                y -= (RoomType.LARGE_ROOM_LENGTH-RoomType.NORMAL_ROOM_LENGTH)/2;
+            }
+            else if(roomType[i] == RoomType.STRECHED_ENEMY_ROOM_H_CODE){
+                width = RoomType.LARGE_ROOM_WIDTH;
+                length = RoomType.NORMAL_ROOM_LENGTH;
+                x -= (RoomType.LARGE_ROOM_WIDTH-RoomType.NORMAL_ROOM_WIDTH)/2;
+            }
+            else if(roomType[i] == RoomType.STRECHED_ENEMY_ROOM_V_CODE){
+                width = RoomType.NORMAL_ROOM_WIDTH;
+                length = RoomType.LARGE_ROOM_WIDTH;
+                y -= (RoomType.LARGE_ROOM_LENGTH-RoomType.NORMAL_ROOM_LENGTH)/2;     
+            }
+
+            // Add walls
+            if(allNodes[i].north){
+                int woffset = (width - RoomType.CORRIDOR_WIDTH)/2; // So it doesnt have to do a division every single tile (i fucking hate divisions)
+                // Paint north wall with a hole for the corridor
+                for(int a = -1; a < woffset; a++){
+                    wallxcoordinates.Add(x + a);
+                    wallycoordinates.Add(y + length);
+                }
+                for(int a = woffset + RoomType.CORRIDOR_WIDTH; a < width + 1 ; a++){
+                    wallxcoordinates.Add(x + a);
+                    wallycoordinates.Add(y + length);
+                }
+            }
+            else{
+                for(int a = -1; a < width + 1; a++){
+                    wallxcoordinates.Add(x + a);
+                    wallycoordinates.Add(y + length);
+                }
+            }
+            if(allNodes[i].east){
+                int loffset = (length - RoomType.CORRIDOR_WIDTH)/2;
+                for(int a = 0; a < loffset; a++){
+                    wallxcoordinates.Add(x + width);
+                    wallycoordinates.Add(y + a);
+                }
+                for(int a = loffset + RoomType.CORRIDOR_WIDTH; a < length; a++){
+                    wallxcoordinates.Add(x + width);
+                    wallycoordinates.Add(y + a);                    
+                }
+            }
+            else{
+                for(int a = 0; a < length; a++){
+                    wallxcoordinates.Add(x + width);
+                    wallycoordinates.Add(y + a);                          
+                }
+            }
+            if(allNodes[i].south){
+                int woffset = (width - RoomType.CORRIDOR_WIDTH)/2;
+                for(int a = -1; a < woffset; a++){
+                    wallxcoordinates.Add(x + a);
+                    wallycoordinates.Add(y - 1);
+                }
+                for(int a = woffset + RoomType.CORRIDOR_WIDTH; a < width + 1 ; a++){
+                    wallxcoordinates.Add(x + a);
+                    wallycoordinates.Add(y - 1);
+                }
+            }
+            else{
+                for(int a = -1; a < width + 1; a++){
+                    wallxcoordinates.Add(x + a);
+                    wallycoordinates.Add(y - 1);
+                }
+            }
+            if(allNodes[i].west){
+                int loffset = (length - RoomType.CORRIDOR_WIDTH)/2;
+                for(int a = 0; a < loffset; a++){
+                    wallxcoordinates.Add(x - 1);
+                    wallycoordinates.Add(y + a);
+                }
+                for(int a = loffset + RoomType.CORRIDOR_WIDTH; a < length; a++){
+                    wallxcoordinates.Add(x - 1);
+                    wallycoordinates.Add(y + a);                    
+                }
+            }
+            else{
+                for(int a = 0; a < length; a++){
+                    wallxcoordinates.Add(x - 1);
+                    wallycoordinates.Add(y + a);                          
+                }
+            }
+        }
+    }
+}
+public struct CorridorCoordinateGetter{
+
+    [ReadOnly]public NativeList<NodeStruct> allNodes;
+    [ReadOnly]public NativeList<int> roomType;
+    public NativeList<int> corridorxcoordinates;
+    public NativeList<int> corridorycoordinates;
+    [ReadOnly]int xoffset, yoffset;
+
+    public CorridorCoordinateGetter(NativeList<NodeStruct> allNodes, NativeList<int> roomType,
+    NativeList<int> corridorxcoordinates, NativeList<int> corridorycoordinates, 
+    int xoffset, int yoffset){
+        this.allNodes = allNodes;
+        this.roomType = roomType;
+        this.corridorxcoordinates = corridorxcoordinates;
+        this.corridorycoordinates = corridorycoordinates;
+        this.xoffset = xoffset;
+        this.yoffset = yoffset;
+    }
+
+    public void getCorridorCoordinates(){
+        // allNodes.Length == roomTypes.length -> Cant use foreach 
+        for(int i = 0; i < allNodes.Length; i++){
+            int x = (allNodes[i].x - xoffset)*(RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH;
+            int y = (allNodes[i].y - yoffset)*(RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH;
+
+            // Set room sizes
+            int width = RoomType.NORMAL_ROOM_WIDTH;
+            int length = RoomType.NORMAL_ROOM_LENGTH;
+            int vertical_corridor_width = RoomType.NORMAL_CORRIDOR_LENGTH;
+            int horizontal_corridor_width = RoomType.NORMAL_CORRIDOR_LENGTH;
+            if(roomType[i] == RoomType.LARGE_ENEMY_ROOM_CODE){
+                width = RoomType.LARGE_ROOM_WIDTH;
+                length = RoomType.LARGE_ROOM_WIDTH;
+                vertical_corridor_width = RoomType.LARGE_ROOM_CORRIDOR_LENGTH;
+                horizontal_corridor_width = RoomType.LARGE_ROOM_CORRIDOR_LENGTH;
+                x -= (RoomType.LARGE_ROOM_WIDTH-RoomType.NORMAL_ROOM_WIDTH)/2;
+                y -= (RoomType.LARGE_ROOM_LENGTH-RoomType.NORMAL_ROOM_LENGTH)/2;
+            }
+            else if(roomType[i] == RoomType.STRECHED_ENEMY_ROOM_H_CODE){
+                width = RoomType.LARGE_ROOM_WIDTH;
+                length = RoomType.NORMAL_ROOM_LENGTH;
+                horizontal_corridor_width = RoomType.LARGE_ROOM_CORRIDOR_LENGTH;
+                x -= (RoomType.LARGE_ROOM_WIDTH-RoomType.NORMAL_ROOM_WIDTH)/2;
+            }
+            else if(roomType[i] == RoomType.STRECHED_ENEMY_ROOM_V_CODE){
+                width = RoomType.NORMAL_ROOM_WIDTH;
+                length = RoomType.LARGE_ROOM_WIDTH;    
+                vertical_corridor_width = RoomType.LARGE_ROOM_CORRIDOR_LENGTH;
+                y -= (RoomType.LARGE_ROOM_LENGTH-RoomType.NORMAL_ROOM_LENGTH)/2;     
+            }
+
+            // Add corridors
+            if(allNodes[i].north){
+                int woffset = (width - RoomType.CORRIDOR_WIDTH)/2; // So it doesnt have to do a division every single tile (i fucking hate divisions)
+                for(int a = 0; a < RoomType.CORRIDOR_WIDTH; a++){
+                    for(int b = 0; b < vertical_corridor_width; b++){
+                        corridorxcoordinates.Add(x + woffset + a);
+                        corridorycoordinates.Add(y + length + b);
+                    }
+                }
+            }
+            if(allNodes[i].east){
+                int loffset = (length - RoomType.CORRIDOR_WIDTH)/2;
+                for(int a = 0; a < RoomType.CORRIDOR_WIDTH; a++){
+                    for(int b = 0; b < horizontal_corridor_width; b++){
+                        corridorxcoordinates.Add(x + width + b);
+                        corridorycoordinates.Add(y + loffset + a);
+                    }
+                }
+            }
+            if(allNodes[i].south){
+                int woffset = (width - RoomType.CORRIDOR_WIDTH)/2; // So it doesnt have to do a division every single tile (i fucking hate divisions)
+                for(int a = 0; a < RoomType.CORRIDOR_WIDTH; a++){
+                    for(int b = 0; b < vertical_corridor_width; b++){
+                        corridorxcoordinates.Add(x + woffset + a);
+                        corridorycoordinates.Add(y - 1 - b);
+                    }
+                }
+            }
+            if(allNodes[i].west){
+                int loffset = (length - RoomType.CORRIDOR_WIDTH)/2;
+                for(int a = 0; a < RoomType.CORRIDOR_WIDTH; a++){
+                    for(int b = 0; b < horizontal_corridor_width; b++){
+                        corridorxcoordinates.Add(x - 1 - b);
+                        corridorycoordinates.Add(y + loffset + a);
+                    }
+                }
+            }
+        }
+    }
+}
+
+public class TileRenderer{
+
+    public Tile floorTile;
+    public Tile corridorTile;
+    public Tile wallTile;
+    public NativeList<int> floorxCoordinates;
+    public NativeList<int> flooryCoordinates;
+    public NativeList<int> corridorxCoordinates;
+    public NativeList<int> corridoryCoordinates;
+    public NativeList<int> wallyCoordinates;
+    public NativeList<int> wallxCoordinates;
+    public NativeList<int> roomTypes;
+
+    public Vector3Int[] vectorCoordinates;
+    public Vector3Int[] wallVectorCoordinates;
+    public Tile[] tileArr;
+    public Tile[] wallTileArr;
+
+    public TileRenderer(NativeList<int> floorxCoordinates, NativeList<int> flooryCoordinates, NativeList<int> corridorxCoordinates, 
+    NativeList<int> corridoryCoordinates, NativeList<int> wallxCoordinates, NativeList<int> wallyCoordinates,
+    Tile floorTile, Tile corridorTile, Tile wallTile, NativeList<int> roomTypes){
+        this.floorxCoordinates = floorxCoordinates;
+        this.flooryCoordinates = flooryCoordinates;
+        this.corridorxCoordinates = corridorxCoordinates;
+        this.corridoryCoordinates = corridoryCoordinates;
+        this.wallxCoordinates = wallxCoordinates;
+        this.wallyCoordinates = wallyCoordinates;
+        this.roomTypes = roomTypes;
+        this.corridorTile = corridorTile;
+        this.wallTile = wallTile;
+
+        int arrLens = floorxCoordinates.Length + corridorxCoordinates.Length;
+        vectorCoordinates = new Vector3Int[arrLens];
+        tileArr = new Tile[arrLens];
+
+        wallVectorCoordinates = new Vector3Int[wallxCoordinates.Length];
+        wallTileArr = new Tile[wallVectorCoordinates.Length];
+
+        for(int i = 0; i < floorxCoordinates.Length; i++){
+            vectorCoordinates[i] = new Vector3Int(floorxCoordinates[i], flooryCoordinates[i], 0);
+            tileArr[i] = floorTile;
+        }
+
+        for(int i = 0; i < corridorxCoordinates.Length; i++){
+            vectorCoordinates[i + floorxCoordinates.Length] = new Vector3Int(corridorxCoordinates[i], corridoryCoordinates[i], 0);
+            tileArr[i + floorxCoordinates.Length] = corridorTile;
+        }
+
+        for(int i = 0; i < wallxCoordinates.Length; i++){
+            wallVectorCoordinates[i] = new Vector3Int(wallxCoordinates[i], wallyCoordinates[i], 0);
+            wallTileArr[i] = wallTile;
+        }
+    }
+}
+
 
 // class to paint the map recursively starting from endnode
 public class MapPainter{
@@ -1045,7 +1335,19 @@ public class MapPainter{
 }
 
 public static class RoomType{
-    public const int MAX_ROOM_SIZE = 20;
+    // Enemy Room Type codes
+    public const int START_ROOM_CODE = 0;
+    public const int END_ROOM_CODE = 1;
+    public const int CHEST_ROOM_CODE = 2;
+    public const int HEALING_ROOM_CODE = 3;
+    public const int STORE_ROOM_CODE = 4;
+    public const int NORMAL_ENEMY_ROOM_CODE = 5;
+    public const int LARGE_ENEMY_ROOM_CODE = 6;
+    public const int STRECHED_ENEMY_ROOM_V_CODE = 7;
+    public const int STRECHED_ENEMY_ROOM_H_CODE = 8;
+
+    // Room sizes
+    public const int MAX_ROOM_SIZE = 30;
     public const int NORMAL_CORRIDOR_LENGTH = 10;
     public const int LARGE_ROOM_CORRIDOR_LENGTH = 5;
     public const int CORRIDOR_WIDTH = 4;
