@@ -4,12 +4,8 @@ using System;
 using UnityEngine;
 using Unity.VisualScripting;
 using Unity.Collections;
-using UnityEngineInternal;
 using UnityEngine.Tilemaps;
-using Unity.VisualScripting.FullSerializer;
-using System.Data;
 using System.Linq;
-using UnityEditor.Tilemaps;
 using Unity.Jobs;
 using Unity.Burst;
 
@@ -27,27 +23,55 @@ public class MapGen: MonoBehaviour{
     public GameObject rooms;
 
     public AStarStruct mapGenerator;
+
+    public int roomAmmount = 100;
+    
+
+    private bool hasBeenGenerated = false;
+
+    private bool mapCanBeRendered = false;
+    public String loadingStatus = "";
+
     void Start(){
         rooms = new GameObject();
         rooms.name = "Rooms";
         rooms.transform.parent = transform;
-        StartCoroutine(generateMap());
+        
+    }
+
+    void Update(){
+        if(Input.GetMouseButtonDown(0) && !hasBeenGenerated){
+            hasBeenGenerated = true;
+            StartCoroutine(generateMap());
+        }
+
+        if(Input.GetKeyDown(KeyCode.R)){
+            Debug.Log("R PRESSED");
+            hasBeenGenerated = false;
+            mapCanBeRendered = false;
+            floorMap.ClearAllTiles();
+            wallMap.ClearAllTiles();
+        }
+
+        if(Input.GetMouseButtonDown(1)){
+            mapCanBeRendered = true;
+        }
     }
 
     IEnumerator generateMap(){
+        loadingStatus = "Initializing map generation data strcutres";
         //mapGenerator = new AStar(10,10,14);
         System.Random seedGen = new System.Random();
         uint seed = (uint) seedGen.Next(1,999999999);
-        Debug.Log("SEED " + seed);
         Unity.Mathematics.Random rand = new Unity.Mathematics.Random(seed);
-        int gridSize = 31;
+        int gridSize = roomAmmount*2 + 3;
         NativeArray<NodeStruct> girdStruct = new NativeArray<NodeStruct>(gridSize*gridSize, Allocator.Persistent);
         NativeList<NodeStruct> openSet = new NativeList<NodeStruct>(Allocator.Persistent);
         NativeList<NodeStruct> allNodes = new NativeList<NodeStruct>(Allocator.Persistent);
         NativeHashSet<NodeStruct> closedSet = new NativeHashSet<NodeStruct>(100000, Allocator.Persistent);
         NativeArray<bool> booleanArray_s4 = new NativeArray<bool>(4, Allocator.Persistent);
         NativeList<NodeStruct> nativeListNodeStruc = new NativeList<NodeStruct>(Allocator.Persistent);
-        AStarStruct mapGenerator2 = new AStarStruct(gridSize,rand,14, girdStruct,allNodes, openSet, closedSet, booleanArray_s4, nativeListNodeStruc, new NodeStruct());
+        AStarStruct mapGenerator2 = new AStarStruct(gridSize,rand,roomAmmount, girdStruct,allNodes, openSet, closedSet, booleanArray_s4, nativeListNodeStruc, new NodeStruct());
 
         NativeArray<int> startNodeCoords = new NativeArray<int>(2, Allocator.Persistent);
         NativeArray<int> endNodeCoords = new NativeArray<int>(2, Allocator.Persistent);
@@ -60,12 +84,16 @@ public class MapGen: MonoBehaviour{
             endNodeCoords = endNodeCoords,
         };
 
+        loadingStatus = "Generating map tree";
+
         JobHandle jobhandle = newJob.Schedule();
 
         while(!jobhandle.IsCompleted){
             yield return null;
         }
+        loadingStatus = "Map tree generated";
         jobhandle.Complete();
+        
 
         // job is completed!
         girdStruct.Dispose();
@@ -74,12 +102,16 @@ public class MapGen: MonoBehaviour{
         booleanArray_s4.Dispose();
         nativeListNodeStruc.Dispose();
 
+        loadingStatus = "Preparing data structures to calculate tile positions";
+
         int xoffset = allNodes[0].x;
         int yoffset = allNodes[0].y;
         foreach(NodeStruct node in allNodes){
             if(node.x < xoffset) xoffset = node.x;
             if(node.y < yoffset) yoffset = node.y;
         }
+
+        
 
 
         NativeList<int> roomTypes = new NativeList<int>(Allocator.Persistent);
@@ -114,7 +146,7 @@ public class MapGen: MonoBehaviour{
         JobHandle roomTypeGen = roomTypeGenJob.Schedule();
         roomTypeGen.Complete(); // Room Types have to be generated before the rest can be done
 
-
+        loadingStatus = "Calculating tile positions";
 
         JobHandle floorJob = floorCoordJob.Schedule();
         JobHandle coorJob = corrCoordJob.Schedule();
@@ -127,15 +159,25 @@ public class MapGen: MonoBehaviour{
         floorJob.Complete();
         coorJob.Complete();
         wallJob.Complete();
-        // Three jobs are completed        
+        // Three jobs are completed 
+
+        loadingStatus = "Tile positions calculated. Waiting for game permission to render them";   
+
+
+        //Wait for the game to be ready to render a map
+        while(!mapCanBeRendered){
+            yield return null;
+        }
+
+
+        loadingStatus = "Rendering map";
+        yield return null; // Give it a frame to update text
 
         TileRenderer tileRenderer = new TileRenderer(xFloorCoords, yFloorCoords, xCorridorCoords, yCorridorCoords, xWallCoords, yWallCoords, 
         floorTile, corridorTile, wallTile, roomTypes);
         
         floorMap.SetTiles(tileRenderer.vectorCoordinates, tileRenderer.tileArr);
         wallMap.SetTiles(tileRenderer.wallVectorCoordinates, tileRenderer.wallTileArr);
-
-
 
         // TEMP -> draw other collor at start and endnode
         floorMap.SetTile(new Vector3Int((startNodeCoords[0] - xoffset) * 40 + 10, (startNodeCoords[1] - yoffset) * 40 + 10, 0),corridorTile);
@@ -150,12 +192,7 @@ public class MapGen: MonoBehaviour{
         yWallCoords.Dispose();
         allNodes.Dispose();
         startNodeCoords.Dispose();
-
-        
-
-        //GameObject.Find("player").transform.position = new Vector3((mapGenerator.startNode.x - mapGenerator.offset[0]) * 40 + 10 + 10, (mapGenerator.startNode.y - mapGenerator.offset[1]) * 40 + 10 + 10, 0);
-
-        yield return null;
+        loadingStatus = "DONE";
     }
 
     [BurstCompile]
@@ -410,12 +447,8 @@ public struct AStarStruct{
 
         openSet.Add(startNode);
 
-        
-        int ii = 0;
         // Get open Node with smallest functional Cost (costs + heuristic)
         while(openSet.Length > 0){
-            ii++;
-            if(ii > 17){Debug.Log("ERROR B"); return;}
             NodeStruct current = openSet[0];
             int currentOpenSetIndex = 0;
             for(int i = 0; i < openSet.Length; i++){
@@ -435,11 +468,8 @@ public struct AStarStruct{
                 roomCounter+= current.createChildren(grid, grid_size, roomCount, rand, booleanArray_s4);
             }
             // Empty nodeStructList
-            int iii = 0;
             while(nodeStructList.Length > 0){
                 nodeStructList.RemoveAt(0);
-                if(iii > 10){Debug.Log("ERROR A"); return;}
-                iii++;
             }
 
             NativeList<NodeStruct> neighborList = current.neighbors(grid, grid_size, nodeStructList);
@@ -577,8 +607,6 @@ public struct FloorCoordinateGetter{
             int y = allNodes[i].y;
             int xsizeoffset = 0;
             int ysizeoffset = 0;
-
-            Debug.Log(x + "   " + y);
             // Set room sizes
             int width = RoomType.NORMAL_ROOM_WIDTH;
             int length = RoomType.NORMAL_ROOM_LENGTH;
@@ -1151,25 +1179,6 @@ public class MapPainter{
             for(int i = -1; i < roomScript.length + 1; i++){
                 mapGen.wallMap.SetTile(new Vector3Int(x-1, y + i, 0), mapGen.wallTile);
             }
-        }
-    }
-
-    private String getDirection(int x, int y){
-        if(x == -1){ // Current node is left of parent node -> draw to the right
-            return "East";
-        }
-        else if( x == 1){
-            return "West";
-        }
-        else if(y == -1){ // Current node is bellow parent node -> drow north
-            return "North";
-        }
-        else if(y == 1){
-            return "South";
-        }
-        else{
-            Debug.Log("INVALID DIRECTION TO PARENT -> " + x + "," + y);
-            return null;
         }
     }
 
