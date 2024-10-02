@@ -876,6 +876,32 @@ public class TileRenderer{
 }
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// UNUSED -> HAVE TO IMPLENT STUFF FROM HERE TO THE JOB SYSTEM THING STUFF
+
+
+
+
+
+
 // class to paint the map recursively starting from endnode
 public class MapPainter{
 
