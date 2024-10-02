@@ -6,6 +6,10 @@ using Unity.VisualScripting;
 using Unity.Collections;
 using UnityEngineInternal;
 using UnityEngine.Tilemaps;
+using Unity.VisualScripting.FullSerializer;
+using System.Data;
+using System.Linq;
+using UnityEditor.Tilemaps;
 
 
 
@@ -20,22 +24,214 @@ public class MapGen: MonoBehaviour{
 
     public GameObject rooms;
 
-    public AStar mapGenerator;
+    public AStarStruct mapGenerator;
     void Start(){
         rooms = new GameObject();
         rooms.name = "Rooms";
         rooms.transform.parent = transform;
-        mapGenerator = new AStar(10,10,14);
-        MapPainter renderer = new MapPainter(this);
-        mapGenerator.createMap();
-        renderer.paintNode(mapGenerator.allNodes, mapGenerator.offset[0], mapGenerator.offset[1]);
+        StartCoroutine(generateMap());
+    }
+
+    IEnumerator generateMap(){
+        //mapGenerator = new AStar(10,10,14);
+        System.Random seedGen = new System.Random();
+        Unity.Mathematics.Random rand = new Unity.Mathematics.Random((uint) seedGen.Next(1,999999999));
+        int gridSize = 31;
+        NativeArray<NodeStruct> girdStruct = new NativeArray<NodeStruct>(gridSize*gridSize, Allocator.Persistent);
+        NativeList<NodeStruct> openSet = new NativeList<NodeStruct>(Allocator.Persistent);
+        NativeList<NodeStruct> allNodes = new NativeList<NodeStruct>(Allocator.Persistent);
+        NativeHashSet<NodeStruct> closedSet = new NativeHashSet<NodeStruct>(100000, Allocator.Persistent);
+        NativeArray<bool> booleanArray_s4 = new NativeArray<bool>(4, Allocator.Persistent);
+        NativeList<NodeStruct> nativeListNodeStruc = new NativeList<NodeStruct>(Allocator.Persistent);
+        AStarStruct mapGenerator2 = new AStarStruct(gridSize,rand,14, girdStruct,allNodes, openSet, closedSet, booleanArray_s4, nativeListNodeStruc, new NodeStruct());
+        MapPainter renderer = new MapPainter(this, girdStruct, gridSize);
+        mapGenerator2.createMap();
+
+        Debug.Log("ENDNODE " + mapGenerator2.endNode.x + " " + mapGenerator2.endNode.y);
+        Debug.Log("START " + mapGenerator2.startNode.x + " " + mapGenerator2.startNode.y);
+        String a = "";
+        // print grid of mapGenerator2
+        Debug.Log(mapGenerator2.allNodes.Length);
+
+        for(int i = 0; i < girdStruct.Length; i++){
+            a += girdStruct[i].hasBeenCreated? 1 : 0 + " ";
+            if(i%gridSize == 0) a+="\n";
+
+        }
+        Debug.Log(a);
+        renderer.paintNode(mapGenerator2.allNodes, mapGenerator2.xoffset, mapGenerator2.yoffset, nativeListNodeStruc);
+
+        girdStruct.Dispose();
+        openSet.Dispose();
+        allNodes.Dispose();
+        closedSet.Dispose();
+        booleanArray_s4.Dispose();
+        nativeListNodeStruc.Dispose();
+
 
         // TEMP -> draw other collor at start and endnode
-        floorMap.SetTile(new Vector3Int((mapGenerator.startNode.x - mapGenerator.offset[0]) * 40 + 10, (mapGenerator.startNode.y - mapGenerator.offset[1]) * 40 + 10, 0),corridorTile);
-        floorMap.SetTile(new Vector3Int((mapGenerator.endNode.x - mapGenerator.offset[0]) * 40 + 10, (mapGenerator.endNode.y - mapGenerator.offset[1]) * 40 + 10, 0),corridorTile);
+        floorMap.SetTile(new Vector3Int((mapGenerator2.startNode.x - mapGenerator2.xoffset) * 40 + 10, (mapGenerator2.startNode.y - mapGenerator2.yoffset) * 40 + 10, 0),corridorTile);
+        floorMap.SetTile(new Vector3Int((mapGenerator2.endNode.x - mapGenerator2.xoffset) * 40 + 10, (mapGenerator2.endNode.y - mapGenerator2.yoffset) * 40 + 10, 0),corridorTile);
 
-        GameObject.Find("player").transform.position = new Vector3((mapGenerator.startNode.x - mapGenerator.offset[0]) * 40 + 10 + 10, (mapGenerator.startNode.y - mapGenerator.offset[1]) * 40 + 10 + 10, 0);
+        //GameObject.Find("player").transform.position = new Vector3((mapGenerator.startNode.x - mapGenerator.offset[0]) * 40 + 10 + 10, (mapGenerator.startNode.y - mapGenerator.offset[1]) * 40 + 10 + 10, 0);
 
+        yield return null;
+    }
+}
+
+public struct NodeStruct : IEquatable<NodeStruct>{
+    public int x, y;
+
+    int parentdir; // 0 north ... 3 west
+    public int cost;
+    public int heuristic;
+    public int funcCost => cost + heuristic;
+    public bool hasBeenCreated;
+    public bool childrenHaveBeenCreated;
+    public bool isWalkable;
+    public bool north;
+    public bool east;
+    public bool south;
+    public bool west;
+
+    public bool Equals(NodeStruct other){
+        return this.x == other.x && this.y == other.y;
+    }
+    public override int GetHashCode()
+    {
+        return x.GetHashCode() ^ y.GetHashCode();
+    }
+
+    public override bool Equals(object other)
+    {
+        if(!(other is NodeStruct)) return false;
+        NodeStruct other2 = (NodeStruct) other;
+        return this.x == other2.x && this.y == other2.y;
+    }
+
+    // overload == 
+    public static bool operator ==(NodeStruct a, NodeStruct b){
+        return a.x == b.x && a.y == b.y;
+    }
+    public static bool operator !=(NodeStruct a, NodeStruct b){
+        return !(a.x == b.x && a.y == b.y);
+    }
+
+    public void initialize(int x, int y){
+        this.x = x;
+        this.y = y;
+        cost = 0;
+        heuristic = 0;
+        childrenHaveBeenCreated = false;
+        isWalkable = true;
+        hasBeenCreated = true;
+        north = false;
+        east = false;
+        south = false;
+        west = false;
+        parentdir = -1;
+    }
+
+    public NativeList<NodeStruct> neighbors(NativeArray<NodeStruct> grid, int grid_size, NativeList<NodeStruct> res){
+        // returns existing neightboring nodes
+        if(west && parentdir != 3) res.Add(grid[(x-1) * grid_size +  y]);
+        if(south && parentdir != 2) res.Add(grid[x*grid_size + y-1]);
+        if(east && parentdir != 1) res.Add(grid[(x+1)*grid_size + y]);
+        if(north && parentdir != 0) res.Add(grid[x*grid_size + y+1]);
+        return res;
+    }
+
+    // Returns a boolean array indicating which of the 4 directions has an available space 
+    public NativeArray<bool> availableNeighbors(NativeArray<NodeStruct> grid, int grid_size, NativeArray<bool> res){
+        if(!grid[x*grid_size + y+1].hasBeenCreated) res[0] = true; // North
+        if(!grid[(x+1)*grid_size + y].hasBeenCreated) res[1] = true; // East
+        if(!grid[x*grid_size + y-1].hasBeenCreated) {res[2] = true;} // South
+        if(!grid[(x-1)*grid_size + y].hasBeenCreated) res[3] = true; // West
+        return res;
+    }
+
+    public int createChildren(NativeArray<NodeStruct> grid, int grid_size, int maxChildren, Unity.Mathematics.Random rand, NativeArray<bool> booleanArray_s4){
+        childrenHaveBeenCreated = true;
+        int res = 0; // created child counter
+        // clean boolean array
+        for(int i = 0; i < 4; i++){
+            booleanArray_s4[i] = false;
+        }
+        NativeArray<bool> availableNeighbors = this.availableNeighbors(grid, grid_size, booleanArray_s4);
+        int availableNeighborsCounter = 0;
+        int remaindingChildren = maxChildren;
+        for(int i = 0; i < 4; i++){ // Count neighbors
+            if(availableNeighbors[i]) availableNeighborsCounter++;
+        }
+
+
+
+
+        // AQUI OCURRE ERROR
+
+
+        // ABAJO
+
+
+        // HAY QUE HACER QUE NO PUEDA ENTRAR EN BUCLE INFINITO
+
+
+
+        // NO ME SORPRENDE; MENUDA MIERDA DE CODIGO QUE ES ESTO
+
+
+
+
+
+
+
+        int ii = 0;
+        while(availableNeighborsCounter > 0 && remaindingChildren > 0){
+            ii++;
+            if(ii > 10){Debug.Log("ERROR C"); return 0;}
+            int i = rand.NextInt(0,3); // Random direction
+            if(availableNeighbors[i]){
+                // Update counters and values
+                availableNeighbors[i]=false;
+                availableNeighborsCounter--; 
+                remaindingChildren--;
+                res++;
+                // Create new child
+                if(i == 0){ // Create child in the north
+                    north = true;
+                    NodeStruct a = grid[x*grid_size + y+1];
+                    a.initialize(x, y+1);
+                    a.south = true;
+                    a.parentdir = 2; // south
+                    grid[x*grid_size + y+1] = a;
+                }
+                if(i == 1){ // Create child in the east
+                    east = true;
+                    NodeStruct a = grid[(x+1)*grid_size + y];
+                    a.initialize(x+1,y);
+                    a.west = true;
+                    a.parentdir = 3; 
+                    grid[(x+1)*grid_size + y] = a;
+                }
+                if(i == 2){ // Create child in the south
+                    south = true;
+                    NodeStruct a = grid[x*grid_size + y-1];
+                    a.initialize(x,y-1);
+                    a.north = true;
+                    a.parentdir = 0;
+                    grid[x*grid_size + y - 1] = a;
+                }
+                if(i == 3){ // Create child in the west a
+                    west = true;
+                    NodeStruct a = grid[(x-1)*grid_size +y];
+                    a.initialize(x-1,y);
+                    a.east = true;
+                    a.parentdir = 1;
+                    grid[(x-1)*grid_size +y] = a;
+                }
+            }
+        }
+        return res;
     }
 }
 
@@ -143,6 +339,138 @@ public class Node
     }
 }
 
+public struct AStarStruct{
+    private int grid_size;
+    public NodeStruct startNode;
+    public NodeStruct endNode;
+
+    private Unity.Mathematics.Random rand;
+
+    private int roomAmmount;
+
+    private NativeArray<NodeStruct> grid;
+
+    public NativeList<NodeStruct> allNodes; // Closed set but not yet closed
+    public NativeList<NodeStruct> openSet; // Auxiliary list for search
+    public NativeHashSet<NodeStruct> closedSet;
+    public NativeArray<bool> booleanArray_s4;
+    private NativeList<NodeStruct> nodeStructList;
+
+    public int xoffset;
+    public int yoffset;
+
+    public AStarStruct(int grid_size, Unity.Mathematics.Random rand, int roomAmmount, NativeArray<NodeStruct> grid, NativeList<NodeStruct> allNodes, NativeList<NodeStruct> openSet, 
+    NativeHashSet<NodeStruct> closedSet, NativeArray<bool> booleanArray_s4, NativeList<NodeStruct> nodeStructList, NodeStruct tempStruc){
+        this.grid_size = grid_size;
+        this.rand = rand;
+        this.roomAmmount = roomAmmount;
+        this.grid = grid;
+        this.allNodes = allNodes;
+        this.openSet = openSet;
+        this.closedSet = closedSet;
+        this.booleanArray_s4 = booleanArray_s4;
+        this.nodeStructList = nodeStructList;
+        xoffset = 0;
+        yoffset = 0;
+        startNode = tempStruc; // Creates uninitialized temporal nodeStructs, which will then be replazed by the real startNode
+        endNode = tempStruc;
+    }
+
+
+
+    // ADD CHECK SO YOU CANT PUT LESS THAN 2 ROOMS AS MAXROOMS
+    public void createMap(){
+        int roomCounter = 0;
+        int remainingRooms = roomAmmount;
+        // Create start node in random part of the center map (width - maxRooms * 2)
+        int x = rand.NextInt(roomAmmount + 1, grid_size - roomAmmount);
+        int y = rand.NextInt(roomAmmount + 1, grid_size - roomAmmount);
+
+        startNode = grid[x*grid_size + y]; // STRUCTS ARE PASSED BY VALUE NOT POINTER -> MODIFYING THIS DOESNT MODIFY THE VALUE INSIDE OF THE ARRAY
+        startNode.initialize(x,y);
+        startNode.heuristic = rand.NextInt(roomAmmount, 10000);
+        startNode.cost = 0;
+        grid[x*grid_size + y] = startNode;
+        xoffset = x;
+        yoffset = y;
+        remainingRooms--;
+
+        openSet.Add(startNode);
+
+        
+        int ii = 0;
+        // Get open Node with smallest functional Cost (costs + heuristic)
+        while(openSet.Length > 0){
+            ii++;
+            if(ii > 17){Debug.Log("ERROR B"); return;}
+            NodeStruct current = openSet[0];
+            int currentOpenSetIndex = 0;
+            for(int i = 0; i < openSet.Length; i++){
+                if(openSet[i].funcCost < current.funcCost || openSet[i].funcCost == current.funcCost && openSet[i].heuristic < current.heuristic){
+                    current = openSet[i];
+                    currentOpenSetIndex = i;
+                }
+            }
+            // current is now lowest cost node
+            openSet.RemoveAt(currentOpenSetIndex);
+            //closedSet.Add(current); // Have to add at the end
+
+            if(!current.childrenHaveBeenCreated){
+                int roomCount = rand.NextInt(2,3);
+                if(current == startNode || remainingRooms == 1) roomCount = 1;
+                else if(remainingRooms == 2) roomCount = 2;
+                roomCounter+= current.createChildren(grid, grid_size, roomCount, rand, booleanArray_s4);
+            }
+            // Empty nodeStructList
+            int iii = 0;
+            while(nodeStructList.Length > 0){
+                nodeStructList.RemoveAt(0);
+                if(iii > 10){Debug.Log("ERROR A"); return;}
+                iii++;
+            }
+
+            NativeList<NodeStruct> neighborList = current.neighbors(grid, grid_size, nodeStructList);
+            // Cannot use foeach because foreach iterations cannot be modified
+            for(int i = 0; i < neighborList.Length; i++){
+                NodeStruct neighbor = neighborList[i];
+                if(!neighbor.hasBeenCreated || !neighbor.isWalkable || closedSet.Contains(neighbor)) continue;
+                neighbor.cost = current.cost;
+                neighbor.heuristic = rand.NextInt(0, remainingRooms * 10);
+                if(!openSet.Contains(neighbor)) openSet.Add(neighbor);
+            }
+
+            remainingRooms -= roomCounter;
+            roomCounter = 0;
+
+            closedSet.Add(current); 
+            if(remainingRooms <= 0){
+                // Select random child of current as endRoom (so endRoom only has one entry)
+                // neightborList contains all neighbors of current
+                if(neighborList.Length > 0){
+                    // Select random child 
+                    int neighborRandIndex = rand.NextInt(0, neighborList.Length - 1);
+                    endNode = grid[neighborList[neighborRandIndex].x * grid_size + neighborList[neighborRandIndex].y];
+                }
+                else{
+                    endNode = current;
+                }
+                // Add all nodes to the allNode list
+                foreach(NodeStruct node in closedSet){
+                    if(node.x < xoffset) xoffset = x;
+                    if(node.y < yoffset) yoffset = y;
+                    allNodes.Add(node);
+                }
+                foreach(NodeStruct node in openSet){
+                    if(node.x < xoffset) xoffset = x;
+                    if(node.y < yoffset) yoffset = y;
+                    allNodes.Add(node);
+                }
+                return;
+            }
+        }
+    }
+}
+
 public class AStar{
 
     private int width, height;
@@ -214,7 +542,6 @@ public class AStar{
                 if(neightbor == null || !neightbor.isWalkable || closedSet.Contains(neightbor)) continue;
                 neightbor.cost = current.cost; // 100 = distance between nodes
                 neightbor.heuristic = rand.Next(10, (remainingRooms)*100);
-
                 if(!openSet.Contains(neightbor)) openSet.Add(neightbor);
             }
 
@@ -265,13 +592,18 @@ public class MapPainter{
     private MapGen mapGen;
     private System.Random rand;
 
-    public MapPainter(MapGen mapGen){
+    private NativeArray<NodeStruct> grid;
+    private int gridSize;
+
+    public MapPainter(MapGen mapGen, NativeArray<NodeStruct> grid, int gridSize){
+        this.grid = grid;
+        this.gridSize = gridSize;
         this.mapGen = mapGen;
         rand = new System.Random();
     }
 
-    public void paintNode(List<Node> nodes, int xoffset, int yoffset){
-        foreach(Node node in nodes){
+    public void paintNode(NativeList<NodeStruct> nodes, int xoffset, int yoffset, NativeList<NodeStruct> nodeStructList){
+        foreach(NodeStruct node in nodes){
             int x = (node.x - xoffset) * (RoomType.MAX_ROOM_SIZE + 2*RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH;
             int y = (node.y - yoffset) * (RoomType.MAX_ROOM_SIZE + 2*RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH;
             // Make gameobject and put it in "rooms"
@@ -386,7 +718,7 @@ public class MapPainter{
             }
 
             // Set corridor booleans in roomScript
-            setCorridorBooleans(node, roomScript);
+            setCorridorBooleans(node, roomScript, nodeStructList);
             
             // Draw corridors
             drawCorridors(x,y,roomScript);
@@ -525,21 +857,25 @@ public class MapPainter{
         }
     }
 
-    private void setCorridorBooleans(Node node, Room roomScript){
-        // Set corridors for children
-        foreach(Node childNode in node.children){
-            String dir = getDirection(node.x - childNode.x, node.y - childNode.y);
+    private void setCorridorBooleans(NodeStruct node, Room roomScript, NativeList<NodeStruct> nodeStructList){
+        // Set corridors for childre
+        foreach(NodeStruct childNode in node.neighbors(grid, gridSize, nodeStructList)){
+            /*String dir = getDirection(node.x - childNode.x, node.y - childNode.y);
             switch(dir){
                 case "North": roomScript.north = true; break;
                 case "East": roomScript.east = true; break;
                 case "South": roomScript.south = true; break;
                 case "West": roomScript.west = true; break;
                 default: break;
-            }
+            }*/
+            roomScript.north = node.north;
+            roomScript.west = node.west;
+            roomScript.east = node.east;
+            roomScript.south = node.south;
         }
     }
 
-    private void addObstacles(Node node, Room roomScript){
+    private void addObstacles(NodeStruct node, Room roomScript){
         // get center coordinates
         int x = roomScript.x + roomScript.width/2;
         int y = roomScript.y+ roomScript.length/2;
@@ -617,8 +953,6 @@ public class MapPainter{
             }
         }
 
-        Debug.Log(boxEdgeType);
-
         // Corner boxes
         if(boxEdgeType == 3){
             // 11 -> one box on each corner
@@ -652,51 +986,54 @@ public class MapPainter{
             box = GameObject.Instantiate(mapGen.box);
             box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
             box.transform.position = new Vector2(boxX+0.5f, boxY+0.5f);
-            for(int i = 1; i < (roomScript.width-roomScript.corridor_width)/4; i++){
+            for(int i = 1; i <= (roomScript.width-roomScript.corridor_width)/4; i++){
                 box = GameObject.Instantiate(mapGen.box);
                 box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
                 box.transform.position = new Vector2(boxX+0.5f + i, boxY+0.5f);
             }
-            for(int i = 1; i < (roomScript.length-roomScript.corridor_width)/4; i++){
+            for(int i = 1; i <= (roomScript.length-roomScript.corridor_width)/4; i++){
                 box = GameObject.Instantiate(mapGen.box);
                 box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
                 box.transform.position = new Vector2(boxX+0.5f, boxY+0.5f + i);
             }
             boxX = roomScript.x + roomScript.width-1;
             boxY = roomScript.y;
+            box = GameObject.Instantiate(mapGen.box);
             box.transform.position = new Vector2(boxX+0.5f, boxY+0.5f);
-            for(int i = 1; i < (roomScript.width-roomScript.corridor_width)/4; i++){
+            for(int i = 1; i <= (roomScript.width-roomScript.corridor_width)/4; i++){
                 box = GameObject.Instantiate(mapGen.box);
                 box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
                 box.transform.position = new Vector2(boxX+0.5f - i, boxY+0.5f);
             }
-            for(int i = 1; i < (roomScript.length-roomScript.corridor_width)/4; i++){
+            for(int i = 1; i <= (roomScript.length-roomScript.corridor_width)/4; i++){
                 box = GameObject.Instantiate(mapGen.box);
                 box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
                 box.transform.position = new Vector2(boxX+0.5f, boxY+0.5f + i);
             }
             boxX = roomScript.x + roomScript.width-1;
             boxY = roomScript.y + roomScript.length-1;
+            box = GameObject.Instantiate(mapGen.box);
             box.transform.position = new Vector2(boxX+0.5f, boxY+0.5f);
-            for(int i = 1; i < (roomScript.width-roomScript.corridor_width)/4; i++){
+            for(int i = 1; i <= (roomScript.width-roomScript.corridor_width)/4; i++){
                 box = GameObject.Instantiate(mapGen.box);
                 box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
                 box.transform.position = new Vector2(boxX+0.5f - i, boxY+0.5f);
             }
-            for(int i = 1; i < (roomScript.length-roomScript.corridor_width)/4; i++){
+            for(int i = 1; i <= (roomScript.length-roomScript.corridor_width)/4; i++){
                 box = GameObject.Instantiate(mapGen.box);
                 box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
                 box.transform.position = new Vector2(boxX+0.5f, boxY+0.5f - i);
             }
             boxX = roomScript.x;
             boxY = roomScript.y + roomScript.length-1;
+            box = GameObject.Instantiate(mapGen.box);
             box.transform.position = new Vector2(boxX+0.5f, boxY+0.5f);
-            for(int i = 1; i < (roomScript.width-roomScript.corridor_width)/4; i++){
+            for(int i = 1; i <= (roomScript.width-roomScript.corridor_width)/4; i++){
                 box = GameObject.Instantiate(mapGen.box);
                 box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
                 box.transform.position = new Vector2(boxX+0.5f + i, boxY+0.5f);
             }
-            for(int i = 1; i < (roomScript.length-roomScript.corridor_width)/4; i++){
+            for(int i = 1; i <= (roomScript.length-roomScript.corridor_width)/4; i++){
                 box = GameObject.Instantiate(mapGen.box);
                 box.transform.parent = roomScript.gameObject.transform; // Set box as child of room
                 box.transform.position = new Vector2(boxX+0.5f, boxY+0.5f - i);
