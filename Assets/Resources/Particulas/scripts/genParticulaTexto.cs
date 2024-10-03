@@ -7,8 +7,9 @@ public class genParticulaTexto : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject particula;
-    public float particulaVel;
-    public float particulaDispersion;
+    public float particulaVel = 2;
+    public float particulaDispersion = 40;
+    public float particulaUpRig = 0.4f;
     void Start()
     {
 
@@ -19,15 +20,16 @@ public class genParticulaTexto : MonoBehaviour
     {
         
     }
-    public void comenzar(int damage,float ang,float attackKnockback)
+    public void comenzar(int damage,float ang)
     {
         //Calculamos dispersion de la particula
         ang = Random.Range(ang - particulaDispersion, ang + particulaDispersion);
         //Calculamos vector dirección
         Vector2 dir = new Vector3(Mathf.Cos(ang * Mathf.Deg2Rad), Mathf.Sin(ang * Mathf.Deg2Rad));
+        dir += Vector2.up * particulaUpRig; 
         //Instanciamos la particula
         particulaTexto temp = Instantiate(particula, new Vector3(transform.position.x, transform.position.y, 0), transform.rotation).GetComponent<particulaTexto>();
-        temp.vel = dir * particulaVel * attackKnockback;
+        temp.vel = dir * particulaVel;
         temp.damage = damage;
        
     }

@@ -8,7 +8,7 @@ public class hitbox : MonoBehaviour
 {
     // Start is called before the first frame update
     public jugador jugador;
-    public float radioHitbox = 1f;
+    public float radioHitbox = 1f;// lo lejos que sale la hitbox del personaje(1 default)
     void Start()
     {
         GetComponent<SpriteRenderer>().enabled = false;
@@ -25,9 +25,11 @@ public class hitbox : MonoBehaviour
         float z = Mathf.Sin(jugador.ang * Mathf.Deg2Rad) * radioHitbox;
         transform.localPosition = new Vector3(x, z, 1);
         transform.localEulerAngles = new Vector3(0, 0, jugador.ang);
+        StartCoroutine(finalizar(jugador.arma.attackAnimation));
     }
-    public void finalizar()
+    public IEnumerator finalizar(float waitseconds)
     {
+        yield return new WaitForSeconds(waitseconds);
         transform.localPosition = new Vector3(0, 1000, 0);
     }
 }

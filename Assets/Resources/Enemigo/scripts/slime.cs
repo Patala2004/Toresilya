@@ -18,10 +18,11 @@ public class slime : enemigo
 		jumpTimer = jumpTimerInit;
 		ac = GetComponent<Animator>();
     }
-    private void FixedUpdate()
+    new private void FixedUpdate()
     {
+		base.FixedUpdate();
 		float magnitude = (jugador.gameObject.transform.position - gameObject.transform.position).magnitude;
-        if(magnitude <= persecutionRadius) {
+        if (magnitude <= persecutionRadius) {
 			ac.SetBool("detectedPlayer", true);
 			jumpTimer -= Time.fixedDeltaTime;
 			
