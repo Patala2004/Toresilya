@@ -554,13 +554,13 @@ public struct RoomTypeGetter{
                 // store room = 10%
                 // healing room = 5%
                 int roomRandNum = rand.NextInt(0,101); // random value between 0 and 100
-                if(roomRandNum < 50){ // Normal enemy room
+                if(roomRandNum < 40){ // Normal enemy room
                     roomType.Add(RoomType.NORMAL_ENEMY_ROOM_CODE);
                 }
-                else if(roomRandNum < 55){
+                else if(roomRandNum < 50){
                     roomType.Add(RoomType.LARGE_ENEMY_ROOM_CODE);
                 }
-                else if(roomRandNum < 65){
+                else if(roomRandNum < 60){
                     roomType.Add(RoomType.STRECHED_ENEMY_ROOM_H_CODE);
                 }
                 else if(roomRandNum < 70){
