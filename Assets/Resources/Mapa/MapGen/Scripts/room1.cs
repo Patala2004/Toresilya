@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -16,11 +17,16 @@ public class Room : MonoBehaviour
 
     public int width; // x size
     public int length; // y size
+    public int corridor_width;
+    public int corridor_length_v; // Length for corridors that go north / south
+    public int corridor_length_h; // Length for corridors that go west / east
 
     public int x;
     public int y; // Coordinates
 
-    public BoxCollider2D colider;
+    public String roomType;
+
+    public BoxCollider2D collider;
     // Start is called before the first frame update
     void Start()
     {
@@ -35,9 +41,9 @@ public class Room : MonoBehaviour
 
     public void createCollider(){
         // Have to add parameters (size, position) first -> cant add it in start
-        colider = this.gameObject.AddComponent<BoxCollider2D>();
-        colider.transform.position = new Vector3Int(x + width/2,y + length/2,0);
-        colider.isTrigger = true;
-        colider.size = new Vector2(width, length);
+        collider = this.gameObject.AddComponent<BoxCollider2D>();
+        collider.transform.position = new Vector3Int(x + width/2,y + length/2,0);
+        collider.isTrigger = true;
+        collider.size = new Vector2(width, length);
     }
 }
