@@ -1382,15 +1382,15 @@ public static class RoomType{
     public const int STRECHED_ENEMY_ROOM_H_CODE = 8;
 
     // Room sizes
-    public const int MAX_ROOM_SIZE = 30;
+    public const int MAX_ROOM_SIZE = 26;
     public const int NORMAL_CORRIDOR_LENGTH = 10;
     public const int LARGE_ROOM_CORRIDOR_LENGTH = 5;
     public const int CORRIDOR_WIDTH = 4;
-    public const int NORMAL_ROOM_WIDTH = 20;
-    public const int NORMAL_ROOM_LENGTH = 20;
+    public const int NORMAL_ROOM_WIDTH = 18;
+    public const int NORMAL_ROOM_LENGTH = 18;
 
-    public const int LARGE_ROOM_WIDTH = 30;
-    public const int LARGE_ROOM_LENGTH = 30;
+    public const int LARGE_ROOM_WIDTH = 26;
+    public const int LARGE_ROOM_LENGTH = 26;
 }
 
 
