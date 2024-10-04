@@ -180,8 +180,8 @@ public class MapGen: MonoBehaviour{
         wallMap.SetTiles(tileRenderer.wallVectorCoordinates, tileRenderer.wallTileArr);
 
         // TEMP -> draw other collor at start and endnode
-        floorMap.SetTile(new Vector3Int((startNodeCoords[0] - xoffset) * 40 + 10, (startNodeCoords[1] - yoffset) * 40 + 10, 0),corridorTile);
-        floorMap.SetTile(new Vector3Int((endNodeCoords[0] - xoffset) * 40 + 10, (endNodeCoords[1] - yoffset) * 40 + 10, 0),corridorTile);
+        floorMap.SetTile(new Vector3Int((startNodeCoords[0] - xoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH + RoomType.NORMAL_ROOM_WIDTH/2, (startNodeCoords[1] - yoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH + RoomType.NORMAL_ROOM_LENGTH/2, 0),corridorTile);
+        floorMap.SetTile(new Vector3Int((endNodeCoords[0] - xoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH  + RoomType.NORMAL_ROOM_WIDTH/2, (endNodeCoords[1] - yoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH  + RoomType.NORMAL_ROOM_LENGTH/2, 0),corridorTile);
 
         roomTypes.Dispose();
         xFloorCoords.Dispose();
@@ -666,21 +666,27 @@ public struct WallCoordinateGetter{
             // Set room sizes
             int width = RoomType.NORMAL_ROOM_WIDTH;
             int length = RoomType.NORMAL_ROOM_LENGTH;
+            int vertical_corridor_length = RoomType.NORMAL_CORRIDOR_LENGTH;
+            int horizontal_corridor_length = RoomType.NORMAL_CORRIDOR_LENGTH;
             if(roomType[i] == RoomType.LARGE_ENEMY_ROOM_CODE){
                 width = RoomType.LARGE_ROOM_WIDTH;
                 length = RoomType.LARGE_ROOM_WIDTH;
                 x -= (RoomType.LARGE_ROOM_WIDTH-RoomType.NORMAL_ROOM_WIDTH)/2;
                 y -= (RoomType.LARGE_ROOM_LENGTH-RoomType.NORMAL_ROOM_LENGTH)/2;
+                vertical_corridor_length = RoomType.LARGE_ROOM_CORRIDOR_LENGTH;
+                horizontal_corridor_length = RoomType.LARGE_ROOM_CORRIDOR_LENGTH;
             }
             else if(roomType[i] == RoomType.STRECHED_ENEMY_ROOM_H_CODE){
                 width = RoomType.LARGE_ROOM_WIDTH;
                 length = RoomType.NORMAL_ROOM_LENGTH;
                 x -= (RoomType.LARGE_ROOM_WIDTH-RoomType.NORMAL_ROOM_WIDTH)/2;
+                horizontal_corridor_length = RoomType.LARGE_ROOM_CORRIDOR_LENGTH;
             }
             else if(roomType[i] == RoomType.STRECHED_ENEMY_ROOM_V_CODE){
                 width = RoomType.NORMAL_ROOM_WIDTH;
                 length = RoomType.LARGE_ROOM_WIDTH;
-                y -= (RoomType.LARGE_ROOM_LENGTH-RoomType.NORMAL_ROOM_LENGTH)/2;     
+                y -= (RoomType.LARGE_ROOM_LENGTH-RoomType.NORMAL_ROOM_LENGTH)/2;
+                vertical_corridor_length = RoomType.LARGE_ROOM_CORRIDOR_LENGTH; 
             }
 
             // Add walls
@@ -694,6 +700,13 @@ public struct WallCoordinateGetter{
                 for(int a = woffset + RoomType.CORRIDOR_WIDTH; a < width + 1 ; a++){
                     wallxcoordinates.Add(x + a);
                     wallycoordinates.Add(y + length);
+                }
+                // Paint corridor walls
+                for(int a = 1; a < vertical_corridor_length - 1; a++){
+                    wallxcoordinates.Add(x + woffset - 1);
+                    wallycoordinates.Add(y + length + a);
+                    wallxcoordinates.Add(x + woffset + RoomType.CORRIDOR_WIDTH);
+                    wallycoordinates.Add(y + length + a);
                 }
             }
             else{
@@ -712,6 +725,13 @@ public struct WallCoordinateGetter{
                     wallxcoordinates.Add(x + width);
                     wallycoordinates.Add(y + a);                    
                 }
+                // Paint corridor walls
+                for(int a = 1; a < horizontal_corridor_length - 1; a++){
+                    wallxcoordinates.Add(x + width + a);
+                    wallycoordinates.Add(y + loffset - 1);
+                    wallxcoordinates.Add(x + width + a);
+                    wallycoordinates.Add(y + loffset + RoomType.CORRIDOR_WIDTH);
+                }
             }
             else{
                 for(int a = 0; a < length; a++){
@@ -729,6 +749,13 @@ public struct WallCoordinateGetter{
                     wallxcoordinates.Add(x + a);
                     wallycoordinates.Add(y - 1);
                 }
+                // Paint corridor walls
+                for(int a = 2; a < vertical_corridor_length; a++){
+                    wallxcoordinates.Add(x + woffset - 1);
+                    wallycoordinates.Add(y - a);
+                    wallxcoordinates.Add(x + woffset + RoomType.CORRIDOR_WIDTH);
+                    wallycoordinates.Add(y - a);
+                }
             }
             else{
                 for(int a = -1; a < width + 1; a++){
@@ -745,6 +772,13 @@ public struct WallCoordinateGetter{
                 for(int a = loffset + RoomType.CORRIDOR_WIDTH; a < length; a++){
                     wallxcoordinates.Add(x - 1);
                     wallycoordinates.Add(y + a);                    
+                }
+                // Paint corridor walls
+                for(int a = 2; a < horizontal_corridor_length; a++){
+                    wallxcoordinates.Add(x - a);
+                    wallycoordinates.Add(y + loffset - 1);
+                    wallxcoordinates.Add(x - a);
+                    wallycoordinates.Add(y + loffset + RoomType.CORRIDOR_WIDTH);
                 }
             }
             else{
@@ -1382,9 +1416,11 @@ public static class RoomType{
     public const int STRECHED_ENEMY_ROOM_H_CODE = 8;
 
     // Room sizes
+
+    // PLEASE MAKE SURE ROOM-SIZE-4 IS DIVISIBLE BY 2 ( (..._ROOM_(SIZE/WIDTH/LENGTH) - 4 ) % 2 == 0)
     public const int MAX_ROOM_SIZE = 26;
     public const int NORMAL_CORRIDOR_LENGTH = 10;
-    public const int LARGE_ROOM_CORRIDOR_LENGTH = 5;
+    public const int LARGE_ROOM_CORRIDOR_LENGTH = 6;
     public const int CORRIDOR_WIDTH = 4;
     public const int NORMAL_ROOM_WIDTH = 18;
     public const int NORMAL_ROOM_LENGTH = 18;
