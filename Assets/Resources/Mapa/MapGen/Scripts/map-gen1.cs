@@ -29,33 +29,17 @@ public class MapGen: MonoBehaviour{
 
     private bool hasBeenGenerated = false;
 
-    private bool mapCanBeRendered = false;
+    private bool mapCanBeRendered = true;
     public String loadingStatus = "";
 
     void Start(){
         rooms = new GameObject();
         rooms.name = "Rooms";
         rooms.transform.parent = transform;
-        
+        StartCoroutine(generateMap());
     }
 
     void Update(){
-        if(Input.GetMouseButtonDown(0) && !hasBeenGenerated){
-            hasBeenGenerated = true;
-            StartCoroutine(generateMap());
-        }
-
-        if(Input.GetKeyDown(KeyCode.R)){
-            Debug.Log("R PRESSED");
-            hasBeenGenerated = false;
-            mapCanBeRendered = false;
-            floorMap.ClearAllTiles();
-            wallMap.ClearAllTiles();
-        }
-
-        if(Input.GetMouseButtonDown(1)){
-            mapCanBeRendered = true;
-        }
     }
 
     IEnumerator generateMap(){
@@ -180,11 +164,16 @@ public class MapGen: MonoBehaviour{
         wallMap.SetTiles(tileRenderer.wallVectorCoordinates, tileRenderer.wallTileArr);
 
         // TEMP -> draw other collor at start and endnode
-        floorMap.SetTile(new Vector3Int((startNodeCoords[0] - xoffset) * 40 + 10, (startNodeCoords[1] - yoffset) * 40 + 10, 0),corridorTile);
+        floorMap.SetTile(new Vector3Int((startNodeCoords[0] - xoffset) * 36 + 10, (startNodeCoords[1] - yoffset) * 36 + 10, 0),corridorTile);
         floorMap.SetTile(new Vector3Int((endNodeCoords[0] - xoffset) * 40 + 10, (endNodeCoords[1] - yoffset) * 40 + 10, 0),corridorTile);
 
+
+        GameObject.Find("player").transform.position = new Vector3Int((startNodeCoords[0] - xoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_ROOM_WIDTH/2 + RoomType.NORMAL_CORRIDOR_LENGTH, (startNodeCoords[1] - yoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH + RoomType.NORMAL_ROOM_WIDTH/2, 0);
+
+
         roomTypes.Dispose();
-        xFloorCoords.Dispose();
+        xFloorCoords.Dispose();    // Tp player
+        
         yFloorCoords.Dispose();
         xCorridorCoords.Dispose();
         yCorridorCoords.Dispose();
