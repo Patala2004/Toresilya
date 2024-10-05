@@ -16,6 +16,7 @@ public class MapGen: MonoBehaviour{
     public Tile floorTile;
     public Tile corridorTile;
     public Tile wallTile;
+    public Tile doorTile;
     public Tilemap floorMap;
     public Tilemap wallMap;
     public GameObject box; // Box prefab
@@ -133,6 +134,11 @@ public class MapGen: MonoBehaviour{
         JobHandle floorJob = floorCoordJob.Schedule();
         JobHandle coorJob = corrCoordJob.Schedule();
         JobHandle wallJob = wallCoordJob.Schedule();
+
+
+        // Generate room objects
+        RoomCreator.createRooms(allNodes, roomTypes, xoffset, yoffset, rooms);
+
         while(!floorJob.IsCompleted || !coorJob.IsCompleted || !wallJob.IsCompleted){
             // Dont block main thread while jobs are running
             yield return null;
@@ -664,12 +670,10 @@ public struct WallCoordinateGetter{
             }
             else if(roomType[i] == RoomType.STRECHED_ENEMY_ROOM_H_CODE){
                 width = RoomType.LARGE_ROOM_WIDTH;
-                length = RoomType.NORMAL_ROOM_LENGTH;
                 x -= (RoomType.LARGE_ROOM_WIDTH-RoomType.NORMAL_ROOM_WIDTH)/2;
                 horizontal_corridor_length = RoomType.LARGE_ROOM_CORRIDOR_LENGTH;
             }
             else if(roomType[i] == RoomType.STRECHED_ENEMY_ROOM_V_CODE){
-                width = RoomType.NORMAL_ROOM_WIDTH;
                 length = RoomType.LARGE_ROOM_WIDTH;
                 y -= (RoomType.LARGE_ROOM_LENGTH-RoomType.NORMAL_ROOM_LENGTH)/2;
                 vertical_corridor_length = RoomType.LARGE_ROOM_CORRIDOR_LENGTH; 
@@ -923,6 +927,58 @@ public class TileRenderer{
     }
 }
 
+public class RoomCreator{
+    public static void createRooms(NativeList<NodeStruct> allNodes, NativeList<int> roomType, int xoffset, int yoffset, GameObject rooms){
+        for(int i = 0; i < allNodes.Length; i++){ // AllNodes.Length == roomTypes.Length
+            int x = allNodes[i].x - xoffset;
+            int y = allNodes[i].y - yoffset;
+            
+            // Get width and length
+            int length = RoomType.NORMAL_ROOM_LENGTH;
+            int width = RoomType.NORMAL_ROOM_WIDTH;
+
+            // Create object
+            GameObject newRoom = new GameObject();
+            newRoom.transform.parent = rooms.transform;
+            newRoom.name = "room " + x +"," + y;
+            x = x*(RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH;
+            y = y*(RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH;
+
+            if(roomType[i] == RoomType.LARGE_ENEMY_ROOM_CODE){
+                width = RoomType.LARGE_ROOM_WIDTH;
+                length = RoomType.LARGE_ROOM_WIDTH;
+                x -= (RoomType.LARGE_ROOM_WIDTH-RoomType.NORMAL_ROOM_WIDTH)/2;
+                y -= (RoomType.LARGE_ROOM_LENGTH-RoomType.NORMAL_ROOM_LENGTH)/2;
+            }
+            else if(roomType[i] == RoomType.STRECHED_ENEMY_ROOM_H_CODE){
+                width = RoomType.LARGE_ROOM_WIDTH;
+                x -= (RoomType.LARGE_ROOM_WIDTH-RoomType.NORMAL_ROOM_WIDTH)/2;
+            }
+            else if(roomType[i] == RoomType.STRECHED_ENEMY_ROOM_V_CODE){
+                length = RoomType.LARGE_ROOM_WIDTH;    
+                y -= (RoomType.LARGE_ROOM_LENGTH-RoomType.NORMAL_ROOM_LENGTH)/2;     
+            }
+
+            // Create collider
+            newRoom.transform.position = new Vector3(x + width/2,y + length/2,0); // +width/2 etc so collider gets placed on the center, not bottom left
+            BoxCollider2D roomCollider = newRoom.AddComponent<BoxCollider2D>();
+            roomCollider.size = new Vector2Int(width - 2, length - 2); // Give some room so doors dont get close on player
+            roomCollider.isTrigger = true;
+
+            // Add Script component and give it its variables
+            Room roomScript = newRoom.AddComponent<Room>();
+            roomScript.roomCollider = roomCollider;
+            roomScript.x = x; // Pass along coordinates of bottom left corner
+            roomScript.y = y;
+            roomScript.width = width;
+            roomScript.length = length;
+            roomScript.roomType = roomType[i];
+            // Corridor booleans
+            roomScript.passCorridorBooleans(allNodes[i].north,  allNodes[i].east,  allNodes[i].south,  allNodes[i].west);
+        }
+    }
+}
+
 
 
 
@@ -947,7 +1003,7 @@ public class TileRenderer{
 
 
 
-
+/*
 
 
 // class to paint the map recursively starting from endnode
@@ -1205,14 +1261,6 @@ public class MapPainter{
     private void setCorridorBooleans(NodeStruct node, Room roomScript, NativeList<NodeStruct> nodeStructList){
         // Set corridors for childre
         foreach(NodeStruct childNode in node.neighbors(grid, gridSize, nodeStructList)){
-            /*String dir = getDirection(node.x - childNode.x, node.y - childNode.y);
-            switch(dir){
-                case "North": roomScript.north = true; break;
-                case "East": roomScript.east = true; break;
-                case "South": roomScript.south = true; break;
-                case "West": roomScript.west = true; break;
-                default: break;
-            }*/
             roomScript.north = node.north;
             roomScript.west = node.west;
             roomScript.east = node.east;
@@ -1388,7 +1436,7 @@ public class MapPainter{
      
     }
 }
-
+*/
 public static class RoomType{
     // Enemy Room Type codes
     public const int START_ROOM_CODE = 0;
