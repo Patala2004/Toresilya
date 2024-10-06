@@ -34,7 +34,7 @@ public class arma : MonoBehaviour
             sR.flipY = true;
             float x = Mathf.Cos((jugador.ang - rotacionArma) * Mathf.Deg2Rad) * radioArma;
             float y = Mathf.Sin((jugador.ang - rotacionArma) * Mathf.Deg2Rad) * radioArma;
-            transform.localPosition = new Vector3(x, y, 1);
+            transform.localPosition = new Vector3(x, y-0.2f, 1);
             transform.localEulerAngles = new Vector3(0, 0, jugador.ang + 90);
         }
         else
@@ -42,7 +42,7 @@ public class arma : MonoBehaviour
             sR.flipY = false;
             float x = Mathf.Cos((jugador.ang + rotacionArma) * Mathf.Deg2Rad) * radioArma;
             float y = Mathf.Sin((jugador.ang + rotacionArma) * Mathf.Deg2Rad) * radioArma;
-            transform.localPosition = new Vector3(x, y, 1);
+            transform.localPosition = new Vector3(x, y - 0.2f, 1);
             transform.localEulerAngles = new Vector3(0, 0, jugador.ang - 90);
         }
         //bloqueo
@@ -50,9 +50,11 @@ public class arma : MonoBehaviour
         {
             radioArma = 0.9f;
             rotacionArma = -50;
+            sR.sortingLayerName = "dopamina";
         }
         else
-        {
+        { 
+            sR.sortingLayerName = "armas";
             radioArma = 0.3f;
             rotacionArma = 0;
         }
