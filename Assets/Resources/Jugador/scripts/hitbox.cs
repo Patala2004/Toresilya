@@ -12,6 +12,7 @@ public class hitbox : MonoBehaviour
     void Start()
     {
         GetComponent<SpriteRenderer>().enabled = false;
+        gameObject.SetActive(false);
     }
 
     // Update is called once per frame
@@ -21,6 +22,7 @@ public class hitbox : MonoBehaviour
     }
     public void comenzar()
     {
+        gameObject.SetActive(true);
         float x = Mathf.Cos(jugador.ang * Mathf.Deg2Rad) * radioHitbox;
         float z = Mathf.Sin(jugador.ang * Mathf.Deg2Rad) * radioHitbox;
         transform.localPosition = new Vector3(x, z, 1);
@@ -30,6 +32,6 @@ public class hitbox : MonoBehaviour
     public IEnumerator finalizar(float waitseconds)
     {
         yield return new WaitForSeconds(waitseconds);
-        transform.localPosition = new Vector3(0, 1000, 0);
+        gameObject.SetActive(false);
     }
 }

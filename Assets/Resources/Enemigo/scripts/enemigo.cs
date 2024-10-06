@@ -9,6 +9,8 @@ public class enemigo : MonoBehaviour
     protected Rigidbody2D rb;
     protected Vector2 velImpulse = Vector2.zero;
     public bool invulnerable;
+    public bool allowAttack = true; // booleano que te deja atacar
+    public int health = 15;
     // Start is called before the first frame update
     public void Start()
     {
@@ -20,18 +22,23 @@ public class enemigo : MonoBehaviour
         rb.velocity += velImpulse;
     }
     // Update is called once per frame
-    void Update()
+    public void Update()
     {
         if (invulnerable) { invulnerable = jugador.attacking; }
+        if(health <= 0)
+        {
+            toDie();
+        }
     }
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.CompareTag("hitboxAmigo") && !invulnerable)
         {
-            invulnerable = true;
+            int damage = Random.Range(jugador.arma.attackDamage[0], jugador.arma.attackDamage[1] + 1);
+            health -= damage;
+            GetComponent<genParticulaTexto>().comenzar(damage, jugador.ang);
             StartCoroutine(golpeado(jugador.arma.attackSpeed,jugador.ang,jugador.arma.attackKnockback));
-			int damage = (int)Random.Range(jugador.arma.attackDamage[0], jugador.arma.attackDamage[1] + 1);
-            GetComponent<genParticulaTexto>().comenzar(damage,jugador.ang);
+            invulnerable = true;
         }
     }
     IEnumerator golpeado(float waitseconds,float ang,float attackKnockback)
@@ -51,5 +58,24 @@ public class enemigo : MonoBehaviour
             yield return null;
         }
         velImpulse = Vector2.zero;
+    }
+    //funciones que se llaman para atacar al jugador
+    public void hitPlayer(float ang,int[] damage,float knockback,float attackSpeed)
+    {
+        allowAttack = false;
+        StartCoroutine(esperar(attackSpeed));
+        int dm = Random.Range(damage[0], damage[1] + 1);
+        jugador.health -= dm;
+        StartCoroutine(jugador.impulse(0.2f, ang, knockback));
+    }
+    IEnumerator esperar(float waitseconds)
+    {
+        yield return new WaitForSeconds(waitseconds);
+        allowAttack = true;
+    }
+    // funcion muerte
+    public virtual void toDie()
+    {
+        Destroy(this.gameObject);
     }
 }

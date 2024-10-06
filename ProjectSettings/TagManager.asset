@@ -6,6 +6,8 @@ TagManager:
   tags:
   - hitboxAmigo
   - hitboxEnemigo
+  - jugador
+  - golpeable
   layers:
   - Default
   - TransparentFX

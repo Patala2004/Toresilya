@@ -169,6 +169,7 @@ public class MapGen: MonoBehaviour{
 
 
         GameObject.Find("player").transform.position = new Vector3Int((startNodeCoords[0] - xoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_ROOM_WIDTH/2 + RoomType.NORMAL_CORRIDOR_LENGTH, (startNodeCoords[1] - yoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH + RoomType.NORMAL_ROOM_WIDTH/2, 0);
+        Instantiate(Resources.Load<GameObject>("Enemigo/Slime"),new Vector3Int((startNodeCoords[0] - xoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_ROOM_WIDTH / 2 + RoomType.NORMAL_CORRIDOR_LENGTH + 5, (startNodeCoords[1] - yoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH + RoomType.NORMAL_ROOM_WIDTH / 2, 0),Quaternion.identity);
 
 
         roomTypes.Dispose();

@@ -14,7 +14,7 @@ public class arma : MonoBehaviour
     public float attackSpeed = 0.2f; // velocidad a la que el jugador puede atacar(no es la velocidad de la animacion)
     public float attackAnimation = 0.2f; // cuanto dura la animacion *importante que no sea mucho
     //to do manejar rng
-    public float[] attackDamage = new float[2]; // daño de dañomin a dañomax
+    public int[] attackDamage = new int[2]; // daño de dañomin a dañomax
     float radioArma = 0.3f;
     float rotacionArma = 90;
     // Start is called before the first frame update

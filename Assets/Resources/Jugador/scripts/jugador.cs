@@ -5,6 +5,8 @@ using UnityEngine.Rendering;
 
 public class jugador : MonoBehaviour
 {
+    //TODO: vida
+    public int health = 50;
     //TODO: implementar parry (probar con slime con impulso 20000)
     //TODO: implementar dash (que no suba mucho la velocidad de movimiento(pequeño impulso+animacion))
     public arma arma;
@@ -102,7 +104,7 @@ public class jugador : MonoBehaviour
         blocking = true;
     }
     //Funcion que añade un impulso en una direccion
-    IEnumerator impulse(float waitseconds,float ang,float recoil) // funcion que calcula el impulso
+    public IEnumerator impulse(float waitseconds,float ang,float recoil) // funcion que calcula el impulso
     {
         float elapsedTime = 0;
         Vector2 dir = new Vector3(Mathf.Cos(ang * Mathf.Deg2Rad), Mathf.Sin(ang * Mathf.Deg2Rad));
