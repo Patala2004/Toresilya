@@ -6,6 +6,7 @@ using UnityEngine.Rendering;
 public class jugador : MonoBehaviour
 {
     //TODO: vida
+    public int maxHealth = 50;
     public int health = 50;
     //TODO: implementar parry (probar con slime con impulso 20000)
     //TODO: implementar dash (que no suba mucho la velocidad de movimiento(pequeño impulso+animacion))
@@ -34,6 +35,8 @@ public class jugador : MonoBehaviour
     }
     private void Update()
     {
+        //vida
+        health = Mathf.Clamp(health,0,maxHealth); // limita la vida a maxHealth
         //atacar
         if (Input.GetMouseButtonDown(0) && !attacking)
         {
