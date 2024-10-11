@@ -15,6 +15,7 @@ public class arma : MonoBehaviour
     public float attackAnimation = 0.2f; // cuanto dura la animacion *importante que no sea mucho
     //to do manejar rng
     public int[] attackDamage = new int[2]; // daño de dañomin a dañomax
+    public Vector2 hitboxSize = new Vector2(1,2);
     float radioArma = 0.3f;
     float rotacionArma = 90;
     // Start is called before the first frame update

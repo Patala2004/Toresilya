@@ -6,8 +6,7 @@ using UnityEngine.Rendering.Universal.Internal;
 
 public class Lobo : enemigo
 {
-	private jugador jug;
-	public float attackSpeed, displSpeed;
+	public float  displSpeed;
 	public float followDistance, attackDistance;
 	public float attackForce;
 
@@ -16,7 +15,6 @@ public class Lobo : enemigo
     new void Start()
     {
 		base.Start();
-        jug = GameObject.Find("player").GetComponent<jugador>();
     }
 
 	void updateTimer() {

@@ -6,12 +6,8 @@ using UnityEngine;
 
 public class slime : enemigo
 {
-	public float persecutionRadius = 5.0f;
-
+    public float persecutionRadius = 5.0f;
 	public float jumpForce = 120f, jumpTimerInit = 1f, jumpTimer;
-    public float knockback;
-    public int[] damage = new int[2];
-    public float attackSpeed = 0.2f;
 	private Animator ac;
     // Start is called before the first frame update
     new void Start()
@@ -19,6 +15,7 @@ public class slime : enemigo
         base.Start();
 		jumpTimer = jumpTimerInit;
 		ac = GetComponent<Animator>();
+        attackSpeed = jumpTimerInit;
     }
     new private void FixedUpdate()
     {
@@ -35,15 +32,7 @@ public class slime : enemigo
 			}
 			else
 			{
-                RaycastHit2D[] boxCast = Physics2D.BoxCastAll(transform.position, transform.localScale, 0, (jugador.transform.position - gameObject.transform.position).normalized, 0);
-                foreach (RaycastHit2D collider in boxCast)
-                {
-                    if (collider.collider.CompareTag("jugador") && allowAttack)
-                    {
-                        Debug.Log("golpeado jugador !!");
-                        hitPlayer(Mathf.Rad2Deg * Mathf.Atan2(jugador.transform.position.y-transform.position.y,jugador.transform.position.x-transform.position.x),damage,knockback,jumpTimerInit);
-                    }
-                }
+                hitboxEnemigo(transform.position, transform.localScale, 0, (jugador.gameObject.transform.position - gameObject.transform.position), 0,this.damage, this.knockback, this.attackSpeed);
             }
 		} else {
 			ac.SetBool("detectedPlayer", false);

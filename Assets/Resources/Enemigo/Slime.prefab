@@ -9,15 +9,15 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2649435589633111601}
+  - component: {fileID: 5431344267532036789}
   - component: {fileID: 5806048497698704715}
   - component: {fileID: 5709872241704900389}
   - component: {fileID: 9126450579112599352}
-  - component: {fileID: 4602828157076744500}
   - component: {fileID: 3678993858170020845}
   - component: {fileID: 4968796170126709865}
   m_Layer: 7
   m_Name: Slime
-  m_TagString: Untagged
+  m_TagString: enemigo
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -37,6 +37,30 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5431344267532036789
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8484869543311770916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb305a3a5711b8e28a6cf594beec245b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  jugador: {fileID: 0}
+  invulnerable: 0
+  allowAttack: 1
+  health: 15
+  knockback: 30
+  knockbackResistance: 0
+  damage: 0200000005000000
+  attackSpeed: 0.2
+  persecutionRadius: 10
+  jumpForce: 20000
+  jumpTimerInit: 1
+  jumpTimer: 0
 --- !u!212 &5806048497698704715
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -161,29 +185,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &4602828157076744500
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8484869543311770916}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb305a3a5711b8e28a6cf594beec245b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  jugador: {fileID: 0}
-  invulnerable: 0
-  allowAttack: 1
-  vida: 20
-  persecutionRadius: 10
-  jumpForce: 20000
-  jumpTimerInit: 1.5
-  jumpTimer: 0
-  knockback: 20
-  damage: 0200000005000000
-  attackSpeed: 0.2
 --- !u!95 &3678993858170020845
 Animator:
   serializedVersion: 5

@@ -5,9 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - hitboxAmigo
-  - hitboxEnemigo
   - jugador
   - golpeable
+  - enemigo
   layers:
   - Default
   - TransparentFX
@@ -59,4 +59,7 @@ TagManager:
     locked: 0
   - name: dopamina
     uniqueID: 3985442501
+    locked: 0
+  - name: HUD
+    uniqueID: 2462986911
     locked: 0
