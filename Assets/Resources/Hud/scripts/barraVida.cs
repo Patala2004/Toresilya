@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class barraVida : MonoBehaviour
 {
@@ -8,17 +11,20 @@ public class barraVida : MonoBehaviour
     public jugador jugador;
     RectTransform rT;
     public float sizeVar = 1;
+	private RawImage img;
+	private float origOffset;
+
     // Start is called before the first frame update
     void Start()
     {
         rT = GetComponent<RectTransform>();
+		origOffset = rT.offsetMax.x;
     }
 
     // Update is called once per frame
     void Update()
     {
         sizeVar = (float)jugador.health/jugador.maxHealth;
-        rT.localScale = new Vector2(sizeVar,rT.localScale.y);
-        rT.localPosition = new Vector2(-883 + 305 * sizeVar,rT.localPosition.y);
+        rT.offsetMax = new Vector2(sizeVar*origOffset, rT.offsetMax.y);
     }
 }
