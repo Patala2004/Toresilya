@@ -12,7 +12,7 @@ public class genParticulaTexto : MonoBehaviour
     public float particulaUpRig = 0.4f;
     void Start()
     {
-
+        particula = Resources.Load<GameObject>("Particulas/particulaTexto");
     }
 
     // Update is called once per frame

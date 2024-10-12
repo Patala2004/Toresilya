@@ -594,7 +594,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4828342796627309653, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: attackSpeed
-      value: 1
+      value: 0.21
       objectReference: {fileID: 0}
     - target: {fileID: 4828342796627309653, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: hitboxSize.x
@@ -606,7 +606,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4828342796627309653, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: attackKnockback
-      value: 2
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4828342796627309653, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: attackDamage.Array.data[0]

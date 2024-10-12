@@ -61,7 +61,9 @@ public class arma : MonoBehaviour
         }
         //anim attack
         ani.SetBool("atacando", jugador.attackingAnimation);
+
     }
+
     public void attack()
     {
         

@@ -113,7 +113,7 @@ public class jugador : MonoBehaviour
     {
         attacking = true;
         arma.attack();
-        hitboxAmigo(transform.position, arma.hitboxSize, 0, mousePos-transform.position , 1, arma.attackDamage, arma.attackKnockback, arma.attackAnimation);
+        hitboxArma(transform.position, arma.hitboxSize, 0, mousePos-transform.position , 1, arma.attackDamage, arma.attackKnockback, arma.attackAnimation);
         StartCoroutine(impulse(arma.attackAnimation, ang, arma.recoil)); // calcular el impulso(mejor con el tiempo de la animacion)
         yield return new WaitForSeconds(waitseconds);
         attacking = false;
@@ -124,7 +124,7 @@ public class jugador : MonoBehaviour
         yield return new WaitForSeconds(waitseconds);
         attackingAnimation = false;
     }
-    public void hitboxAmigo(Vector2 position, Vector2 scale, float angle, Vector2 dir, float distance, int[] damage, float knockback, float attackSpeed)
+    public void hitboxArma(Vector2 position, Vector2 scale, float angle, Vector2 dir, float distance, int[] damage, float knockback, float attackSpeed)
     {
         RaycastHit2D[] boxCast = Physics2D.BoxCastAll(position, scale, angle, dir, distance);
         foreach (RaycastHit2D collider in boxCast)
