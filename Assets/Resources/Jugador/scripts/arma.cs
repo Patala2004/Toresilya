@@ -60,7 +60,7 @@ public class arma : MonoBehaviour
             rotacionArma = 0;
         }
         //anim attack
-        ani.SetBool("atacando", jugador.attacking);
+        ani.SetBool("atacando", jugador.attackingAnimation);
     }
     public void attack()
     {

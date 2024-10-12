@@ -30,7 +30,7 @@ public class slime : enemigo
                 jumpTimer = jumpTimerInit;
                 allowAttack = true;
 			}
-			else
+			else // empieza a saltar
 			{
                 hitboxEnemigo(transform.position, transform.localScale, 0, (jugador.gameObject.transform.position - gameObject.transform.position), 0,this.damage, this.knockback, this.attackSpeed);
             }

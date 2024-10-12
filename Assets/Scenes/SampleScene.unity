@@ -593,6 +593,10 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 4828342796627309653, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
+      propertyPath: attackSpeed
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4828342796627309653, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: hitboxSize.x
       value: 2
       objectReference: {fileID: 0}
@@ -602,7 +606,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4828342796627309653, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: attackKnockback
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4828342796627309653, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: attackDamage.Array.data[0]
@@ -658,11 +662,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8817363745017176764, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: resistance
-      value: 20
+      value: 15.6
       objectReference: {fileID: 0}
     - target: {fileID: 8817363745017176764, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: resistanceMax
-      value: 20
+      value: 11.1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 1779444716208025063, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
@@ -726,7 +730,7 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.055600703, y: -0.07413435}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -737,7 +741,7 @@ BoxCollider2D:
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 1.1580082, y: 1.3062768}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!95 &1002041212
 Animator:
@@ -777,9 +781,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 012da888ccb10c14b9df2585847915bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorTile: {fileID: 11400000, guid: f49558ce9e3a1b04cb21e2b7670b8113, type: 2}
+  floorTile: {fileID: 11400000, guid: a2a597d78bf200f48aeced89bda86f33, type: 2}
   corridorTile: {fileID: 11400000, guid: a368fcca269d5744da42756e8d14b76d, type: 2}
-  wallTile: {fileID: 11400000, guid: 25b0f62de6aaea04787b5c810ee67538, type: 2}
+  wallTile: {fileID: 11400000, guid: 0894a9b26aa3a674ab2ea6c4c9ad9f3f, type: 2}
   floorMap: {fileID: 430523385}
   wallMap: {fileID: 1785906144}
   box: {fileID: 0}
@@ -1156,8 +1160,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -688, y: 337}
-  m_SizeDelta: {x: 4, y: 1}
+  m_AnchoredPosition: {x: -678.94006, y: 351.25}
+  m_SizeDelta: {x: 3.88, y: 0.89}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1569319458
 MonoBehaviour:
@@ -1228,8 +1232,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -826.15, y: 334.86}
-  m_SizeDelta: {x: 403.52, y: 39.29}
+  m_AnchoredPosition: {x: -857, y: 353}
+  m_SizeDelta: {x: 403.95, y: 34.14}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1672831762
 MonoBehaviour:

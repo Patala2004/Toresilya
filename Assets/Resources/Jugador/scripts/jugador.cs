@@ -13,14 +13,17 @@ public class jugador : MonoBehaviour
     public float resistance = 50;
     [SerializeField] bool resistanceRegen = true; // TRUE: regenera resistencia
     public bool parrying = false;
-    [SerializeField] float parryTime = 0;
-    Coroutine coroutineCooldown;
     public float parryTimerCooldown = 3;
+    public float parryTimerCheck = 0.5f; // Cuanto tiempo es valido el parry 
+    public float parryTimerClamp = 1; // Para que el parry no pueda espamearse poner esto mayor a parryTimerCheck
+    [SerializeField] float parryTime = 0;
+    Coroutine coroutineCooldownRes;
  
     public arma arma;
     public float vel = 5f; //velocidad jugador
     public float ang; // angulo en grados respecto al cursor (0-180,-0-180)
     public bool attacking = false; // cuando estoy atacando
+    public bool attackingAnimation = false;
     public bool blocking = false;
     Vector2 velImpulse;
     Vector2 velMovimiento;
@@ -49,16 +52,9 @@ public class jugador : MonoBehaviour
         health = Mathf.Clamp(health,0,healthMax); // limita la vida a maxHealth
         //resistencia y parry
         resistance = Mathf.Clamp(resistance, 0, resistanceMax); // limita la vida a maxHealth
-        parryTime = Mathf.Clamp(parryTime, 0, 1); // se queda en 1 bajar para hacer mas facil hacer parry
+        parryTime = Mathf.Clamp(parryTime, 0, parryTimerClamp); // se queda en 1 bajar para hacer mas facil hacer parry
         //esta haciendo parry
-        if(parryTime > 0 && parryTime < 0.5f)
-        {
-            parrying = true;
-        }
-        else
-        {
-            parrying = false;
-        }
+        parrying = (parryTime > 0 && parryTime < parryTimerCheck && blocking); // calcula cuando esta haciendo parry
         if (resistanceRegen && !blocking)
         {
             resistance += 5 * Time.deltaTime;
@@ -67,9 +63,10 @@ public class jugador : MonoBehaviour
         if (Input.GetMouseButtonDown(0) && !attacking)
         {
             StartCoroutine(attack(arma.attackSpeed));
+            StartCoroutine(attackAnimation(arma.attackAnimation));
         }
         //block
-        if (Input.GetMouseButton(1) && !attacking && resistance != 0)
+        if (Input.GetMouseButton(1) && !attackingAnimation && resistance != 0)
         {
             block();
             parryTime += Time.deltaTime; // añade tiempo al parry time para que no puedas spamear el boton de atacar
@@ -82,18 +79,11 @@ public class jugador : MonoBehaviour
         //direccion en la que esta mirando el personaje
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         ang = calcularAngulo();
-        if (ang > 90 || ang < -90)
-        {
-            sR.flipX = true;
-        }
-        else
-        {
-            sR.flipX = false;
-        }
+        sR.flipX = (ang > 90 || ang < -90);
         //animacion
-        if (attacking)
+        if (attackingAnimation)
         {
-            ani.SetFloat("velocity", 0);
+            //ani.SetFloat("velocity", 0);
         }
         else { 
             ani.SetFloat("velocity", velMovimiento.magnitude); 
@@ -123,10 +113,16 @@ public class jugador : MonoBehaviour
     {
         attacking = true;
         arma.attack();
-        hitboxAmigo(transform.position, arma.hitboxSize, 0, mousePos-transform.position , 1, arma.attackDamage, arma.attackKnockback, arma.attackSpeed);
+        hitboxAmigo(transform.position, arma.hitboxSize, 0, mousePos-transform.position , 1, arma.attackDamage, arma.attackKnockback, arma.attackAnimation);
         StartCoroutine(impulse(arma.attackAnimation, ang, arma.recoil)); // calcular el impulso(mejor con el tiempo de la animacion)
         yield return new WaitForSeconds(waitseconds);
         attacking = false;
+    }
+    IEnumerator attackAnimation(float waitseconds)
+    {
+        attackingAnimation = true;
+        yield return new WaitForSeconds(waitseconds);
+        attackingAnimation = false;
     }
     public void hitboxAmigo(Vector2 position, Vector2 scale, float angle, Vector2 dir, float distance, int[] damage, float knockback, float attackSpeed)
     {
@@ -172,20 +168,21 @@ public class jugador : MonoBehaviour
     {
         if(resistance > 0 && blocking)
         {
-            if (parrying)
+            if (parrying) // se hace el parry a un enemigo
             {
                 parryTime = 0; // cuando haces parry reseteas el timer
-                StartCoroutine(ene.impulse(0.1f, ang, 2));
+                StartCoroutine(ene.impulse(0.1f, ang, 1)); // aplica empuje en la dir que haces el parryçç+
+                attacking = false; // cuando haces parry reseteas que el jugador pueda atacar(punish)
             }
             else
             {
                 resistance -= damage;
                 // cooldown de parry
-                if (coroutineCooldown != null)
+                if (coroutineCooldownRes != null)
                 {
-                    StopCoroutine(coroutineCooldown);
+                    StopCoroutine(coroutineCooldownRes);
                 }
-                coroutineCooldown = StartCoroutine(parryCooldown(parryTimerCooldown));
+                coroutineCooldownRes = StartCoroutine(parryCooldown(parryTimerCooldown));
             }
         }
         else
