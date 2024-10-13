@@ -21,6 +21,11 @@ public class MapGen: MonoBehaviour{
     public Tilemap wallMap;
     public GameObject box; // Box prefab
 
+    public GameObject[] roomPrefabs18x18;
+    public GameObject[] roomPrefabs26x26;
+    public GameObject[] roomPrefabs18x26;
+    public GameObject[] roomPrefabs26x18;
+
     public GameObject rooms;
 
     public AStarStruct mapGenerator;
@@ -137,7 +142,7 @@ public class MapGen: MonoBehaviour{
 
 
         // Generate room objects
-        RoomCreator.createRooms(allNodes, roomTypes, xoffset, yoffset, rooms);
+        RoomCreator.createRooms(allNodes, roomTypes, xoffset, yoffset, rooms, roomPrefabs18x18, roomPrefabs26x26, roomPrefabs18x26, roomPrefabs26x18);
 
         while(!floorJob.IsCompleted || !coorJob.IsCompleted || !wallJob.IsCompleted){
             // Dont block main thread while jobs are running
@@ -928,7 +933,8 @@ public class TileRenderer{
 }
 
 public class RoomCreator{
-    public static void createRooms(NativeList<NodeStruct> allNodes, NativeList<int> roomType, int xoffset, int yoffset, GameObject rooms){
+    public static void createRooms(NativeList<NodeStruct> allNodes, NativeList<int> roomType, int xoffset, int yoffset, GameObject rooms
+    , GameObject[] roomPrefab18x18, GameObject[] roomPrefab26x26, GameObject[] roomPrefab18x26, GameObject[] roomPrefab26x18){
         for(int i = 0; i < allNodes.Length; i++){ // AllNodes.Length == roomTypes.Length
             int x = allNodes[i].x - xoffset;
             int y = allNodes[i].y - yoffset;
@@ -975,6 +981,36 @@ public class RoomCreator{
             roomScript.roomType = roomType[i];
             // Corridor booleans
             roomScript.passCorridorBooleans(allNodes[i].north,  allNodes[i].east,  allNodes[i].south,  allNodes[i].west);
+
+
+
+            
+            System.Random rand = new System.Random();
+            GameObject randRoomPrefab = null;
+            // Add a room Obstacle prefab
+            if(roomType[i] == RoomType.NORMAL_ENEMY_ROOM_CODE){
+                randRoomPrefab = GameObject.Instantiate(roomPrefab18x18[rand.Next(0,roomPrefab18x18.Length)]); 
+            }
+            else if(roomType[i] == RoomType.LARGE_ENEMY_ROOM_CODE){
+                randRoomPrefab = GameObject.Instantiate(roomPrefab26x26[rand.Next(0,roomPrefab26x26.Length)]); 
+            }
+            else if(roomType[i] == RoomType.STRECHED_ENEMY_ROOM_V_CODE){
+                randRoomPrefab = GameObject.Instantiate(roomPrefab18x26[rand.Next(0,roomPrefab18x26.Length)]); 
+            }
+            else if(roomType[i] == RoomType.STRECHED_ENEMY_ROOM_H_CODE){
+                randRoomPrefab = GameObject.Instantiate(roomPrefab26x18[rand.Next(0,roomPrefab26x18.Length)]); 
+            }
+
+            if(randRoomPrefab != null){
+                randRoomPrefab.transform.position = new Vector3(x + width/2,y + length/2,0);
+                randRoomPrefab.transform.parent = newRoom.transform;
+            }
+
+            
+            // Create node Matrix
+            roomScript.createMatrix(width, length, randRoomPrefab);
+
+            
         }
     }
 }
