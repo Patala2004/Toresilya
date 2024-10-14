@@ -59,7 +59,7 @@ MonoBehaviour:
   attackSpeed: 0.2
   persecutionRadius: 10
   jumpForce: 20000
-  jumpTimerInit: 1
+  jumpTimerInit: 2
   jumpTimer: 0
 --- !u!212 &5806048497698704715
 SpriteRenderer:
