@@ -18,8 +18,9 @@ public class EnemySpawner : MonoBehaviour
         
     }
 
-    public void SpawnEnemy(int x, int y){
+    public GameObject SpawnEnemy(int x, int y){
         GameObject newEnemy = Instantiate(enemies[0]);
-        newEnemy.transform.position = new Vector3(x,y,0);
+        newEnemy.transform.position = new (x,y,0);
+        return newEnemy;
     }
 }

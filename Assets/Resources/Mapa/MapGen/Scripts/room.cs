@@ -34,6 +34,7 @@ public class Room : MonoBehaviour
     private EnemySpawner enemySpawner;
 
     private bool spawned = false;
+    private int aliveEnemies = 0;
 
     public BoxCollider2D roomCollider;
     // Start is called before the first frame update
@@ -56,7 +57,16 @@ public class Room : MonoBehaviour
             spawned = true;
             Debug.Log("cerrando pasillos");
             CloseCorridors();
-            enemySpawner.SpawnEnemy(x + width/2, y + length/2);
+            GameObject newEnemy = enemySpawner.SpawnEnemy(x + width/2, y + length/2);
+            aliveEnemies++;
+            newEnemy.GetComponent<enemigo>().room = this;
+        }
+    }
+
+    public void CommunicateEnemyDeath(){
+        aliveEnemies--;
+        if(aliveEnemies == 0){
+            OpenCorridors();
         }
     }
 
@@ -107,13 +117,59 @@ public class Room : MonoBehaviour
                 i++;
             }
         }
-
-        Debug.Log("fin pasillos");
-
         // Draw tiles
         wallMap.SetTiles(vectors, tiles);
+    }
 
-        Debug.Log("pintados pasillos");
+     private void OpenCorridors(){
+        int arrSize = 0;
+        if(north) arrSize+= RoomType.CORRIDOR_WIDTH;
+        if(east) arrSize+= RoomType.CORRIDOR_WIDTH;
+        if(south) arrSize+= RoomType.CORRIDOR_WIDTH;
+        if(west) arrSize+= RoomType.CORRIDOR_WIDTH;
+        Tile doorTile = null;
+        Tilemap wallMap = mapManager.wallMap;
+
+        // Create arrays
+        Vector3Int[] vectors = new Vector3Int[arrSize];
+        Tile[] tiles = new Tile[arrSize];
+        int i = 0; // arrayIndex
+
+        int halfWidth = (width - RoomType.CORRIDOR_WIDTH)/2; // So it doesnt have to do many divisions
+        int halfLength = (length - RoomType.CORRIDOR_WIDTH)/2;
+
+        
+
+        if(north){
+            for(int j = 0; j < RoomType.CORRIDOR_WIDTH; j++){
+                vectors[i] = new Vector3Int(x + halfWidth + j, y + length);
+                tiles[i] = doorTile;
+                i++;
+            }
+        }
+        if(south){
+            for(int j = 0; j < RoomType.CORRIDOR_WIDTH; j++){
+                vectors[i] = new Vector3Int(x + halfWidth + j, y -1);
+                tiles[i] = doorTile;
+                i++;
+            }
+        }
+        if(east){
+            for(int j = 0; j < RoomType.CORRIDOR_WIDTH; j++){
+                vectors[i] = new Vector3Int(x + width, y + halfLength + j);
+                tiles[i] = doorTile;
+                i++;
+            }
+        }
+        if(west){
+            for(int j = 0; j < RoomType.CORRIDOR_WIDTH; j++){
+                vectors[i] = new Vector3Int(x - 1, y + halfLength + j);
+                tiles[i] = doorTile;
+                i++;
+            }
+        }
+        // Draw tiles
+        wallMap.SetTiles(vectors, tiles);
     }
 
 

@@ -16,6 +16,8 @@ public class enemigo : MonoBehaviour
     public float knockbackResistance; // 0 sin resistencia 100 con resistencia
     public int[] damage = new int[2];
     public float attackSpeed = 0.2f;
+
+    public Room room;
     // Start is called before the first frame update
     public void Start()
     {
@@ -85,6 +87,9 @@ public class enemigo : MonoBehaviour
     public virtual void toDie()
     {
         Destroy(this.gameObject);
+        if(room != null){
+            room.CommunicateEnemyDeath();
+        }
     }
     public void takeDamage(int damage)
     {
