@@ -648,7 +648,7 @@ MonoBehaviour:
   floorTile: {fileID: 11400000, guid: a2a597d78bf200f48aeced89bda86f33, type: 2}
   corridorTile: {fileID: 11400000, guid: a368fcca269d5744da42756e8d14b76d, type: 2}
   wallTile: {fileID: 11400000, guid: 0894a9b26aa3a674ab2ea6c4c9ad9f3f, type: 2}
-  doorTile: {fileID: 0}
+  doorTile: {fileID: 11400000, guid: 0894a9b26aa3a674ab2ea6c4c9ad9f3f, type: 2}
   floorMap: {fileID: 430523385}
   wallMap: {fileID: 1785906144}
   box: {fileID: 0}

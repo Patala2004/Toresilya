@@ -33,6 +33,8 @@ public class Room : MonoBehaviour
     private MapGen mapManager;
     private EnemySpawner enemySpawner;
 
+    private bool spawned = false;
+
     public BoxCollider2D roomCollider;
     // Start is called before the first frame update
     void Start()
@@ -50,7 +52,9 @@ public class Room : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other){
         Debug.Log("ENTERED");
         // If collision was with player and the room is an EnemyRoom
-        if(other.gameObject.name == "player" && roomType > 4){
+        if(other.gameObject.name == "player" && roomType > 4 && !spawned){
+            spawned = true;
+            Debug.Log("cerrando pasillos");
             CloseCorridors();
             enemySpawner.SpawnEnemy(x + width/2, y + length/2);
         }
@@ -104,8 +108,12 @@ public class Room : MonoBehaviour
             }
         }
 
+        Debug.Log("fin pasillos");
+
         // Draw tiles
         wallMap.SetTiles(vectors, tiles);
+
+        Debug.Log("pintados pasillos");
     }
 
 
