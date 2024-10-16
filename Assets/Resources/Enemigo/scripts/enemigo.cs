@@ -6,7 +6,7 @@ using UnityEngine.UIElements;
 public class enemigo : MonoBehaviour
 {
     //TODO: implementar ataque(cuando salte que tenga hitbox)
-    public jugador jugador;
+    public Player player;
     protected Rigidbody2D rb;
     protected Vector2 velImpulse = Vector2.zero;
     public bool invulnerable;
@@ -22,7 +22,7 @@ public class enemigo : MonoBehaviour
     public void Start()
     {
         rb = GetComponent<Rigidbody2D>();
-        jugador = GameObject.Find("player").GetComponent<jugador>();
+        player = GameObject.Find("player").GetComponent<Player>();
     }
     public void FixedUpdate()
     {
@@ -32,7 +32,7 @@ public class enemigo : MonoBehaviour
     public void Update()
     {
         // vida control
-        if (invulnerable) { invulnerable = jugador.attacking; }
+        if (invulnerable) { invulnerable = player.attacking; }
         if(health <= 0)
         {
             toDie();
@@ -40,7 +40,7 @@ public class enemigo : MonoBehaviour
     }
     public IEnumerator golpeado(float waitseconds,float ang,float attackKnockback)
     { 
-        StartCoroutine(impulse(jugador.arma.attackAnimation,ang,attackKnockback));
+        StartCoroutine(impulse(player.sword.attackAnimation,ang,attackKnockback));
         yield return new WaitForSeconds(waitseconds);
         invulnerable = false;
     }
@@ -63,20 +63,19 @@ public class enemigo : MonoBehaviour
         RaycastHit2D[] boxCast = Physics2D.BoxCastAll(position,scale, angle, dir, distance);
         foreach (RaycastHit2D collider in boxCast)
         {
-            if (collider.collider.CompareTag("jugador") && allowAttack)
+            if (collider.collider.CompareTag("player") && allowAttack)
             {
                 hitPlayer(Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x), damage, knockback, attackSpeed);
             }
         }
     }
-    //funciones que se llaman para atacar al jugador
+    //funciones que se llaman para atacar al player
     public void hitPlayer(float ang,int[] damage,float knockback,float attackSpeed)
     {
         allowAttack = false;
         StartCoroutine(esperar(attackSpeed));
         int dm = Random.Range(damage[0], damage[1] + 1);
-        jugador.takeDamage(dm,gameObject.GetComponent<enemigo>());
-        StartCoroutine(jugador.impulse(0.2f, ang, knockback));
+        player.takeDamage(dm,ang,knockback,gameObject);
     }
     IEnumerator esperar(float waitseconds)
     {
@@ -91,8 +90,11 @@ public class enemigo : MonoBehaviour
             room.CommunicateEnemyDeath();
         }
     }
-    public void takeDamage(int damage)
+    public void takeDamage(int damage,float ang,float attackKnockback)
     {
         health -= damage;
+        GetComponent<genParticulaTexto>().comenzar(damage, ang);
+        StartCoroutine(golpeado(attackSpeed, ang, attackKnockback));
+        invulnerable = true;
     }
 }

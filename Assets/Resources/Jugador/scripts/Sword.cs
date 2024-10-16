@@ -4,18 +4,18 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class arma : MonoBehaviour
+public class Sword : MonoBehaviour
 {
-    public jugador jugador;
+    public Player player;
     Animator ani;
     SpriteRenderer sR;
     public float recoil = 10f; // recoil del arma(empuje cuando)
     public float attackKnockback = 4f;// lo lejos que envia al enemigo atacando
-    public float attackSpeed = 0.2f; // velocidad a la que el jugador puede atacar(no es la velocidad de la animacion)
+    public float attackSpeed = 0.2f; // velocidad a la que el player puede atacar(no es la velocidad de la animacion)
     public float attackAnimation = 0.2f; // cuanto dura la animacion *importante que no sea mucho
     //to do manejar rng
     public int[] attackDamage = new int[2]; // daño de dañomin a dañomax
-    public Vector2 hitboxSize = new Vector2(1,2);
+    public Vector2 hitboxSize = new(1,2);
     float radioArma = 0.3f;
     float rotacionArma = 90;
     // Start is called before the first frame update
@@ -29,25 +29,25 @@ public class arma : MonoBehaviour
     void Update()
     {
 
-        //seguimiento del arma al jugador ç
-        if (jugador.ang > 90 || jugador.ang < -90)
+        //seguimiento del arma al player ç
+        if (player.ang > 90 || player.ang < -90)
         {
             sR.flipY = true;
-            float x = Mathf.Cos((jugador.ang - rotacionArma) * Mathf.Deg2Rad) * radioArma;
-            float y = Mathf.Sin((jugador.ang - rotacionArma) * Mathf.Deg2Rad) * radioArma;
+            float x = Mathf.Cos((player.ang - rotacionArma) * Mathf.Deg2Rad) * radioArma;
+            float y = Mathf.Sin((player.ang - rotacionArma) * Mathf.Deg2Rad) * radioArma;
             transform.localPosition = new Vector3(x, y-0.2f, 1);
-            transform.localEulerAngles = new Vector3(0, 0, jugador.ang + 90);
+            transform.localEulerAngles = new Vector3(0, 0, player.ang + 90);
         }
         else
         {
             sR.flipY = false;
-            float x = Mathf.Cos((jugador.ang + rotacionArma) * Mathf.Deg2Rad) * radioArma;
-            float y = Mathf.Sin((jugador.ang + rotacionArma) * Mathf.Deg2Rad) * radioArma;
+            float x = Mathf.Cos((player.ang + rotacionArma) * Mathf.Deg2Rad) * radioArma;
+            float y = Mathf.Sin((player.ang + rotacionArma) * Mathf.Deg2Rad) * radioArma;
             transform.localPosition = new Vector3(x, y - 0.2f, 1);
-            transform.localEulerAngles = new Vector3(0, 0, jugador.ang - 90);
+            transform.localEulerAngles = new Vector3(0, 0, player.ang - 90);
         }
         //bloqueo
-        if (jugador.blocking)
+        if (player.blocking)
         {
             radioArma = 0.9f;
             rotacionArma = -50;
@@ -60,7 +60,7 @@ public class arma : MonoBehaviour
             rotacionArma = 0;
         }
         //anim attack
-        ani.SetBool("atacando", jugador.attackingAnimation);
+        ani.SetBool("atacando", player.attackingAnimation);
 
     }
 

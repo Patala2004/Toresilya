@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class camara : MonoBehaviour
 {
-    public jugador jugador;
+    public Player player;
     public enemigo enemigo;
     // Start is called before the first frame update
     void Start()
@@ -17,8 +17,8 @@ public class camara : MonoBehaviour
     {
         if (Input.GetKeyUp(KeyCode.P))
         {
-            Instantiate(enemigo.gameObject, new Vector2(jugador.transform.position.x +5, jugador.transform.position.y),Quaternion.identity);
+            Instantiate(enemigo.gameObject, new Vector2(player.transform.position.x +5, player.transform.position.y),Quaternion.identity);
         }
-        transform.position = new Vector3(jugador.transform.position.x, jugador.transform.position.y,-20);
+        transform.position = new Vector3(player.transform.position.x, player.transform.position.y,-20);
     }
 }

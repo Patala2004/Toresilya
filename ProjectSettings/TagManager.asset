@@ -5,9 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - hitboxAmigo
-  - jugador
   - golpeable
   - enemigo
+  - player
   layers:
   - Default
   - TransparentFX

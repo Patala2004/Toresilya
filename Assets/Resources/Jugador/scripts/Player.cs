@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class jugador : MonoBehaviour
+public class Player : MonoBehaviour
 {
     //TODO: vida
     public float healthMax = 50;
@@ -19,7 +19,7 @@ public class jugador : MonoBehaviour
     [SerializeField] float parryTime = 0;
     Coroutine coroutineCooldownRes;
  
-    public arma arma;
+    public Sword sword;
     public float vel = 5f; //velocidad jugador
     public float ang; // angulo en grados respecto al cursor (0-180,-0-180)
     public bool attacking = false; // cuando estoy atacando
@@ -42,7 +42,7 @@ public class jugador : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        rb.velocity = velMovimiento + velImpulse; // la velocidad del movimiento mas la del recoil del arma
+        rb.velocity = velMovimiento + velImpulse; // la velocidad del movimiento mas la del recoil del sword
     }
     private void Update()
     {
@@ -62,8 +62,8 @@ public class jugador : MonoBehaviour
         //atacar
         if (Input.GetMouseButtonDown(0) && !attacking)
         {
-            StartCoroutine(attack(arma.attackSpeed));
-            StartCoroutine(attackAnimation(arma.attackAnimation));
+            StartCoroutine(attack(sword.attackSpeed));
+            StartCoroutine(attackAnimation(sword.attackAnimation));
         }
         //block
         if (Input.GetMouseButton(1) && !attackingAnimation && resistance != 0)
@@ -112,9 +112,9 @@ public class jugador : MonoBehaviour
     IEnumerator attack(float waitseconds) // funcion ataque
     {
         attacking = true;
-        arma.attack();
-        hitboxArma(transform.position, arma.hitboxSize, 0, mousePos-transform.position , 1, arma.attackDamage, arma.attackKnockback, arma.attackAnimation);
-        StartCoroutine(impulse(arma.attackAnimation, ang, arma.recoil)); // calcular el impulso(mejor con el tiempo de la animacion)
+        sword.attack();
+        hitboxsword(transform.position, sword.hitboxSize, 0, mousePos-transform.position , 1, sword.attackDamage, sword.attackKnockback, sword.attackAnimation);
+        StartCoroutine(impulse(sword.attackAnimation, ang, sword.recoil)); // calcular el impulso(mejor con el tiempo de la animacion)
         yield return new WaitForSeconds(waitseconds);
         attacking = false;
     }
@@ -124,7 +124,7 @@ public class jugador : MonoBehaviour
         yield return new WaitForSeconds(waitseconds);
         attackingAnimation = false;
     }
-    public void hitboxArma(Vector2 position, Vector2 scale, float angle, Vector2 dir, float distance, int[] damage, float knockback, float attackSpeed)
+    public void hitboxsword(Vector2 position, Vector2 scale, float angle, Vector2 dir, float distance, int[] damage, float knockback, float attackSpeed)
     {
         RaycastHit2D[] boxCast = Physics2D.BoxCastAll(position, scale, angle, dir, distance);
         foreach (RaycastHit2D collider in boxCast)
@@ -134,12 +134,8 @@ public class jugador : MonoBehaviour
                 enemigo enemigo = collider.collider.GetComponent<enemigo>();
                 if (!enemigo.invulnerable)
                 {
-                    int dam = Random.Range(arma.attackDamage[0], arma.attackDamage[1] + 1);
-                    enemigo.takeDamage(dam);
-                    enemigo.GetComponent<genParticulaTexto>().comenzar(dam, ang);
-                    StartCoroutine(enemigo.golpeado(arma.attackSpeed, ang, arma.attackKnockback));
-                    enemigo.invulnerable = true;
-                    Debug.Log("ENENIGGANIGGER GOLPEADO!!!");
+                    int dam = Random.Range(sword.attackDamage[0], sword.attackDamage[1] + 1);
+                    enemigo.takeDamage(dam,ang,sword.attackKnockback);
                 }
             }
         }
@@ -147,7 +143,7 @@ public class jugador : MonoBehaviour
     //Funcion block
     public void block()
     {
-        arma.block();
+        sword.block();
         blocking = true;
     }
     //Funcion que añade un impulso en una direccion
@@ -164,19 +160,20 @@ public class jugador : MonoBehaviour
         velImpulse = Vector2.zero;
     }
     // Funcion que sirve para recibir daño
-    public void takeDamage(int damage,enemigo ene)
+    public void takeDamage(int damage,float ang,float knockback,GameObject gObject = null)
     {
         if(resistance > 0 && blocking)
         {
-            if (parrying) // se hace el parry a un enemigo
+            if (parrying && gObject != null) // se hace el parry a un enemigo
             {
                 parryTime = 0; // cuando haces parry reseteas el timer
-                StartCoroutine(ene.impulse(0.1f, ang, 1)); // aplica empuje en la dir que haces el parryçç+
+                StartCoroutine(gObject.GetComponent<enemigo>().impulse(0.1f, ang, 1)); // aplica empuje en la dir que haces el parryçç+
                 attacking = false; // cuando haces parry reseteas que el jugador pueda atacar(punish)
             }
             else
             {
                 resistance -= damage;
+                StartCoroutine(impulse(0.2f, ang, knockback)); // empuje
                 // cooldown de parry
                 if (coroutineCooldownRes != null)
                 {
@@ -188,6 +185,7 @@ public class jugador : MonoBehaviour
         else
         {
             health -= damage;
+            StartCoroutine(impulse(0.2f, ang, knockback)); // empuje
         }
     }
     // Parry y manejo de resistencia

@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4828342796627309653}
   - component: {fileID: 2657037084222195983}
   m_Layer: 0
-  m_Name: espada
+  m_Name: sword
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -98,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16c3df8a1083f5d449bf81688f002824, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  jugador: {fileID: 8817363745017176764}
+  player: {fileID: 161952172803752721}
   recoil: 10
   attackKnockback: 4
   attackSpeed: 0.21
@@ -138,7 +138,7 @@ GameObject:
   - component: {fileID: 9134617899203809750}
   - component: {fileID: 5605307540211292037}
   m_Layer: 0
-  m_Name: cursor
+  m_Name: mouse
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -233,13 +233,13 @@ GameObject:
   m_Component:
   - component: {fileID: 3239231867532664413}
   - component: {fileID: 4357321508639750816}
-  - component: {fileID: 8817363745017176764}
+  - component: {fileID: 161952172803752721}
   - component: {fileID: 7757474557007384813}
   - component: {fileID: 674154930639325253}
   - component: {fileID: 7318882265097623831}
   m_Layer: 3
   m_Name: JUGADOR
-  m_TagString: jugador
+  m_TagString: player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -313,7 +313,7 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8817363745017176764
+--- !u!114 &161952172803752721
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -327,8 +327,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthMax: 50
   health: 50
-  resistanceMax: 11.1
-  resistance: 15.6
+  resistanceMax: 50
+  resistance: 50
   resistanceRegen: 1
   parrying: 0
   parryTimerCooldown: 3
@@ -336,7 +336,7 @@ MonoBehaviour:
   parryTimerClamp: 1
   parryTime: 0
   arma: {fileID: 4828342796627309653}
-  vel: 6
+  vel: 5
   ang: 0
   attacking: 0
   attackingAnimation: 0

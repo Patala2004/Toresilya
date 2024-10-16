@@ -20,19 +20,19 @@ public class slime : enemigo
     new private void FixedUpdate()
     {
 		base.FixedUpdate();
-		float magnitude = (jugador.gameObject.transform.position - gameObject.transform.position).magnitude;
+		float magnitude = (player.gameObject.transform.position - gameObject.transform.position).magnitude;
         if (magnitude <= persecutionRadius) {
 			ac.SetBool("detectedPlayer", true);
 			jumpTimer -= Time.fixedDeltaTime;
             if (jumpTimer <= 0f) {
-				Vector2 dir = (jugador.transform.position - gameObject.transform.position).normalized;
+				Vector2 dir = (player.transform.position - gameObject.transform.position).normalized;
 				rb.AddForce(dir*jumpForce);
                 jumpTimer = jumpTimerInit;
                 allowAttack = true;
 			}
 			else // empieza a saltar
 			{
-                hitboxEnemigo(transform.position, transform.localScale, 0, (jugador.gameObject.transform.position - gameObject.transform.position), 0,this.damage, this.knockback, this.attackSpeed);
+                hitboxEnemigo(transform.position, transform.localScale, 0, (player.gameObject.transform.position - gameObject.transform.position), 0, this.damage, this.knockback, this.attackSpeed);
             }
 		} else {
 			ac.SetBool("detectedPlayer", false);

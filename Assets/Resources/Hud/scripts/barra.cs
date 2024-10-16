@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class barra : MonoBehaviour
 {
-    public jugador jugador;
+    public Player player;
     public GameObject resistanceBar;
     public GameObject healthBar;
 	private float healthOrigOffset;
@@ -23,7 +23,7 @@ public class barra : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        healthBar.GetComponent<RectTransform>().sizeDelta = new Vector2(healthOrigOffset*((float)jugador.health/jugador.healthMax), healthBar.GetComponent<RectTransform>().sizeDelta.y);
-        resistanceBar.GetComponent<RectTransform>().sizeDelta = new Vector2(resistanceOrigOffset * ((float)jugador.resistance / jugador.resistanceMax), resistanceBar.GetComponent<RectTransform>().sizeDelta.y);
+        healthBar.GetComponent<RectTransform>().sizeDelta = new Vector2(healthOrigOffset*((float)player.health/player.healthMax), healthBar.GetComponent<RectTransform>().sizeDelta.y);
+        resistanceBar.GetComponent<RectTransform>().sizeDelta = new Vector2(resistanceOrigOffset * ((float)player.resistance / player.resistanceMax), resistanceBar.GetComponent<RectTransform>().sizeDelta.y);
     }
 }

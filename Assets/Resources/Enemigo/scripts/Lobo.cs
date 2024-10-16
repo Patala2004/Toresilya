@@ -22,15 +22,15 @@ public class Lobo : enemigo
 	}
 
 	void Moverse() {
-		float distance = (jugador.transform.position - gameObject.transform.position).magnitude;
+		float distance = (player.transform.position - gameObject.transform.position).magnitude;
 		if(distance <= attackDistance) {
-			Vector2 direccion = (jugador.transform.position - gameObject.transform.position).normalized;
+			Vector2 direccion = (player.transform.position - gameObject.transform.position).normalized;
 			if(timer <= 0) {
 				rb.AddForce(direccion * attackForce);
 				timer = timerReset;
 			} else updateTimer();
 		} else if(distance <= followDistance) {
-			Vector2 direccion = (jugador.transform.position - gameObject.transform.position).normalized;
+			Vector2 direccion = (player.transform.position - gameObject.transform.position).normalized;
 			if(timer == timerReset)
 				transform.Translate(displSpeed * Time.fixedDeltaTime * direccion);
 			else updateTimer();
