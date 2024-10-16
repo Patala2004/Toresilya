@@ -16,15 +16,21 @@ public class MapGen: MonoBehaviour{
     public Tile floorTile;
     public Tile corridorTile;
     public Tile wallTile;
+    public Tile doorTile;
     public Tilemap floorMap;
     public Tilemap wallMap;
     public GameObject box; // Box prefab
+
+    public GameObject[] roomPrefabs18x18;
+    public GameObject[] roomPrefabs26x26;
+    public GameObject[] roomPrefabs18x26;
+    public GameObject[] roomPrefabs26x18;
 
     public GameObject rooms;
 
     public AStarStruct mapGenerator;
 
-    public int roomAmmount = 100;
+    public int roomAmmount = 14;
     
 
     private bool hasBeenGenerated = false;
@@ -37,9 +43,7 @@ public class MapGen: MonoBehaviour{
         rooms.name = "Rooms";
         rooms.transform.parent = transform;
         StartCoroutine(generateMap());
-    }
-
-    void Update(){
+        
     }
 
     IEnumerator generateMap(){
@@ -135,6 +139,11 @@ public class MapGen: MonoBehaviour{
         JobHandle floorJob = floorCoordJob.Schedule();
         JobHandle coorJob = corrCoordJob.Schedule();
         JobHandle wallJob = wallCoordJob.Schedule();
+
+
+        // Generate room objects
+        RoomCreator.createRooms(allNodes, roomTypes, xoffset, yoffset, rooms, roomPrefabs18x18, roomPrefabs26x26, roomPrefabs18x26, roomPrefabs26x18);
+
         while(!floorJob.IsCompleted || !coorJob.IsCompleted || !wallJob.IsCompleted){
             // Dont block main thread while jobs are running
             yield return null;
@@ -163,18 +172,16 @@ public class MapGen: MonoBehaviour{
         floorMap.SetTiles(tileRenderer.vectorCoordinates, tileRenderer.tileArr);
         wallMap.SetTiles(tileRenderer.wallVectorCoordinates, tileRenderer.wallTileArr);
 
+        GameObject.Find("player").transform.position = new Vector3((startNodeCoords[0] - xoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH + RoomType.NORMAL_ROOM_WIDTH/2, (startNodeCoords[1] - yoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH + RoomType.NORMAL_ROOM_LENGTH/2, 0);
+        //GameObject.Find("Enemigo").transform.position = new Vector3((startNodeCoords[0] - xoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH + RoomType.NORMAL_ROOM_WIDTH/2, (startNodeCoords[1] - yoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH + RoomType.NORMAL_ROOM_LENGTH/2 + 3, 0);
+
+
         // TEMP -> draw other collor at start and endnode
-        floorMap.SetTile(new Vector3Int((startNodeCoords[0] - xoffset) * 36 + 10, (startNodeCoords[1] - yoffset) * 36 + 10, 0),corridorTile);
-        floorMap.SetTile(new Vector3Int((endNodeCoords[0] - xoffset) * 40 + 10, (endNodeCoords[1] - yoffset) * 40 + 10, 0),corridorTile);
-
-
-        GameObject.Find("player").transform.position = new Vector3Int((startNodeCoords[0] - xoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_ROOM_WIDTH/2 + RoomType.NORMAL_CORRIDOR_LENGTH, (startNodeCoords[1] - yoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH + RoomType.NORMAL_ROOM_WIDTH/2, 0);
-        Instantiate(Resources.Load<GameObject>("Enemigo/Slime"),new Vector3Int((startNodeCoords[0] - xoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_ROOM_WIDTH / 2 + RoomType.NORMAL_CORRIDOR_LENGTH + 5, (startNodeCoords[1] - yoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH + RoomType.NORMAL_ROOM_WIDTH / 2, 0),Quaternion.identity);
-
+        floorMap.SetTile(new Vector3Int((startNodeCoords[0] - xoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH + RoomType.NORMAL_ROOM_WIDTH/2, (startNodeCoords[1] - yoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH + RoomType.NORMAL_ROOM_LENGTH/2, 0),corridorTile);
+        floorMap.SetTile(new Vector3Int((endNodeCoords[0] - xoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH  + RoomType.NORMAL_ROOM_WIDTH/2, (endNodeCoords[1] - yoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH  + RoomType.NORMAL_ROOM_LENGTH/2, 0),corridorTile);
 
         roomTypes.Dispose();
-        xFloorCoords.Dispose();    // Tp player
-        
+        xFloorCoords.Dispose();
         yFloorCoords.Dispose();
         xCorridorCoords.Dispose();
         yCorridorCoords.Dispose();
@@ -656,21 +663,25 @@ public struct WallCoordinateGetter{
             // Set room sizes
             int width = RoomType.NORMAL_ROOM_WIDTH;
             int length = RoomType.NORMAL_ROOM_LENGTH;
+            int vertical_corridor_length = RoomType.NORMAL_CORRIDOR_LENGTH;
+            int horizontal_corridor_length = RoomType.NORMAL_CORRIDOR_LENGTH;
             if(roomType[i] == RoomType.LARGE_ENEMY_ROOM_CODE){
                 width = RoomType.LARGE_ROOM_WIDTH;
                 length = RoomType.LARGE_ROOM_WIDTH;
                 x -= (RoomType.LARGE_ROOM_WIDTH-RoomType.NORMAL_ROOM_WIDTH)/2;
                 y -= (RoomType.LARGE_ROOM_LENGTH-RoomType.NORMAL_ROOM_LENGTH)/2;
+                vertical_corridor_length = RoomType.LARGE_ROOM_CORRIDOR_LENGTH;
+                horizontal_corridor_length = RoomType.LARGE_ROOM_CORRIDOR_LENGTH;
             }
             else if(roomType[i] == RoomType.STRECHED_ENEMY_ROOM_H_CODE){
                 width = RoomType.LARGE_ROOM_WIDTH;
-                length = RoomType.NORMAL_ROOM_LENGTH;
                 x -= (RoomType.LARGE_ROOM_WIDTH-RoomType.NORMAL_ROOM_WIDTH)/2;
+                horizontal_corridor_length = RoomType.LARGE_ROOM_CORRIDOR_LENGTH;
             }
             else if(roomType[i] == RoomType.STRECHED_ENEMY_ROOM_V_CODE){
-                width = RoomType.NORMAL_ROOM_WIDTH;
                 length = RoomType.LARGE_ROOM_WIDTH;
-                y -= (RoomType.LARGE_ROOM_LENGTH-RoomType.NORMAL_ROOM_LENGTH)/2;     
+                y -= (RoomType.LARGE_ROOM_LENGTH-RoomType.NORMAL_ROOM_LENGTH)/2;
+                vertical_corridor_length = RoomType.LARGE_ROOM_CORRIDOR_LENGTH; 
             }
 
             // Add walls
@@ -684,6 +695,13 @@ public struct WallCoordinateGetter{
                 for(int a = woffset + RoomType.CORRIDOR_WIDTH; a < width + 1 ; a++){
                     wallxcoordinates.Add(x + a);
                     wallycoordinates.Add(y + length);
+                }
+                // Paint corridor walls
+                for(int a = 1; a < vertical_corridor_length - 1; a++){
+                    wallxcoordinates.Add(x + woffset - 1);
+                    wallycoordinates.Add(y + length + a);
+                    wallxcoordinates.Add(x + woffset + RoomType.CORRIDOR_WIDTH);
+                    wallycoordinates.Add(y + length + a);
                 }
             }
             else{
@@ -702,6 +720,13 @@ public struct WallCoordinateGetter{
                     wallxcoordinates.Add(x + width);
                     wallycoordinates.Add(y + a);                    
                 }
+                // Paint corridor walls
+                for(int a = 1; a < horizontal_corridor_length - 1; a++){
+                    wallxcoordinates.Add(x + width + a);
+                    wallycoordinates.Add(y + loffset - 1);
+                    wallxcoordinates.Add(x + width + a);
+                    wallycoordinates.Add(y + loffset + RoomType.CORRIDOR_WIDTH);
+                }
             }
             else{
                 for(int a = 0; a < length; a++){
@@ -719,6 +744,13 @@ public struct WallCoordinateGetter{
                     wallxcoordinates.Add(x + a);
                     wallycoordinates.Add(y - 1);
                 }
+                // Paint corridor walls
+                for(int a = 2; a < vertical_corridor_length; a++){
+                    wallxcoordinates.Add(x + woffset - 1);
+                    wallycoordinates.Add(y - a);
+                    wallxcoordinates.Add(x + woffset + RoomType.CORRIDOR_WIDTH);
+                    wallycoordinates.Add(y - a);
+                }
             }
             else{
                 for(int a = -1; a < width + 1; a++){
@@ -735,6 +767,13 @@ public struct WallCoordinateGetter{
                 for(int a = loffset + RoomType.CORRIDOR_WIDTH; a < length; a++){
                     wallxcoordinates.Add(x - 1);
                     wallycoordinates.Add(y + a);                    
+                }
+                // Paint corridor walls
+                for(int a = 2; a < horizontal_corridor_length; a++){
+                    wallxcoordinates.Add(x - a);
+                    wallycoordinates.Add(y + loffset - 1);
+                    wallxcoordinates.Add(x - a);
+                    wallycoordinates.Add(y + loffset + RoomType.CORRIDOR_WIDTH);
                 }
             }
             else{
@@ -893,6 +932,91 @@ public class TileRenderer{
     }
 }
 
+public class RoomCreator{
+    public static void createRooms(NativeList<NodeStruct> allNodes, NativeList<int> roomType, int xoffset, int yoffset, GameObject rooms
+    , GameObject[] roomPrefab18x18, GameObject[] roomPrefab26x26, GameObject[] roomPrefab18x26, GameObject[] roomPrefab26x18){
+        for(int i = 0; i < allNodes.Length; i++){ // AllNodes.Length == roomTypes.Length
+            int x = allNodes[i].x - xoffset;
+            int y = allNodes[i].y - yoffset;
+            
+            // Get width and length
+            int length = RoomType.NORMAL_ROOM_LENGTH;
+            int width = RoomType.NORMAL_ROOM_WIDTH;
+
+            // Create object
+            GameObject newRoom = new GameObject();
+            newRoom.transform.parent = rooms.transform;
+            newRoom.name = "room " + x +"," + y;
+            x = x*(RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH;
+            y = y*(RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH;
+
+            if(roomType[i] == RoomType.LARGE_ENEMY_ROOM_CODE){
+                width = RoomType.LARGE_ROOM_WIDTH;
+                length = RoomType.LARGE_ROOM_WIDTH;
+                x -= (RoomType.LARGE_ROOM_WIDTH-RoomType.NORMAL_ROOM_WIDTH)/2;
+                y -= (RoomType.LARGE_ROOM_LENGTH-RoomType.NORMAL_ROOM_LENGTH)/2;
+            }
+            else if(roomType[i] == RoomType.STRECHED_ENEMY_ROOM_H_CODE){
+                width = RoomType.LARGE_ROOM_WIDTH;
+                x -= (RoomType.LARGE_ROOM_WIDTH-RoomType.NORMAL_ROOM_WIDTH)/2;
+            }
+            else if(roomType[i] == RoomType.STRECHED_ENEMY_ROOM_V_CODE){
+                length = RoomType.LARGE_ROOM_WIDTH;    
+                y -= (RoomType.LARGE_ROOM_LENGTH-RoomType.NORMAL_ROOM_LENGTH)/2;     
+            }
+
+            // Create collider
+            newRoom.transform.position = new Vector3(x + width/2,y + length/2,0); // +width/2 etc so collider gets placed on the center, not bottom left
+            BoxCollider2D roomCollider = newRoom.AddComponent<BoxCollider2D>();
+            roomCollider.size = new Vector2Int(width - 2, length - 2); // Give some room so doors dont get close on player
+            roomCollider.isTrigger = true;
+
+            // Add Script component and give it its variables
+            Room roomScript = newRoom.AddComponent<Room>();
+            roomScript.roomCollider = roomCollider;
+            roomScript.x = x; // Pass along coordinates of bottom left corner
+            roomScript.y = y;
+            roomScript.width = width;
+            roomScript.length = length;
+            roomScript.roomType = roomType[i];
+            // Corridor booleans
+            roomScript.passCorridorBooleans(allNodes[i].north,  allNodes[i].east,  allNodes[i].south,  allNodes[i].west);
+
+            /*
+
+            
+            System.Random rand = new System.Random();
+            GameObject randRoomPrefab = null;
+            // Add a room Obstacle prefab
+            if(roomType[i] == RoomType.NORMAL_ENEMY_ROOM_CODE){
+                randRoomPrefab = GameObject.Instantiate(roomPrefab18x18[rand.Next(0,roomPrefab18x18.Length)]); 
+            }
+            else if(roomType[i] == RoomType.LARGE_ENEMY_ROOM_CODE){
+                randRoomPrefab = GameObject.Instantiate(roomPrefab26x26[rand.Next(0,roomPrefab26x26.Length)]); 
+            }
+            else if(roomType[i] == RoomType.STRECHED_ENEMY_ROOM_V_CODE){
+                randRoomPrefab = GameObject.Instantiate(roomPrefab18x26[rand.Next(0,roomPrefab18x26.Length)]); 
+            }
+            else if(roomType[i] == RoomType.STRECHED_ENEMY_ROOM_H_CODE){
+                randRoomPrefab = GameObject.Instantiate(roomPrefab26x18[rand.Next(0,roomPrefab26x18.Length)]); 
+            }
+
+            if(randRoomPrefab != null){
+                randRoomPrefab.transform.position = new Vector3(x + width/2,y + length/2,0);
+                randRoomPrefab.transform.parent = newRoom.transform;
+            }
+
+            
+            // Create node Matrix
+            roomScript.createMatrix(width, length, randRoomPrefab);
+
+            */
+
+            
+        }
+    }
+}
+
 
 
 
@@ -917,7 +1041,7 @@ public class TileRenderer{
 
 
 
-
+/*
 
 
 // class to paint the map recursively starting from endnode
@@ -1175,14 +1299,6 @@ public class MapPainter{
     private void setCorridorBooleans(NodeStruct node, Room roomScript, NativeList<NodeStruct> nodeStructList){
         // Set corridors for childre
         foreach(NodeStruct childNode in node.neighbors(grid, gridSize, nodeStructList)){
-            /*String dir = getDirection(node.x - childNode.x, node.y - childNode.y);
-            switch(dir){
-                case "North": roomScript.north = true; break;
-                case "East": roomScript.east = true; break;
-                case "South": roomScript.south = true; break;
-                case "West": roomScript.west = true; break;
-                default: break;
-            }*/
             roomScript.north = node.north;
             roomScript.west = node.west;
             roomScript.east = node.east;
@@ -1358,7 +1474,7 @@ public class MapPainter{
      
     }
 }
-
+*/
 public static class RoomType{
     // Enemy Room Type codes
     public const int START_ROOM_CODE = 0;
@@ -1372,9 +1488,11 @@ public static class RoomType{
     public const int STRECHED_ENEMY_ROOM_H_CODE = 8;
 
     // Room sizes
+
+    // PLEASE MAKE SURE ROOM-SIZE-4 IS DIVISIBLE BY 2 ( (..._ROOM_(SIZE/WIDTH/LENGTH) - 4 ) % 2 == 0)
     public const int MAX_ROOM_SIZE = 26;
     public const int NORMAL_CORRIDOR_LENGTH = 10;
-    public const int LARGE_ROOM_CORRIDOR_LENGTH = 5;
+    public const int LARGE_ROOM_CORRIDOR_LENGTH = 6;
     public const int CORRIDOR_WIDTH = 4;
     public const int NORMAL_ROOM_WIDTH = 18;
     public const int NORMAL_ROOM_LENGTH = 18;
