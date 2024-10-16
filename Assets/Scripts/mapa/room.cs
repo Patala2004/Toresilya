@@ -38,7 +38,7 @@ public class Room : MonoBehaviour
     void Start()
     {
         mapManager = GameObject.Find("MapGenerator").GetComponent<MapGen>();
-        //enemySpawner = GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>();
+        enemySpawner = GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>();
     }
 
     // Update is called once per frame

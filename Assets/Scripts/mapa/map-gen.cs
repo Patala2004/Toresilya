@@ -982,7 +982,7 @@ public class RoomCreator{
             // Corridor booleans
             roomScript.passCorridorBooleans(allNodes[i].north,  allNodes[i].east,  allNodes[i].south,  allNodes[i].west);
 
-
+            /*
 
             
             System.Random rand = new System.Random();
@@ -1009,6 +1009,8 @@ public class RoomCreator{
             
             // Create node Matrix
             roomScript.createMatrix(width, length, randRoomPrefab);
+
+            */
 
             
         }
