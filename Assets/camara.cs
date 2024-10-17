@@ -5,7 +5,7 @@ using UnityEngine;
 public class camara : MonoBehaviour
 {
     public Player player;
-    public enemigo enemigo;
+    public Enemy enemigo;
     // Start is called before the first frame update
     void Start()
     {

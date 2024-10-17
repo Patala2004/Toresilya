@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class particulaTexto : MonoBehaviour
+public class ParticulaTexto : MonoBehaviour
 {
     TextMeshPro mProTexto;
     public Vector3 vel;

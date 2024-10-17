@@ -4,7 +4,7 @@ using System.Threading;
 using UnityEngine;
 using UnityEngine.Rendering.Universal.Internal;
 
-public class Lobo : enemigo
+public class Lobo : Enemy
 {
 	public float  displSpeed;
 	public float followDistance, attackDistance;

@@ -17,14 +17,17 @@ public class Player : MonoBehaviour
     public float parryTimerCheck = 0.5f; // Cuanto tiempo es valido el parry 
     public float parryTimerClamp = 1; // Para que el parry no pueda espamearse poner esto mayor a parryTimerCheck
     [SerializeField] float parryTime = 0;
-    Coroutine coroutineCooldownRes;
- 
-    public Sword sword;
-    public float vel = 5f; //velocidad jugador
-    public float ang; // angulo en grados respecto al cursor (0-180,-0-180)
+    Coroutine IcooldownRes;
+    //arma
     public bool attacking = false; // cuando estoy atacando
     public bool attackingAnimation = false;
     public bool blocking = false;
+
+    public Sword sword;
+    public float vel = 5f;
+    public float velWalk = 5f; //velocidad jugador
+    public float velBlock = 2.5f;
+    public float ang; // angulo en grados respecto al cursor (0-180,-0-180)
     Vector2 velImpulse;
     Vector2 velMovimiento;
     Vector3 mousePos;
@@ -47,7 +50,8 @@ public class Player : MonoBehaviour
     private void Update()
     {
         //movimiento
-        moving();
+        Moving();
+        vel = (blocking ? velBlock : velWalk); // C:
         //vida
         health = Mathf.Clamp(health,0,healthMax); // limita la vida a maxHealth
         //resistencia y parry
@@ -62,13 +66,13 @@ public class Player : MonoBehaviour
         //atacar
         if (Input.GetMouseButtonDown(0) && !attacking)
         {
-            StartCoroutine(attack(sword.attackSpeed));
-            StartCoroutine(attackAnimation(sword.attackAnimation));
+            StartCoroutine(Attack(sword.attackSpeed));
+            StartCoroutine(AttackAnimation(sword.attackAnimation));
         }
         //block
-        if (Input.GetMouseButton(1) && !attackingAnimation && resistance != 0)
+        if (Input.GetMouseButton(1) && !attackingAnimation && resistance != 0) // cuando bloqueas tenemos en cuenta la animacion de ataque no el attack speed
         {
-            block();
+            Block();
             parryTime += Time.deltaTime; // añade tiempo al parry time para que no puedas spamear el boton de atacar
         }
         else
@@ -78,7 +82,7 @@ public class Player : MonoBehaviour
         }
         //direccion en la que esta mirando el personaje
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        ang = calcularAngulo();
+        ang = CalcularAngulo();
         sR.flipX = (ang > 90 || ang < -90);
         //animacion
         if (attackingAnimation)
@@ -90,14 +94,14 @@ public class Player : MonoBehaviour
         }
     }
     //Funcion que calcula en angulo respecto al cursor
-    public float calcularAngulo()
+    public float CalcularAngulo()
     {
         float adyacente = mousePos.x - transform.position.x;
         float opuesto = mousePos.y - transform.position.y ;
         return Mathf.Rad2Deg*(Mathf.Atan2(opuesto,adyacente));
     }
     //Funcion que devuelve el vector2 del mocvimiento del jugador
-    public void moving()
+    public void Moving()
     {
         float x = Input.GetAxis("Horizontal");
         float y = Input.GetAxis("Vertical");
@@ -109,45 +113,45 @@ public class Player : MonoBehaviour
         velMovimiento = dir * vel;
     }
     //Funcion atacar
-    IEnumerator attack(float waitseconds) // funcion ataque
+    IEnumerator Attack(float waitseconds) // funcion ataque
     {
         attacking = true;
-        sword.attack();
-        hitboxsword(transform.position, sword.hitboxSize, 0, mousePos-transform.position , 1, sword.attackDamage, sword.attackKnockback, sword.attackAnimation);
-        StartCoroutine(impulse(sword.attackAnimation, ang, sword.recoil)); // calcular el impulso(mejor con el tiempo de la animacion)
+        sword.Attack();
+        HitboxSword(transform.position, sword.hitboxSize, 0, (mousePos-transform.position).normalized , 1, sword.attackDamage, sword.attackKnockback);
+        StartCoroutine(Impulse(sword.attackAnimation, ang, sword.recoil)); // calcular el impulso(mejor con el tiempo de la animacion)
         yield return new WaitForSeconds(waitseconds);
         attacking = false;
     }
-    IEnumerator attackAnimation(float waitseconds)
+    IEnumerator AttackAnimation(float waitseconds)
     {
         attackingAnimation = true;
         yield return new WaitForSeconds(waitseconds);
         attackingAnimation = false;
     }
-    public void hitboxsword(Vector2 position, Vector2 scale, float angle, Vector2 dir, float distance, int[] damage, float knockback, float attackSpeed)
+    public void HitboxSword(Vector2 position, Vector2 scale, float angle, Vector2 dir, float distance, int[] damage, float knockback)
     {
         RaycastHit2D[] boxCast = Physics2D.BoxCastAll(position, scale, angle, dir, distance);
         foreach (RaycastHit2D collider in boxCast)
         {
-            if (collider.collider.CompareTag("enemigo"))
+            if (collider.collider.CompareTag("enemy"))
             {
-                enemigo enemigo = collider.collider.GetComponent<enemigo>();
-                if (!enemigo.invulnerable)
+                Enemy enemy = collider.collider.GetComponent<Enemy>();
+                if (!enemy.invulnerable)
                 {
-                    int dam = Random.Range(sword.attackDamage[0], sword.attackDamage[1] + 1);
-                    enemigo.takeDamage(dam,ang,sword.attackKnockback);
+                    int dam = Random.Range(damage[0], damage[1] + 1);
+                    enemy.TakeDamage(dam,ang,knockback);
                 }
             }
         }
     }
     //Funcion block
-    public void block()
+    public void Block()
     {
-        sword.block();
+        sword.Block();
         blocking = true;
     }
     //Funcion que añade un impulso en una direccion
-    public IEnumerator impulse(float waitseconds,float ang,float recoil) 
+    public IEnumerator Impulse(float waitseconds,float ang,float recoil) 
     {
         float elapsedTime = 0;
         Vector2 dir = new Vector3(Mathf.Cos(ang * Mathf.Deg2Rad), Mathf.Sin(ang * Mathf.Deg2Rad));
@@ -160,36 +164,36 @@ public class Player : MonoBehaviour
         velImpulse = Vector2.zero;
     }
     // Funcion que sirve para recibir daño
-    public void takeDamage(int damage,float ang,float knockback,GameObject gObject = null)
+    public void TakeDamage(int damage,float ang,float knockback,GameObject gObject = null)
     {
         if(resistance > 0 && blocking)
         {
-            if (parrying && gObject != null) // se hace el parry a un enemigo
+            if (parrying && gObject != null) // se hace el parry a un Enemy
             {
                 parryTime = 0; // cuando haces parry reseteas el timer
-                StartCoroutine(gObject.GetComponent<enemigo>().impulse(0.1f, ang, 1)); // aplica empuje en la dir que haces el parryçç+
+                StartCoroutine(gObject.GetComponent<Enemy>().Impulse(0.1f, ang, 1)); // aplica empuje en la dir que haces el parry
                 attacking = false; // cuando haces parry reseteas que el jugador pueda atacar(punish)
             }
             else
             {
                 resistance -= damage;
-                StartCoroutine(impulse(0.2f, ang, knockback)); // empuje
+                StartCoroutine(Impulse(0.2f, ang, knockback)); // empuje
                 // cooldown de parry
-                if (coroutineCooldownRes != null)
+                if (IcooldownRes != null)
                 {
-                    StopCoroutine(coroutineCooldownRes);
+                    StopCoroutine(IcooldownRes);
                 }
-                coroutineCooldownRes = StartCoroutine(parryCooldown(parryTimerCooldown));
+                IcooldownRes = StartCoroutine(ParryCooldown(parryTimerCooldown));
             }
         }
         else
         {
             health -= damage;
-            StartCoroutine(impulse(0.2f, ang, knockback)); // empuje
+            StartCoroutine(Impulse(0.2f, ang, knockback)); // empuje
         }
     }
     // Parry y manejo de resistencia
-    IEnumerator parryCooldown(float waitseconds)
+    IEnumerator ParryCooldown(float waitseconds)
     {
         resistanceRegen = false;
         yield return new WaitForSeconds(waitseconds);

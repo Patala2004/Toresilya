@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Data.Common;
 using UnityEngine;
 
-public class genParticulaTexto : MonoBehaviour
+public class GenParticulaTexto : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject particula;
@@ -28,7 +28,7 @@ public class genParticulaTexto : MonoBehaviour
         Vector2 dir = new Vector3(Mathf.Cos(ang * Mathf.Deg2Rad), Mathf.Sin(ang * Mathf.Deg2Rad));
         dir += Vector2.up * particulaUpRig; 
         //Instanciamos la particula
-        particulaTexto temp = Instantiate(particula, new Vector3(transform.position.x, transform.position.y, 0), transform.rotation).GetComponent<particulaTexto>();
+        ParticulaTexto temp = Instantiate(particula, new Vector3(transform.position.x, transform.position.y, 0), transform.rotation).GetComponent<ParticulaTexto>();
         temp.vel = dir * particulaVel;
         temp.damage = damage;
        

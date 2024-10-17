@@ -59,7 +59,7 @@ public class Room : MonoBehaviour
             CloseCorridors();
             GameObject newEnemy = enemySpawner.SpawnEnemy(x + width/2, y + length/2);
             aliveEnemies++;
-            newEnemy.GetComponent<enemigo>().room = this;
+            newEnemy.GetComponent<Enemy>().room = this;
         }
     }
 

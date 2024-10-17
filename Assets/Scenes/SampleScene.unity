@@ -383,7 +383,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 4
+  orthographic size: 5
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -488,6 +488,26 @@ PrefabInstance:
       propertyPath: sword
       value: 
       objectReference: {fileID: 1088749462}
+    - target: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
+      propertyPath: health
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
+      propertyPath: velBlock
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
+      propertyPath: healthMax
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
+      propertyPath: resistance
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
+      propertyPath: resistanceMax
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 2631732413121222874, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: m_Name
       value: sword
@@ -498,11 +518,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3239231867532664413, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0.013012508
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3239231867532664413, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.064290926
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3239231867532664413, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -579,7 +599,7 @@ MonoBehaviour:
   attackKnockback: 4
   attackSpeed: 0.2
   attackAnimation: 0.2
-  attackDamage: 0100000003000000
+  attackDamage: 0200000004000000
   hitboxSize: {x: 1, y: 2}
 --- !u!1 &1199260586 stripped
 GameObject:
@@ -599,7 +619,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   floorTile: {fileID: 11400000, guid: a2a597d78bf200f48aeced89bda86f33, type: 2}
-  corridorTile: {fileID: 11400000, guid: a368fcca269d5744da42756e8d14b76d, type: 2}
+  corridorTile: {fileID: 11400000, guid: 6f825c43646150544b8eaecb03f40aac, type: 2}
   wallTile: {fileID: 11400000, guid: 0894a9b26aa3a674ab2ea6c4c9ad9f3f, type: 2}
   doorTile: {fileID: 11400000, guid: 0894a9b26aa3a674ab2ea6c4c9ad9f3f, type: 2}
   floorMap: {fileID: 430523385}
@@ -975,7 +995,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1569319456}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -12150}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 135, y: 135, z: 135}
   m_ConstrainProportionsScale: 0
   m_Children: []

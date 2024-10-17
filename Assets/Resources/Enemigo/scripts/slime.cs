@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
-using UnityEditor.Animations;
 using UnityEngine;
 
-public class slime : enemigo
+public class Slime : Enemy
 {
     public float persecutionRadius = 5.0f;
 	public float jumpForce = 120f, jumpTimerInit = 1f, jumpTimer;
@@ -32,7 +31,7 @@ public class slime : enemigo
 			}
 			else // empieza a saltar
 			{
-                hitboxEnemigo(transform.position, transform.localScale, 0, (player.gameObject.transform.position - gameObject.transform.position), 0, this.damage, this.knockback, this.attackSpeed);
+                HitboxEnemigo(transform.position, transform.localScale, 0, (player.gameObject.transform.position - gameObject.transform.position).normalized, 0, this.damage, this.knockback, this.attackSpeed);
             }
 		} else {
 			ac.SetBool("detectedPlayer", false);

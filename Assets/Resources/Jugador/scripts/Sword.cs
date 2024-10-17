@@ -64,11 +64,11 @@ public class Sword : MonoBehaviour
 
     }
 
-    public void attack()
+    public void Attack()
     {
         
     }
-    public void block()
+    public void Block()
     {
         
     }

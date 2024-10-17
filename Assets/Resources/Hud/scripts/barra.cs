@@ -5,7 +5,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class barra : MonoBehaviour
+public class Barra : MonoBehaviour
 {
     public Player player;
     public GameObject resistanceBar;
