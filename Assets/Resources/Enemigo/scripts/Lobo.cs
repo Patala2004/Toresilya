@@ -22,6 +22,7 @@ public class Lobo : Enemy
 
 	void HandleJump()
     {
+		HitboxEnemigo(transform.position, transform.localScale, 0, (player.gameObject.transform.position - gameObject.transform.position).normalized, 0, this.damage, this.knockback, this.attackSpeed);
         timer -= Time.deltaTime;
 
         if (timer <= 0) {
@@ -62,12 +63,15 @@ public class Lobo : Enemy
 
 	void Chase()
     {
-        // Move the wolf towards the player using Rigidbody2D velocity
         Vector2 direction = (player.transform.position - transform.position).normalized;
         rb.velocity = new Vector2(direction.x * displSpeed, direction.y * displSpeed);
     }
 
 	void Idle() {
 		rb.velocity = Vector2.zero;
+	}
+
+	new void Update() {
+		base.Update();
 	}
 }
