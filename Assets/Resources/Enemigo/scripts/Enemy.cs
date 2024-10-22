@@ -15,8 +15,6 @@ public class Enemy : MonoBehaviour
     public float knockback;
     public float knockbackResistance; // 0 sin resistencia 100 con resistencia
     public int[] damage = new int[2];
-    public float attackSpeed = 0.2f;
-    Coroutine IallowAttack;
     public Room room;
     // Start is called before the first frame update
     public void Start()
@@ -38,12 +36,6 @@ public class Enemy : MonoBehaviour
             ToDie();
         }
     }
-    public IEnumerator Hit(float waitseconds,float ang,float attackKnockback)
-    { 
-        StartCoroutine(Impulse(player.sword.attackAnimation,ang,attackKnockback));
-        yield return new WaitForSeconds(waitseconds);
-        invulnerable = false;
-    }
     //funcion impulso
     public IEnumerator Impulse(float waitseconds, float ang, float recoil)
     {
@@ -58,47 +50,42 @@ public class Enemy : MonoBehaviour
         velImpulse = Vector2.zero;
     }
     //funcion para crear una hitbox que ataque
-    public void HitboxEnemigo(Vector2 position,Vector2 scale,float angle,Vector2 dir,float distance,int[] damage,float knockback,float attackSpeed)
+    public void HitboxEnemy(Vector2 position,Vector2 scale,float angle,Vector2 dir,float distance,int[] damage,float knockback)
     {
         RaycastHit2D[] boxCast = Physics2D.BoxCastAll(position,scale, angle, dir, distance);
         foreach (RaycastHit2D collider in boxCast)
         {
             if (collider.collider.CompareTag("player") && allowAttack)
             {
-                HitPlayer(Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x), damage, knockback, attackSpeed);
+                HitPlayer(Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x), damage, knockback);
             }
         }
     }
     //funciones que se llaman para atacar al player
-    public void HitPlayer(float ang,int[] damage,float knockback,float attackSpeed)
+    public void HitPlayer(float ang,int[] damage,float knockback)
     {
         allowAttack = false;
-        if (IallowAttack != null)
-        {
-            StopCoroutine(IallowAttack);
-        }
-        IallowAttack = StartCoroutine(Esperar(attackSpeed));// evitar muchos golpes por frame
+
         int dm = Random.Range(damage[0], damage[1] + 1);
         player.TakeDamage(dm,ang,knockback,gameObject);
-    }
-    IEnumerator Esperar(float waitseconds)
-    {
-        yield return new WaitForSeconds(waitseconds);
-        allowAttack = true;
     }
     // funciones para el manejo de vida
     public virtual void ToDie()
     {
-        Destroy(this.gameObject);
+        Destroy(this.gameObject); // morir
+
         if(room != null){
             room.CommunicateEnemyDeath();
         }
     }
     public void TakeDamage(int damage,float ang,float attackKnockback)
     {
-        health -= damage;
-        GetComponent<GenParticulaTexto>().comenzar(damage, ang);
-        StartCoroutine(Hit(attackSpeed, ang, attackKnockback));
-        invulnerable = true;
+        if (!invulnerable)
+        {
+            health -= damage;
+            StartCoroutine(Impulse(player.sword.attackAnimation, ang, attackKnockback));
+            invulnerable = true;
+            GetComponent<GenParticulaTexto>().comenzar(damage, ang);
+        }
     }
 }

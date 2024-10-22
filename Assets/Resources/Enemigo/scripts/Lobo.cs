@@ -13,7 +13,7 @@ public class Lobo : Enemy
 
 	public float timer, timerReset = 1;
 
-	private bool isJumping;
+	[SerializeField]private bool isJumping;
     // Start is called before the first frame update
     new void Start()
     {
@@ -22,7 +22,7 @@ public class Lobo : Enemy
 
 	void HandleJump()
     {
-		HitboxEnemigo(transform.position, transform.localScale, 0, (player.gameObject.transform.position - gameObject.transform.position).normalized, 0, this.damage, this.knockback, this.attackSpeed);
+		HitboxEnemy(transform.position, transform.localScale, 0, (player.gameObject.transform.position - gameObject.transform.position).normalized, 0, this.damage, this.knockback);
         timer -= Time.deltaTime;
 
         if (timer <= 0) {
@@ -53,6 +53,8 @@ public class Lobo : Enemy
 
 	void Jump()
     {
+        allowAttack = true;
+
         isJumping = true;
         timer = timerReset;
 

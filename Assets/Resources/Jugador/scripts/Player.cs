@@ -5,10 +5,10 @@ using UnityEngine.Rendering;
 
 public class Player : MonoBehaviour
 {
-    //TODO: vida
+    // VIDA
     public float healthMax = 50;
     public float health = 50;
-    //TODO: implementar parry (probar con slime con impulso 20000)
+    // PARRY
     public float resistanceMax = 50;
     public float resistance = 50;
     [SerializeField] bool resistanceRegen = true; // TRUE: regenera resistencia
@@ -55,7 +55,7 @@ public class Player : MonoBehaviour
         //vida
         health = Mathf.Clamp(health,0,healthMax); // limita la vida a maxHealth
         //resistencia y parry
-        resistance = Mathf.Clamp(resistance, 0, resistanceMax); // limita la vida a maxHealth
+        resistance = Mathf.Clamp(resistance, 0, resistanceMax); // limita la resis a maxHealth
         parryTime = Mathf.Clamp(parryTime, 0, parryTimerClamp); // se queda en 1 bajar para hacer mas facil hacer parry
         //esta haciendo parry
         parrying = (parryTime > 0 && parryTime < parryTimerCheck && blocking); // calcula cuando esta haciendo parry
@@ -117,7 +117,7 @@ public class Player : MonoBehaviour
     {
         attacking = true;
         sword.Attack();
-        HitboxSword(transform.position, sword.hitboxSize, 0, (mousePos-transform.position).normalized , 1, sword.attackDamage, sword.attackKnockback);
+        sword.HitboxPlayer(transform.position, sword.hitboxSize, 0, (mousePos-transform.position).normalized , 1);
         StartCoroutine(Impulse(sword.attackAnimation, ang, sword.recoil)); // calcular el impulso(mejor con el tiempo de la animacion)
         yield return new WaitForSeconds(waitseconds);
         attacking = false;
@@ -127,22 +127,6 @@ public class Player : MonoBehaviour
         attackingAnimation = true;
         yield return new WaitForSeconds(waitseconds);
         attackingAnimation = false;
-    }
-    public void HitboxSword(Vector2 position, Vector2 scale, float angle, Vector2 dir, float distance, int[] damage, float knockback)
-    {
-        RaycastHit2D[] boxCast = Physics2D.BoxCastAll(position, scale, angle, dir, distance);
-        foreach (RaycastHit2D collider in boxCast)
-        {
-            if (collider.collider.CompareTag("enemy"))
-            {
-                Enemy enemy = collider.collider.GetComponent<Enemy>();
-                if (!enemy.invulnerable)
-                {
-                    int dam = Random.Range(damage[0], damage[1] + 1);
-                    enemy.TakeDamage(dam,ang,knockback);
-                }
-            }
-        }
     }
     //Funcion block
     public void Block()

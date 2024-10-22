@@ -14,7 +14,6 @@ public class Slime : Enemy
         base.Start();
 		jumpTimer = jumpTimerInit;
 		ac = GetComponent<Animator>();
-        attackSpeed = jumpTimerInit;
     }
     new private void FixedUpdate()
     {
@@ -31,7 +30,7 @@ public class Slime : Enemy
 			}
 			else // empieza a saltar
 			{
-                HitboxEnemigo(transform.position, transform.localScale, 0, (player.gameObject.transform.position - gameObject.transform.position).normalized, 0, this.damage, this.knockback, this.attackSpeed);
+                HitboxEnemy(transform.position, transform.localScale, 0, (player.gameObject.transform.position - gameObject.transform.position).normalized, 0, this.damage, this.knockback);
             }
 		} else {
 			ac.SetBool("detectedPlayer", false);
