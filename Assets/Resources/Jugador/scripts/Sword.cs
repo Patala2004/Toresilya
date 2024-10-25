@@ -14,7 +14,7 @@ public class Sword : MonoBehaviour
     public float attackSpeed = 0.2f; // velocidad a la que el player puede atacar(no es la velocidad de la animacion)
     public float attackAnimation = 0.2f; // cuanto dura la animacion *importante que no sea mucho
     //to do manejar rng
-    public int[] attackDamage = new int[2]; // daño de dañomin a dañomax
+    public int[] attackDamage = new int[2]; // daï¿½o de daï¿½omin a daï¿½omax
     public Vector2 hitboxSize = new(1,2);
     float radioArma = 0.3f;
     float rotacionArma = 90;
@@ -29,7 +29,7 @@ public class Sword : MonoBehaviour
     void Update()
     {
 
-        //seguimiento del arma al player ç
+        //seguimiento del arma al player ï¿½
         if (player.ang > 90 || player.ang < -90)
         {
             sR.flipY = true;

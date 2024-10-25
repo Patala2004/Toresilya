@@ -73,7 +73,7 @@ public class Player : MonoBehaviour
         if (Input.GetMouseButton(1) && !attackingAnimation && resistance != 0) // cuando bloqueas tenemos en cuenta la animacion de ataque no el attack speed
         {
             Block();
-            parryTime += Time.deltaTime; // añade tiempo al parry time para que no puedas spamear el boton de atacar
+            parryTime += Time.deltaTime; // aï¿½ade tiempo al parry time para que no puedas spamear el boton de atacar
         }
         else
         {
@@ -117,7 +117,7 @@ public class Player : MonoBehaviour
     {
         attacking = true;
         sword.Attack();
-        sword.HitboxPlayer(transform.position, sword.hitboxSize, 0, (mousePos-transform.position).normalized , 1);
+        sword.HitboxPlayer(transform.position, sword.hitboxSize, 0, (mousePos-transform.position).normalized , 2);
         StartCoroutine(Impulse(sword.attackAnimation, ang, sword.recoil)); // calcular el impulso(mejor con el tiempo de la animacion)
         yield return new WaitForSeconds(waitseconds);
         attacking = false;
@@ -134,7 +134,7 @@ public class Player : MonoBehaviour
         sword.Block();
         blocking = true;
     }
-    //Funcion que añade un impulso en una direccion
+    //Funcion que aï¿½ade un impulso en una direccion
     public IEnumerator Impulse(float waitseconds,float ang,float recoil) 
     {
         float elapsedTime = 0;
@@ -147,7 +147,7 @@ public class Player : MonoBehaviour
         }
         velImpulse = Vector2.zero;
     }
-    // Funcion que sirve para recibir daño
+    // Funcion que sirve para recibir daï¿½o
     public void TakeDamage(int damage,float ang,float knockback,GameObject gObject = null)
     {
         if(resistance > 0 && blocking)

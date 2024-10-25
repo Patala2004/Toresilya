@@ -56,10 +56,9 @@ MonoBehaviour:
   knockback: 30
   knockbackResistance: 0
   damage: 0200000005000000
-  attackSpeed: 0.2
   room: {fileID: 0}
   persecutionRadius: 10
-  jumpForce: 15000
+  jumpForce: 1500
   jumpTimerInit: 1
   jumpTimer: 0
 --- !u!212 &5806048497698704715
@@ -126,7 +125,7 @@ Rigidbody2D:
   m_Simulated: 1
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
-  m_Mass: 10
+  m_Mass: 1
   m_LinearDrag: 10
   m_AngularDrag: 0.05
   m_GravityScale: 0

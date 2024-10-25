@@ -282,7 +282,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -485.69995, y: 458.6}
+  m_AnchoredPosition: {x: -3.6999636, y: 208.60005}
   m_SizeDelta: {x: 920, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &574381750
@@ -471,7 +471,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1899338861}
-  enemigo: {fileID: 541082040500159832, guid: c9dcc9e7305b66b4b9208feaa7e1b520, type: 3}
+  enemigo: {fileID: 5431344267532036789, guid: 02ca91e8da018014fb996dee6330102d, type: 3}
 --- !u!1001 &711699708
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -600,7 +600,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 1899338861}
   recoil: 10
-  attackKnockback: 4
+  attackKnockback: 1.5
   attackSpeed: 0.6
   attackAnimation: 0.2
   attackDamage: 0200000004000000
@@ -795,7 +795,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -872, y: 457}
+  m_AnchoredPosition: {x: -390, y: 207}
   m_SizeDelta: {x: 640.9004, y: 35}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1371626665
@@ -867,7 +867,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -678.94006, y: 351.25}
+  m_AnchoredPosition: {x: -196.94008, y: 101.250046}
   m_SizeDelta: {x: 3.88, y: 0.89}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1569319458
@@ -939,7 +939,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -857, y: 353}
+  m_AnchoredPosition: {x: -375, y: 103.000046}
   m_SizeDelta: {x: 403.95, y: 34.14}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1672831762

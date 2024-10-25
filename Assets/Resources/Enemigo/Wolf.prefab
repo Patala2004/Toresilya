@@ -111,7 +111,7 @@ MonoBehaviour:
   displSpeed: 5
   followDistance: 15
   attackDistance: 4
-  attackForce: 10
+  attackForce: 20
   timer: 0
   timerReset: 1.5
   isJumping: 0
@@ -128,7 +128,7 @@ Rigidbody2D:
   m_UseFullKinematicContacts: 0
   m_UseAutoMass: 0
   m_Mass: 1
-  m_LinearDrag: 1
+  m_LinearDrag: 5
   m_AngularDrag: 0.05
   m_GravityScale: 0
   m_Material: {fileID: 6200000, guid: 845ca9d715a2f8757be930dd4be1610a, type: 2}
