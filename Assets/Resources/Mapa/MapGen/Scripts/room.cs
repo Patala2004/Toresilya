@@ -63,6 +63,7 @@ public class Room : MonoBehaviour
         }
     }
 
+
     public void CommunicateEnemyDeath(){
         aliveEnemies--;
         if(aliveEnemies == 0){
