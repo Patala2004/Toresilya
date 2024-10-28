@@ -50,7 +50,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  invulnerable: 0
   allowAttack: 1
   health: 15
   knockback: 30
@@ -59,7 +58,7 @@ MonoBehaviour:
   room: {fileID: 0}
   persecutionRadius: 10
   jumpForce: 1500
-  jumpTimerInit: 1
+  jumpTimerInit: 2
   jumpTimer: 0
 --- !u!212 &5806048497698704715
 SpriteRenderer:

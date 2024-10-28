@@ -123,7 +123,7 @@ public class Player : MonoBehaviour
     {
         attacking = true;
         sword.Attack();
-        Enemy[] hitEnemies = sword.HitboxPlayer(transform.position, sword.hitboxSize, 0, (mousePos-transform.position).normalized , 2);
+        Enemy[] hitEnemies = sword.HitboxPlayer(transform.position, sword.hitboxSize, 0, (mousePos-transform.position).normalized , 1f);
         StartCoroutine(Impulse(sword.attackAnimation, ang, sword.recoil)); // calcular el impulso(mejor con el tiempo de la animacion)
         // Llamar a mecánicas de items de ataque
         foreach(Action<Enemy[]> mechanic in attackMechanics){

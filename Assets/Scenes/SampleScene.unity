@@ -251,7 +251,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_VertexColorAlwaysGammaSpace: 0
   m_AdditionalShaderChannelsFlag: 25
-  m_UpdateRectTransformForStandalone: 0
+  m_UpdateRectTransformForStandalone: 1
   m_SortingLayerID: -1831980385
   m_SortingOrder: 0
   m_TargetDisplay: 0
@@ -327,8 +327,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -234.47, y: 241.11}
-  m_SizeDelta: {x: 458.46, y: 54.99}
+  m_AnchoredPosition: {x: -472.91, y: 477.98996}
+  m_SizeDelta: {x: 960, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &574381750
 MonoBehaviour:
@@ -516,7 +516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1899338861}
-  enemigo: {fileID: 2687714359759941155, guid: d083456b95d910594a105c299a2cd312, type: 3}
+  enemigo: {fileID: 5431344267532036789, guid: 02ca91e8da018014fb996dee6330102d, type: 3}
 --- !u!1001 &711699708
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -646,9 +646,9 @@ MonoBehaviour:
   player: {fileID: 1899338861}
   recoil: 10
   attackKnockback: 1.5
-  attackSpeed: 0.6
+  attackSpeed: 0.2
   attackAnimation: 0.2
-  attackDamage: 050000000a000000
+  attackDamage: 0200000004000000
   hitboxSize: {x: 1, y: 2}
 --- !u!1 &1199260586 stripped
 GameObject:
@@ -841,8 +841,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -426.97, y: 240.37}
-  m_SizeDelta: {x: 319.37, y: 16.04}
+  m_AnchoredPosition: {x: -868, y: 476}
+  m_SizeDelta: {x: 661.32, y: 33.82}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1371626665
 MonoBehaviour:
@@ -906,15 +906,15 @@ RectTransform:
   m_GameObject: {fileID: 1569319456}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 135, y: 135, z: 135}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 552840993}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -330.77, y: 191.91}
-  m_SizeDelta: {x: 1.93, y: 0.41}
+  m_AnchoredPosition: {x: -464.13983, y: 357.99}
+  m_SizeDelta: {x: 960, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1569319458
 MonoBehaviour:
@@ -985,8 +985,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -419.5, y: 192.71}
-  m_SizeDelta: {x: 201.3, y: 15.64}
+  m_AnchoredPosition: {x: -865.9099, y: 359.90927}
+  m_SizeDelta: {x: 368.19, y: 33.878}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1672831762
 MonoBehaviour:
