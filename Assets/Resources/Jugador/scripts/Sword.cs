@@ -63,18 +63,21 @@ public class Sword : MonoBehaviour
         ani.SetBool("atacando", player.attackingAnimation);
 
     }
-    public void HitboxPlayer(Vector2 position, Vector2 scale, float angle, Vector2 dir, float distance)
+    public Enemy[] HitboxPlayer(Vector2 position, Vector2 scale, float angle, Vector2 dir, float distance)
     {
         RaycastHit2D[] boxCast = Physics2D.BoxCastAll(position, scale, angle, dir, distance);
+        List<Enemy> hitEnemies = new List<Enemy>();
         foreach (RaycastHit2D collider in boxCast)
         {
             if (collider.collider.CompareTag("enemy"))
             {
                 Enemy enemy = collider.collider.GetComponent<Enemy>();
+                hitEnemies.Add(enemy);
                 int dam = Random.Range(attackDamage[0], attackDamage[1] + 1);
                 enemy.TakeDamage(dam, player.ang, attackKnockback);
             }
         }
+        return hitEnemies.ToArray();
     }
     public void Attack()
     {

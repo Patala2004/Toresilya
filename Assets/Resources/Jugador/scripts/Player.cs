@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -34,6 +35,11 @@ public class Player : MonoBehaviour
     Rigidbody2D rb;
     SpriteRenderer sR;
     Animator ani;
+
+    // Array de funciones de mecánicas 
+    public List<Action<Enemy[]>> attackMechanics = new List<Action<Enemy[]>>();
+
+
     // Start is called before the first frame update
     void Start()
     {
@@ -117,8 +123,12 @@ public class Player : MonoBehaviour
     {
         attacking = true;
         sword.Attack();
-        sword.HitboxPlayer(transform.position, sword.hitboxSize, 0, (mousePos-transform.position).normalized , 2);
+        Enemy[] hitEnemies = sword.HitboxPlayer(transform.position, sword.hitboxSize, 0, (mousePos-transform.position).normalized , 2);
         StartCoroutine(Impulse(sword.attackAnimation, ang, sword.recoil)); // calcular el impulso(mejor con el tiempo de la animacion)
+        // Llamar a mecánicas de items de ataque
+        foreach(Action<Enemy[]> mechanic in attackMechanics){
+            mechanic.Invoke(hitEnemies);
+        }
         yield return new WaitForSeconds(waitseconds);
         attacking = false;
     }
