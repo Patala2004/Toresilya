@@ -37,7 +37,10 @@ public class Player : MonoBehaviour
     Animator ani;
 
     // Array de funciones de mecánicas 
-    public List<Action<Enemy[]>> attackMechanics = new List<Action<Enemy[]>>();
+    public List<Action<Enemy[]>> attackMechanics = new List<Action<Enemy[]>>(); // Ocurren cada ataque (que golpee o no a enemigos, eso lo revisa la función)
+    public List<Action<Enemy[]>> criticalAttackMechanics = new List<Action<Enemy[]>>(); // Ocurren cada ataque crítico
+    public List<Action<Enemy[]>> parryMechanics = new List<Action<Enemy[]>>();
+
 
 
     // Start is called before the first frame update
@@ -123,11 +126,15 @@ public class Player : MonoBehaviour
     {
         attacking = true;
         sword.Attack();
-        Enemy[] hitEnemies = sword.HitboxPlayer(transform.position, sword.hitboxSize, 0, (mousePos-transform.position).normalized , 1f);
+        Enemy[][] hitData = sword.HitboxPlayer(transform.position, sword.hitboxSize, 0, (mousePos-transform.position).normalized , 1f);
         StartCoroutine(Impulse(sword.attackAnimation, ang, sword.recoil)); // calcular el impulso(mejor con el tiempo de la animacion)
         // Llamar a mecánicas de items de ataque
         foreach(Action<Enemy[]> mechanic in attackMechanics){
-            mechanic.Invoke(hitEnemies);
+            mechanic.Invoke(hitData[0]); 
+        }
+        // Mecanicas de ataques críticos
+        foreach(Action<Enemy[]> mechanic in criticalAttackMechanics){
+            mechanic.Invoke(hitData[1]);
         }
         yield return new WaitForSeconds(waitseconds);
         attacking = false;
