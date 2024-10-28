@@ -57,7 +57,18 @@ public class Room : MonoBehaviour
             spawned = true;
             Debug.Log("cerrando pasillos");
             CloseCorridors();
-            GameObject newEnemy = enemySpawner.SpawnEnemy(x + width/2, y + length/2);
+            SpawnEnemies((int) UnityEngine.Random.Range(2,5));
+        }
+    }
+
+    private void SpawnEnemies(int enemyAmm){
+        System.Random rand = new System.Random();
+        for(int i = 0; i < enemyAmm; i++){
+            // Get free coordinates on a radius arround the player but not too near the walls
+            int randW = rand.Next(2,width-2);
+            int randL = rand.Next(2,length-2);
+            // Spawn Enemy
+            GameObject newEnemy = enemySpawner.SpawnEnemy(x + randW, y + randL);
             aliveEnemies++;
             newEnemy.GetComponent<Enemy>().room = this;
         }

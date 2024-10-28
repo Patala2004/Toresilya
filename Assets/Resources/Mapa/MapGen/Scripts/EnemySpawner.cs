@@ -19,7 +19,7 @@ public class EnemySpawner : MonoBehaviour
     }
 
     public GameObject SpawnEnemy(int x, int y){
-        GameObject newEnemy = Instantiate(enemies[0]);
+        GameObject newEnemy = Instantiate(enemies[(int) UnityEngine.Random.Range(0,enemies.Length-0.1f)]);
         newEnemy.transform.position = new (x,y,0);
         return newEnemy;
     }
