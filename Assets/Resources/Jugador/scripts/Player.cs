@@ -39,6 +39,7 @@ public class Player : MonoBehaviour
     // Array de funciones de mecánicas 
     public List<Action<Enemy[]>> attackMechanics = new List<Action<Enemy[]>>(); // Ocurren cada ataque (que golpee o no a enemigos, eso lo revisa la función)
     public List<Action<Enemy[]>> criticalAttackMechanics = new List<Action<Enemy[]>>(); // Ocurren cada ataque crítico
+    public List<Action<Enemy[]>> parryMechanics = new List<Action<Enemy[]>>();
 
 
 
