@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
 using UnityEngine;
+using UnityEngineInternal;
 
 public class GenParticulaTexto : MonoBehaviour
 {
@@ -18,7 +19,7 @@ public class GenParticulaTexto : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+   
     }
     public void comenzar(int damage,float ang)
     {

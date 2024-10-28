@@ -59,7 +59,7 @@ public class Player : MonoBehaviour
         parryTime = Mathf.Clamp(parryTime, 0, parryTimerClamp); // se queda en 1 bajar para hacer mas facil hacer parry
         //esta haciendo parry
         parrying = (parryTime > 0 && parryTime < parryTimerCheck && blocking); // calcula cuando esta haciendo parry
-        if (resistanceRegen && !blocking)
+        if (resistanceRegen && !blocking && resistance < resistanceMax)
         {
             resistance += 5 * Time.deltaTime;
         }
