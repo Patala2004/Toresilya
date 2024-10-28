@@ -10,7 +10,6 @@ public class Enemy : MonoBehaviour
     public Player player;
     protected Rigidbody2D rb;
     protected Vector2 velImpulse = Vector2.zero;
-    public bool invulnerable;
     public bool allowAttack = true; // booleano que te deja atacar
     public float health = 15;
     public float knockback;
@@ -31,7 +30,6 @@ public class Enemy : MonoBehaviour
     public void Update()
     {
         // vida control
-        if (invulnerable) { invulnerable = player.attacking; }
         if(health <= 0)
         {
             ToDie();
@@ -81,13 +79,9 @@ public class Enemy : MonoBehaviour
     }
     public void TakeDamage(int damage,float ang,float attackKnockback)
     {
-        if (!invulnerable)
-        {
-            health -= damage;
-            StartCoroutine(Impulse(player.sword.attackAnimation, ang, attackKnockback));
-            invulnerable = true;
-            GetComponent<GenParticulaTexto>().comenzar(damage, ang);
-        }
+        health -= damage;
+        StartCoroutine(Impulse(player.sword.attackAnimation, ang, attackKnockback));
+        GetComponent<GenParticulaTexto>().comenzar(damage, ang);
     }
     // Manejo sprites
     public void DoFlipX(SpriteRenderer sR,Vector2 dir) // girar sprite depende de donde mire
