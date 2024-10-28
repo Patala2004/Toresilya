@@ -982,6 +982,17 @@ public class RoomCreator{
             // Corridor booleans
             roomScript.passCorridorBooleans(allNodes[i].north,  allNodes[i].east,  allNodes[i].south,  allNodes[i].west);
 
+            if(roomType[i] == RoomType.STORE_ROOM_CODE){
+                GameObject prefab = GameObject.Instantiate(Resources.Load<GameObject>("Mapa/MapGen/Prefabs/Store_1"));
+                prefab.transform.parent = newRoom.transform; // Set as child            
+                prefab.transform.localPosition = new Vector3(0,0,0);    
+            }
+            else if(roomType[i] == RoomType.CHEST_ROOM_CODE){
+                GameObject prefab = GameObject.Instantiate(Resources.Load<GameObject>("Mapa/MapGen/Prefabs/Chest_1"));
+                prefab.transform.parent = newRoom.transform; // Set as child            
+                prefab.transform.localPosition = new Vector3(0,0,0);  
+            }
+
             /*
 
             
