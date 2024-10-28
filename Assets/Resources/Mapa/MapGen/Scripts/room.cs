@@ -69,6 +69,7 @@ public class Room : MonoBehaviour
             int randL = rand.Next(2,length-2);
             // Spawn Enemy
             GameObject newEnemy = enemySpawner.SpawnEnemy(x + randW, y + randL);
+            newEnemy.transform.parent = this.transform;
             aliveEnemies++;
             newEnemy.GetComponent<Enemy>().room = this;
         }

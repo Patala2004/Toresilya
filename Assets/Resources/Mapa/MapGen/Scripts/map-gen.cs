@@ -42,11 +42,23 @@ public class MapGen: MonoBehaviour{
         rooms = new GameObject();
         rooms.name = "Rooms";
         rooms.transform.parent = transform;
-        StartCoroutine(generateMap());
-        
+        generateMap();
+    }
+    public void generateMap(){
+        StartCoroutine(generateMapCoroutine());
     }
 
-    IEnumerator generateMap(){
+    public void clearMap(){
+        floorMap.ClearAllTiles();
+        wallMap.ClearAllTiles();
+        foreach (Transform child in rooms.transform){
+            Destroy(child.gameObject);
+        }
+    }
+
+
+
+    IEnumerator generateMapCoroutine(){
         loadingStatus = "Initializing map generation data strcutres";
         //mapGenerator = new AStar(10,10,14);
         System.Random seedGen = new System.Random();
@@ -989,6 +1001,11 @@ public class RoomCreator{
             }
             else if(roomType[i] == RoomType.CHEST_ROOM_CODE){
                 GameObject prefab = GameObject.Instantiate(Resources.Load<GameObject>("Mapa/MapGen/Prefabs/Chest_1"));
+                prefab.transform.parent = newRoom.transform; // Set as child            
+                prefab.transform.localPosition = new Vector3(0,0,0);  
+            }
+            else if(roomType[i] == RoomType.END_ROOM_CODE){
+                GameObject prefab = GameObject.Instantiate(Resources.Load<GameObject>("Mapa/MapGen/Prefabs/EndRoom_1"));
                 prefab.transform.parent = newRoom.transform; // Set as child            
                 prefab.transform.localPosition = new Vector3(0,0,0);  
             }
