@@ -18,4 +18,8 @@ public class ItemGenerator : MonoBehaviour
     {
         
     }
+
+    public GameObject getItem(){
+        return Instantiate(items[UnityEngine.Random.Range(0,items.Length)]);
+    }
 }
