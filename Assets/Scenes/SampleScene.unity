@@ -603,7 +603,7 @@ MonoBehaviour:
   attackKnockback: 1.5
   attackSpeed: 0.6
   attackAnimation: 0.2
-  attackDamage: 0200000004000000
+  attackDamage: 050000000a000000
   hitboxSize: {x: 1, y: 2}
 --- !u!1 &1199260586 stripped
 GameObject:

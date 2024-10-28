@@ -28,6 +28,11 @@ public class Goblin : Enemy
             rb.velocity = Vector2.zero;
         }
     }
+    new void Update()
+    {
+        base.Update();
+        DoFlipX(GetComponent<SpriteRenderer>(), (player.transform.position - transform.position).normalized);
+    }
 
     // Update is called once per frame
     new void FixedUpdate()
@@ -71,7 +76,4 @@ public class Goblin : Enemy
 		rb.velocity = Vector2.zero;
 	}
 
-	new void Update() {
-		base.Update();
-	}
 }

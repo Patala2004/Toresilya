@@ -7,7 +7,7 @@ public class GenParticulaTexto : MonoBehaviour
 {
     // Start is called before the first frame update
     public GameObject particula;
-    public float particulaVel = 2;
+    public float particulaVel = 8;
     public float particulaDispersion = 40;
     public float particulaUpRig = 0.4f;
     void Start()

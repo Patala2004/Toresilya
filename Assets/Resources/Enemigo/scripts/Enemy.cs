@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -87,5 +88,11 @@ public class Enemy : MonoBehaviour
             invulnerable = true;
             GetComponent<GenParticulaTexto>().comenzar(damage, ang);
         }
+    }
+    // Manejo sprites
+    public void DoFlipX(SpriteRenderer sR,Vector2 dir) // girar sprite depende de donde mire
+    {
+        float ang = Mathf.Rad2Deg * (Mathf.Atan2(dir.y, dir.x));
+        sR.flipX = (ang > 90 || ang < -90);
     }
 }
