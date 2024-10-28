@@ -122,6 +122,17 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!114 &271184422 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2687714359759941155, guid: d083456b95d910594a105c299a2cd312, type: 3}
+  m_PrefabInstance: {fileID: 4903911075737025446}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cedbf97ab1e613e6499c1f8c055c2d19, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1839735485 &430523385 stripped
 Tilemap:
   m_CorrespondingSourceObject: {fileID: 3069127047600447951, guid: b018b1f33b3303047aac132e297f5c84, type: 3}
@@ -471,7 +482,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1899338861}
-  enemigo: {fileID: 1789099643}
+  enemigo: {fileID: 271184422}
 --- !u!1001 &711699708
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -982,17 +993,6 @@ Tilemap:
   m_CorrespondingSourceObject: {fileID: 988288822346389573, guid: b018b1f33b3303047aac132e297f5c84, type: 3}
   m_PrefabInstance: {fileID: 1204198855}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1789099643 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 541082040500159832, guid: c9dcc9e7305b66b4b9208feaa7e1b520, type: 3}
-  m_PrefabInstance: {fileID: 3798826743811452872}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a9a47bc57acb4335a9c992177418c531, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1885740175
 GameObject:
   m_ObjectHideFlags: 0
@@ -1165,9 +1165,33 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 2687714359759941155, guid: d083456b95d910594a105c299a2cd312, type: 3}
+      propertyPath: timer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687714359759941155, guid: d083456b95d910594a105c299a2cd312, type: 3}
       propertyPath: player
       value: 
       objectReference: {fileID: 1899338861}
+    - target: {fileID: 2687714359759941155, guid: d083456b95d910594a105c299a2cd312, type: 3}
+      propertyPath: timerReset
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687714359759941155, guid: d083456b95d910594a105c299a2cd312, type: 3}
+      propertyPath: attackForce
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687714359759941155, guid: d083456b95d910594a105c299a2cd312, type: 3}
+      propertyPath: attackDistance
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2687714359759941155, guid: d083456b95d910594a105c299a2cd312, type: 3}
+      propertyPath: damage.Array.data[1]
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 5830796725177033867, guid: d083456b95d910594a105c299a2cd312, type: 3}
+      propertyPath: m_LinearDrag
+      value: 5
+      objectReference: {fileID: 0}
     - target: {fileID: 6159802974911976144, guid: d083456b95d910594a105c299a2cd312, type: 3}
       propertyPath: m_Name
       value: Goblin

@@ -20,7 +20,7 @@ public class Goblin : Enemy
 
 	void HandleJump()
     {
-		HitboxEnemy(transform.position, new(1,1), 0, (player.gameObject.transform.position - gameObject.transform.position).normalized, 0, this.damage, this.knockback);
+		HitboxEnemy(transform.position, new(1,1), 0, (player.gameObject.transform.position - gameObject.transform.position).normalized, 0.5f, this.damage, this.knockback);
         timer -= Time.deltaTime;
 
         if (timer <= 0) {
