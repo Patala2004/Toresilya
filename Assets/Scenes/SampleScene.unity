@@ -516,7 +516,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1899338861}
-  enemigo: {fileID: 5431344267532036789, guid: 02ca91e8da018014fb996dee6330102d, type: 3}
+  enemigo: {fileID: 2687714359759941155, guid: d083456b95d910594a105c299a2cd312, type: 3}
 --- !u!1001 &711699708
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -650,6 +650,7 @@ MonoBehaviour:
   attackAnimation: 0.2
   attackDamage: 0200000004000000
   hitboxSize: {x: 1, y: 2}
+  angArma: 45
 --- !u!1 &1199260586 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3851222254810370747, guid: a39907273a1c3954586d131013b71315, type: 3}

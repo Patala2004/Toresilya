@@ -17,7 +17,8 @@ public class Sword : MonoBehaviour
     public int[] attackDamage = new int[2]; // da�o de da�omin a da�omax
     public Vector2 hitboxSize = new(1,2);
     float radioArma = 0.3f;
-    float rotacionArma = 90;
+    float rotacionArma =0;
+    public float angArma = 90;
     // Start is called before the first frame update
     void Start()
     {
@@ -36,7 +37,7 @@ public class Sword : MonoBehaviour
             float x = Mathf.Cos((player.ang - rotacionArma) * Mathf.Deg2Rad) * radioArma;
             float y = Mathf.Sin((player.ang - rotacionArma) * Mathf.Deg2Rad) * radioArma;
             transform.localPosition = new Vector3(x, y-0.2f, 1);
-            transform.localEulerAngles = new Vector3(0, 0, player.ang + 90);
+            transform.localEulerAngles = new Vector3(0, 0, player.ang + angArma);
         }
         else
         {
@@ -44,7 +45,7 @@ public class Sword : MonoBehaviour
             float x = Mathf.Cos((player.ang + rotacionArma) * Mathf.Deg2Rad) * radioArma;
             float y = Mathf.Sin((player.ang + rotacionArma) * Mathf.Deg2Rad) * radioArma;
             transform.localPosition = new Vector3(x, y - 0.2f, 1);
-            transform.localEulerAngles = new Vector3(0, 0, player.ang - 90);
+            transform.localEulerAngles = new Vector3(0, 0, player.ang - angArma);
         }
         //bloqueo
         if (player.blocking)
