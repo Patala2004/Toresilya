@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 4521119959520301446}
   - component: {fileID: 6526347785837016804}
   m_Layer: 0
-  m_Name: Goblin
+  m_Name: GoblinEspada
   m_TagString: enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -104,16 +104,16 @@ MonoBehaviour:
   player: {fileID: 0}
   allowAttack: 1
   health: 15
-  knockback: 30
+  knockback: 15
   knockbackResistance: 0
-  damage: 0300000009000000
+  damage: 0200000004000000
   room: {fileID: 0}
-  displSpeed: 3
+  displSpeed: 3.7
   followDistance: 15
   attackDistance: 1.5
   attackForce: 6
   timer: 0
-  timerReset: 1.5
+  timerReset: 0.5
   isJumping: 0
 --- !u!50 &5830796725177033867
 Rigidbody2D:
@@ -178,7 +178,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 6.25, y: 6.25}
+    oldSize: {x: 8.333333, y: 8.333333}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
