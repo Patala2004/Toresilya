@@ -78,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -2039116452, guid: b0a0ce3aa327f4b4c8e62332ba78f766, type: 3}
+  m_Sprite: {fileID: 1928217659, guid: 149c8f815ce82414396a7cee2284f7a2, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -105,7 +105,7 @@ MonoBehaviour:
   allowAttack: 1
   health: 15
   knockback: 15
-  knockbackResistance: 0
+  knockbackResistance: -50
   damage: 0200000004000000
   room: {fileID: 0}
   displSpeed: 3.7
@@ -113,7 +113,7 @@ MonoBehaviour:
   attackDistance: 1.5
   attackForce: 6
   timer: 0
-  timerReset: 0.5
+  timerReset: 0.7
   isJumping: 0
 --- !u!50 &5830796725177033867
 Rigidbody2D:
