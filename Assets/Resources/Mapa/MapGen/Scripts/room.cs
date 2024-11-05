@@ -24,6 +24,9 @@ public class Room : MonoBehaviour
     public int x;
     public int y; // Bottom Left Corner Coordinates
 
+    public int roomX; // x coordinates but not based on real coordinates but on room index on the room matrix
+    public int roomY;
+
     public int roomType;
 
 
@@ -36,12 +39,15 @@ public class Room : MonoBehaviour
     private bool spawned = false;
     private int aliveEnemies = 0;
 
+    private GameObject minimapCamera;
+
     public BoxCollider2D roomCollider;
     // Start is called before the first frame update
     void Start()
     {
         mapManager = GameObject.Find("MapGenerator").GetComponent<MapGen>();
         enemySpawner = GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>();
+        minimapCamera = GameObject.Find("MiniMapCamera");
     }
 
     // Update is called once per frame
@@ -59,6 +65,9 @@ public class Room : MonoBehaviour
             CloseCorridors();
             SpawnEnemies((int) UnityEngine.Random.Range(2,5));
         }
+
+        // Crear habitacion de minimapa
+        createMiniMapRoom();
     }
 
     private void SpawnEnemies(int enemyAmm){
@@ -191,6 +200,21 @@ public class Room : MonoBehaviour
         this.east = east;
         this.south = south;
         this.west = west;
+    }
+
+    private void createMiniMapRoom(){
+        GameObject miniMapFolder = GameObject.Find("MiniMap");
+        GameObject minimapRoom = Instantiate(Resources.Load<GameObject>("Mapa/Minimap/MiniMap_Room"));
+        minimapRoom.transform.position = new Vector2(roomX*3 - 1000,roomY*3 - 1000);
+        // hide not existing corridors
+        minimapRoom.transform.GetChild(1).gameObject.SetActive(north); // north
+        minimapRoom.transform.GetChild(2).gameObject.SetActive(east); // east
+        minimapRoom.transform.GetChild(3).gameObject.SetActive(south); // south
+        minimapRoom.transform.GetChild(4).gameObject.SetActive(west); // west
+
+        minimapRoom.transform.parent = miniMapFolder.transform;
+
+        minimapCamera.transform.position = new Vector3(roomX*3 - 1000,roomY*3 - 1000, -10);
     }
 
 
