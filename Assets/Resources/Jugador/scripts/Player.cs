@@ -39,7 +39,8 @@ public class Player : MonoBehaviour
     // Array de funciones de mecánicas 
     public List<Action<Enemy[]>> attackMechanics = new List<Action<Enemy[]>>(); // Ocurren cada ataque (que golpee o no a enemigos, eso lo revisa la función)
     public List<Action<Enemy[]>> criticalAttackMechanics = new List<Action<Enemy[]>>(); // Ocurren cada ataque crítico
-    public List<Action<Enemy[]>> parryMechanics = new List<Action<Enemy[]>>();
+    public List<Action<Enemy>> parryMechanics = new List<Action<Enemy>>();
+    public List<Action<Enemy>> perfectParryMechanics = new List<Action<Enemy>>();
 
 
 
@@ -169,12 +170,18 @@ public class Player : MonoBehaviour
     {
         if(resistance > 0 && blocking)
         {
+            // Parry perfecto
             if (parrying && gObject != null) // se hace el parry a un Enemy
             {
                 parryTime = 0; // cuando haces parry reseteas el timer
                 StartCoroutine(gObject.GetComponent<Enemy>().Impulse(0.1f, ang, 1)); // aplica empuje en la dir que haces el parry
                 attacking = false; // cuando haces parry reseteas que el jugador pueda atacar(punish)
+
+                foreach(Action<Enemy> mechanic in perfectParryMechanics){
+                    mechanic.Invoke(gObject.GetComponent<Enemy>()); 
+                }
             }
+            // Parry normal
             else
             {
                 resistance -= damage;
@@ -185,6 +192,10 @@ public class Player : MonoBehaviour
                     StopCoroutine(IcooldownRes);
                 }
                 IcooldownRes = StartCoroutine(ParryCooldown(parryTimerCooldown));
+
+                foreach(Action<Enemy> mechanic in parryMechanics){
+                    mechanic.Invoke(gObject.GetComponent<Enemy>()); 
+                }
             }
         }
         else
