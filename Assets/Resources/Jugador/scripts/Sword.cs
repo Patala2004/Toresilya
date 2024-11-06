@@ -76,12 +76,22 @@ public class Sword : MonoBehaviour
                 bool critical = false;
                 Enemy enemy = collider.collider.GetComponent<Enemy>();
                 hitEnemies.Add(enemy);
-                int dam = Random.Range(attackDamage[0], attackDamage[1] + 1);
-                enemy.TakeDamage(dam, player.ang, attackKnockback);
-
-                if(critical){
+                int dam = Random.Range(attackDamage[0], attackDamage[1] + 1); // cogemos el daño de la espada base
+                dam += (int)player.statDamage; // sumamos el daño del player
+                critical = Random.Range(0f, 1f) < player.statCriticalChance; // vemos si ha habido critico
+                if (critical)
+                {
+                    dam = (int)(dam * player.statCriticalDamage);
                     criticallyHitEnemies.Add(enemy);
                 }
+
+                enemy.TakeDamage(dam, player.ang, attackKnockback);
+            }
+            if (collider.collider.CompareTag("golpeable"))
+            {
+                int dam = Random.Range(attackDamage[0], attackDamage[1] + 1);
+                Golpeable golpeable = collider.collider.GetComponent<Golpeable>();
+                golpeable.TakeDamage(dam);
             }
         }
         resArray[0] = hitEnemies.ToArray();

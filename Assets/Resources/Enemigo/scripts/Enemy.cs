@@ -58,6 +58,12 @@ public class Enemy : MonoBehaviour
             {
                 HitPlayer(Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x), damage, knockback);
             }
+            if (collider.collider.CompareTag("golpeable"))
+            {
+                int dam = Random.Range(damage[0], damage[1] + 1);
+                Golpeable golpeable = collider.collider.GetComponent<Golpeable>();
+                golpeable.TakeDamage(dam);
+            }
         }
     }
     //funciones que se llaman para atacar al player

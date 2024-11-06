@@ -51,6 +51,9 @@ TagManager:
   - name: escenario
     uniqueID: 2776139443
     locked: 0
+  - name: Obstaculos
+    uniqueID: 4143045241
+    locked: 0
   - name: armas
     uniqueID: 296492903
     locked: 0
