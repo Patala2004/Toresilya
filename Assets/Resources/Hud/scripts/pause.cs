@@ -11,7 +11,6 @@ public class pause : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
     }
 
     // Update is called once per frame
@@ -29,5 +28,15 @@ public class pause : MonoBehaviour
                 isPaused = false;
             }            
         }
+    }
+
+    public void QuitGame(){
+        Application.Quit();
+    }
+
+    public void unPause(){
+        Time.timeScale = 1;
+        pauseMenu.SetActive(false);
+        isPaused = false;
     }
 }

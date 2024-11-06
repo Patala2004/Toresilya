@@ -74,13 +74,13 @@ public class Player : MonoBehaviour
             resistance += 5 * Time.deltaTime;
         }
         //atacar
-        if (Input.GetMouseButtonDown(0) && !attacking)
+        if (Input.GetMouseButtonDown(0) && !attacking && Time.timeScale > 0)
         {
             StartCoroutine(Attack(sword.attackSpeed));
             StartCoroutine(AttackAnimation(sword.attackAnimation));
         }
         //block
-        if (Input.GetMouseButton(1) && !attackingAnimation && resistance != 0) // cuando bloqueas tenemos en cuenta la animacion de ataque no el attack speed
+        if (Input.GetMouseButton(1) && !attackingAnimation && resistance != 0  && Time.timeScale > 0) // cuando bloqueas tenemos en cuenta la animacion de ataque no el attack speed
         {
             Block();
             parryTime += Time.deltaTime; // a�ade tiempo al parry time para que no puedas spamear el boton de atacar

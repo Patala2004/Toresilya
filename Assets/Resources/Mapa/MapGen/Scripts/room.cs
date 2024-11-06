@@ -40,6 +40,7 @@ public class Room : MonoBehaviour
     private int aliveEnemies = 0;
 
     private GameObject minimapCamera;
+    private GameObject minimapCameraWide;
 
     public BoxCollider2D roomCollider;
     // Start is called before the first frame update
@@ -48,6 +49,7 @@ public class Room : MonoBehaviour
         mapManager = GameObject.Find("MapGenerator").GetComponent<MapGen>();
         enemySpawner = GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>();
         minimapCamera = GameObject.Find("MiniMapCamera");
+        minimapCameraWide = GameObject.Find("MiniMapCameraWide");
     }
 
     // Update is called once per frame
@@ -215,6 +217,7 @@ public class Room : MonoBehaviour
         minimapRoom.transform.parent = miniMapFolder.transform;
 
         minimapCamera.transform.position = new Vector3(roomX*3 - 1000,roomY*3 - 1000, -10);
+        minimapCameraWide.transform.position = new Vector3(roomX*3 - 1000,roomY*3 - 1000, -40);
 
         // Add symbols
         if(roomType == 0){
