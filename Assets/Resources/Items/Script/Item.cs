@@ -7,6 +7,10 @@ public class Item : MonoBehaviour
 {
 
     public String description = "";
+    public bool unique = false;
+
+    public String rarity = "common";
+
     // Start is called before the first frame update
     void Start()
     {

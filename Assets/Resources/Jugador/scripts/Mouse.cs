@@ -4,10 +4,12 @@ using UnityEngine;
 
 public class Mouse : MonoBehaviour
 {
+
+    [SerializeField] private Texture2D gameCursor = null;
     // Start is called before the first frame update
     void Start()
     {
-        Cursor.visible = false;
+        Cursor.SetCursor(gameCursor, new Vector2(0,0),CursorMode.Auto);
     }
 
     // Update is called once per frame

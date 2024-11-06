@@ -28,24 +28,7 @@ public class Sword : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
-        //seguimiento del arma al player �
-        if (player.ang > 90 || player.ang < -90)
-        {
-            sR.flipY = true;
-            float x = Mathf.Cos((player.ang - rotacionArma) * Mathf.Deg2Rad) * radioArma;
-            float y = Mathf.Sin((player.ang - rotacionArma) * Mathf.Deg2Rad) * radioArma;
-            transform.localPosition = new Vector3(x, y-0.2f, 1);
-            transform.localEulerAngles = new Vector3(0, 0, player.ang + 90);
-        }
-        else
-        {
-            sR.flipY = false;
-            float x = Mathf.Cos((player.ang + rotacionArma) * Mathf.Deg2Rad) * radioArma;
-            float y = Mathf.Sin((player.ang + rotacionArma) * Mathf.Deg2Rad) * radioArma;
-            transform.localPosition = new Vector3(x, y - 0.2f, 1);
-            transform.localEulerAngles = new Vector3(0, 0, player.ang - 90);
-        }
+        
         //bloqueo
         if (player.blocking)
         {
@@ -97,6 +80,26 @@ public class Sword : MonoBehaviour
         resArray[0] = hitEnemies.ToArray();
         resArray[1] = criticallyHitEnemies.ToArray();
         return resArray;
+    }
+
+    public void FixedUpdate(){
+        //seguimiento del arma al player �
+        if (player.ang > 90 || player.ang < -90)
+        {
+            sR.flipY = true;
+            float x = Mathf.Cos((player.ang - rotacionArma) * Mathf.Deg2Rad) * radioArma;
+            float y = Mathf.Sin((player.ang - rotacionArma) * Mathf.Deg2Rad) * radioArma;
+            transform.localPosition = new Vector3(x, y-0.2f, 1);
+            transform.localEulerAngles = new Vector3(0, 0, player.ang + 90);
+        }
+        else
+        {
+            sR.flipY = false;
+            float x = Mathf.Cos((player.ang + rotacionArma) * Mathf.Deg2Rad) * radioArma;
+            float y = Mathf.Sin((player.ang + rotacionArma) * Mathf.Deg2Rad) * radioArma;
+            transform.localPosition = new Vector3(x, y - 0.2f, 1);
+            transform.localEulerAngles = new Vector3(0, 0, player.ang - 90);
+        } 
     }
     public void Attack()
     {

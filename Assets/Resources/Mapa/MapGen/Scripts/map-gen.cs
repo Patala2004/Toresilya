@@ -959,6 +959,8 @@ public class RoomCreator{
             GameObject newRoom = new GameObject();
             newRoom.transform.parent = rooms.transform;
             newRoom.name = "room " + x +"," + y;
+            int relativeX = x;
+            int relativeY = y;
             x = x*(RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH;
             y = y*(RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH;
 
@@ -988,6 +990,8 @@ public class RoomCreator{
             roomScript.roomCollider = roomCollider;
             roomScript.x = x; // Pass along coordinates of bottom left corner
             roomScript.y = y;
+            roomScript.roomX = relativeX;
+            roomScript.roomY = relativeY;
             roomScript.width = width;
             roomScript.length = length;
             roomScript.roomType = roomType[i];

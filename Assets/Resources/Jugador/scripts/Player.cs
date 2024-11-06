@@ -96,7 +96,8 @@ public class Player : MonoBehaviour
         //direccion en la que esta mirando el personaje
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         ang = CalcularAngulo();
-        sR.flipX = (ang > 90 || ang < -90);
+        if(Time.timeScale > 0) sR.flipX = (ang > 90 || ang < -90); // Que no cambie el sentido del jugador basado en a donde apuntas mientras el juego esta en pausa
+        
         //animacion
         if (attackingAnimation)
         {
