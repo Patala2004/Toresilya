@@ -762,8 +762,20 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
+      propertyPath: statDamage
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: resistanceMax
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
+      propertyPath: statCriticalChance
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
+      propertyPath: statCriticalDamage
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2631732413121222874, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: m_Name

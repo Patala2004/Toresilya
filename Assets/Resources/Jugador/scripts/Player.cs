@@ -23,11 +23,14 @@ public class Player : MonoBehaviour
     public bool attacking = false; // cuando estoy atacando
     public bool attackingAnimation = false;
     public bool blocking = false;
-
+    //Stats
     public Sword sword;
     public float vel = 5f;
     public float velWalk = 5f; //velocidad jugador
     public float velBlock = 2.5f;
+    public float statDamage;
+    public float statCriticalChance;
+    public float statCriticalDamage = 2;
     public float ang; // angulo en grados respecto al cursor (0-180,-0-180)
     Vector2 velImpulse;
     Vector2 velMovimiento;
@@ -85,7 +88,7 @@ public class Player : MonoBehaviour
             Block();
             parryTime += Time.deltaTime; // a�ade tiempo al parry time para que no puedas spamear el boton de atacar
         }
-        else
+        else if(parryTime > 0)
         {
             blocking = false;
             parryTime -= Time.deltaTime;
