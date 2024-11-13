@@ -83,9 +83,13 @@ public class Enemy : MonoBehaviour
             room.CommunicateEnemyDeath();
         }
     }
+
+	public void ReduceHealth(int damage) {
+		health -= damage;
+	}
     public void TakeDamage(int damage,float ang,float attackKnockback)
     {
-        health -= damage;
+        ReduceHealth(damage);
         StartCoroutine(Impulse(player.sword.attackAnimation, ang, attackKnockback));
         GetComponent<GenParticulaTexto>().comenzar(damage, ang);
     }
