@@ -29,9 +29,8 @@ public class Item : MonoBehaviour
     public virtual void grabItem(Player p){
         // Add stats
 
-        Debug.Log("El método grabItem ha sido llamado para el item " + nombre);
+        Debug.Log("El mï¿½todo grabItem ha sido llamado para el item " + nombre);
 
-        Destroy(gameObject);    
     }
     
 

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Item_14 : Item
 {
-    //Declaramos stats o cosas que modificará el item
+    //Declaramos stats o cosas que modificarï¿½ el item
     float attackDMG = 1.1f; //Aumentaremos el 10%
     float attackKNC = 1.05f; //Aumentaremos el 15%
 
@@ -13,7 +13,7 @@ public class Item_14 : Item
     {
         //Declaracion del item
         player = GameObject.Find("player").GetComponent<Player>();
-        descriptionItem = "Tus ataques hacen mas daño y empujan hacia atras un poco mas a los enemigos";
+        descriptionItem = "Tus ataques hacen mas daÃ±o y empujan hacia atras un poco mas a los enemigos";
         descripcionRecoger = "RAW";
         nombre = "ITEM 14";
         unique = false;
@@ -51,17 +51,5 @@ public class Item_14 : Item
             }
         }
     }
-
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        // Verifica si el objeto que ha tocado el ítem tiene la etiqueta "player"
-        if (collision.CompareTag("player"))
-        {
-            grabItem(player); // Llamamos a la funcion de recoger el item
-        }
-    }
-
-   
-
 }
 
