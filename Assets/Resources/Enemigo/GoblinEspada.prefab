@@ -109,7 +109,7 @@ MonoBehaviour:
   damage: 0200000004000000
   room: {fileID: 0}
   displSpeed: 3.7
-  followDistance: 15
+  followDistance: 10
   attackDistance: 1.5
   attackForce: 6
   timer: 0
