@@ -71,7 +71,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 984901699
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b2da5e39c92a1b64ea504d36a9593021, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -129,4 +129,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56899ce98719f7f43b9b1482106307ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  description: 
+  description: "Afila tu arma y sube el da\xF1o 2 unidades."
+  unique: 0
+  rarity: common
