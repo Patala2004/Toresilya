@@ -11,7 +11,7 @@ public class Piedra_afilar : Item
     void Start()
     {
         player = GameObject.Find("player").GetComponent<Player>();
-        descriptionItem = "Añade 2 de ataque";
+        descriptionItem = "Añade 1 de ataque";
     }
 
     // Update is called once per frame
@@ -23,7 +23,8 @@ public class Piedra_afilar : Item
     public override void grabItem(Player p)
     {
         base.grabItem(p);
-        p.statDamage += 2;
+        p.sword.attackDamage[0] += 1;
+        p.sword.attackDamage[1] += 1;
     }
 
     public void OnTriggerEnter2D(Collider2D collision)

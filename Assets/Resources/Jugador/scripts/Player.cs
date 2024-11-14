@@ -28,7 +28,6 @@ public class Player : MonoBehaviour
     public float vel = 5f;
     public float velWalk = 5f; //velocidad jugador
     public float velBlock = 2.5f;
-    public float statDamage;
     public float statCriticalChance;
     public float statCriticalDamage = 2;
     public float ang; // angulo en grados respecto al cursor (0-180,-0-180)
