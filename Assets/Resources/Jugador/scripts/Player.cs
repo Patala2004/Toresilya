@@ -170,7 +170,7 @@ public class Player : MonoBehaviour
         velImpulse = Vector2.zero;
     }
     // Funcion que sirve para recibir da�o
-    public void TakeDamage(int damage,float ang,float knockback,GameObject gObject = null)
+    public void TakeDamage(float damage,float ang,float knockback,GameObject gObject = null)
     {
         if(resistance > 0 && blocking)
         {

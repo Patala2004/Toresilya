@@ -105,7 +105,9 @@ MonoBehaviour:
   health: 25
   knockback: 30
   knockbackResistance: 0
-  damage: 0200000005000000
+  damage:
+  - 4
+  - 8
   room: {fileID: 0}
   displSpeed: 5
   followDistance: 15

@@ -14,7 +14,7 @@ public class Sword : MonoBehaviour
     public float attackSpeed = 0.2f; // velocidad a la que el player puede atacar(no es la velocidad de la animacion)
     public float attackAnimation = 0.2f; // cuanto dura la animacion *importante que no sea mucho
     //to do manejar rng
-    public int[] attackDamage = new int[2]; // da�o de da�omin a da�omax
+    public float[] attackDamage = new float[2]; // da�o de da�omin a da�omax
     public Vector2 hitboxSize = new(1,2);
     float radioArma = 0.3f;
     float rotacionArma =0;
@@ -56,15 +56,14 @@ public class Sword : MonoBehaviour
         {
             if (collider.collider.CompareTag("enemy"))
             {
-                bool critical = false;
                 Enemy enemy = collider.collider.GetComponent<Enemy>();
                 hitEnemies.Add(enemy);
-                int dam = Random.Range(attackDamage[0], attackDamage[1] + 1); // cogemos el daño de la espada base
-                dam += (int)player.statDamage; // sumamos el daño del player
-                critical = Random.Range(0f, 1f) < player.statCriticalChance; // vemos si ha habido critico
+                float dam = Random.Range(attackDamage[0], attackDamage[1]); // cogemos el daño de la espada base
+                dam += player.statDamage; // sumamos el daño del player
+                bool critical = Random.Range(0f, 1f) < player.statCriticalChance; // vemos si ha habido critico
                 if (critical)
                 {
-                    dam = (int)(dam * player.statCriticalDamage);
+                    dam *= player.statCriticalDamage;
                     criticallyHitEnemies.Add(enemy);
                 }
 
@@ -72,7 +71,7 @@ public class Sword : MonoBehaviour
             }
             if (collider.collider.CompareTag("golpeable"))
             {
-                int dam = Random.Range(attackDamage[0], attackDamage[1] + 1);
+                float dam = Random.Range(attackDamage[0], attackDamage[1]);
                 Golpeable golpeable = collider.collider.GetComponent<Golpeable>();
                 golpeable.TakeDamage(dam);
             }

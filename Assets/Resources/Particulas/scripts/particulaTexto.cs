@@ -7,13 +7,13 @@ public class ParticulaTexto : MonoBehaviour
 {
     TextMeshPro mProTexto;
     public Vector3 vel;
-    public int damage;
+    public float damage;
     public float dismissTime;
     // Start is called before the first frame update
     void Start()
     {
         mProTexto = GetComponent<TextMeshPro>();
-        mProTexto.text = "-" + damage.ToString();
+        mProTexto.text = "-" + (Mathf.Round(damage * 10f) / 10f).ToString();
         Destroy(gameObject, dismissTime);
     }
 

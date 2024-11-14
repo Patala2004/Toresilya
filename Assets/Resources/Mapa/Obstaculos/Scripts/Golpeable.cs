@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Golpeable : MonoBehaviour
 {
-    public int health = 6;
+    public float health = 6;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +16,7 @@ public class Golpeable : MonoBehaviour
     {
         
     }
-    public virtual void TakeDamage(int damage)
+    public virtual void TakeDamage(float damage)
     {
         health -= damage;
         if(health <= 0)

@@ -106,7 +106,9 @@ MonoBehaviour:
   health: 15
   knockback: 15
   knockbackResistance: -50
-  damage: 0200000004000000
+  damage:
+  - 2
+  - 4
   room: {fileID: 0}
   displSpeed: 3.7
   followDistance: 10
@@ -178,7 +180,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 8.333333, y: 8.333333}
+    oldSize: {x: 7.142857, y: 7.142857}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

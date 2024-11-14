@@ -54,7 +54,9 @@ MonoBehaviour:
   health: 15
   knockback: 30
   knockbackResistance: 0
-  damage: 0200000005000000
+  damage:
+  - 3
+  - 5
   room: {fileID: 0}
   persecutionRadius: 10
   jumpForce: 700
@@ -99,7 +101,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 984901699
-  m_SortingLayer: 3
+  m_SortingLayer: 4
   m_SortingOrder: 0
   m_Sprite: {fileID: -1641933623, guid: b4d69b9a0b52dc1e685950bb6db18cfd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

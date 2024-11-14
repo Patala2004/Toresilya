@@ -21,7 +21,7 @@ public class GenParticulaTexto : MonoBehaviour
     {
    
     }
-    public void comenzar(int damage,float ang)
+    public void comenzar(float damage,float ang)
     {
         //Calculamos dispersion de la particula
         ang = Random.Range(ang - particulaDispersion, ang + particulaDispersion);

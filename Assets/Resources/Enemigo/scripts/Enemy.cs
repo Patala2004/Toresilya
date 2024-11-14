@@ -14,7 +14,7 @@ public class Enemy : MonoBehaviour
     public float health = 15;
     public float knockback;
     public float knockbackResistance; // 0 sin resistencia 100 con resistencia
-    public int[] damage = new int[2];
+    public float[] damage = new float[2];
     public Room room;
     // Start is called before the first frame update
     public void Start()
@@ -49,7 +49,7 @@ public class Enemy : MonoBehaviour
         velImpulse = Vector2.zero;
     }
     //funcion para crear una hitbox que ataque
-    public void HitboxEnemy(Vector2 position,Vector2 scale,float angle,Vector2 dir,float distance,int[] damage,float knockback)
+    public void HitboxEnemy(Vector2 position,Vector2 scale,float angle,Vector2 dir,float distance,float[] damage,float knockback)
     {
         RaycastHit2D[] boxCast = Physics2D.BoxCastAll(position,scale, angle, dir, distance);
         foreach (RaycastHit2D collider in boxCast)
@@ -60,18 +60,18 @@ public class Enemy : MonoBehaviour
             }
             if (collider.collider.CompareTag("golpeable"))
             {
-                int dam = Random.Range(damage[0], damage[1] + 1);
+                float dam = Random.Range(damage[0], damage[1]);
                 Golpeable golpeable = collider.collider.GetComponent<Golpeable>();
                 golpeable.TakeDamage(dam);
             }
         }
     }
     //funciones que se llaman para atacar al player
-    public void HitPlayer(float ang,int[] damage,float knockback)
+    public void HitPlayer(float ang,float[] damage,float knockback)
     {
         allowAttack = false;
 
-        int dm = Random.Range(damage[0], damage[1] + 1);
+        float dm = Random.Range(damage[0], damage[1]);
         player.TakeDamage(dm,ang,knockback,gameObject);
     }
     // funciones para el manejo de vida
@@ -84,10 +84,10 @@ public class Enemy : MonoBehaviour
         }
     }
 
-	public void ReduceHealth(int damage) {
+	public void ReduceHealth(float damage) {
 		health -= damage;
 	}
-    public void TakeDamage(int damage,float ang,float attackKnockback)
+    public void TakeDamage(float damage,float ang,float attackKnockback)
     {
         ReduceHealth(damage);
         StartCoroutine(Impulse(player.sword.attackAnimation, ang, attackKnockback));
