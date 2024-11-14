@@ -10,7 +10,8 @@ public class Piedra_afilar : Item
     // Start is called before the first frame update
     void Start()
     {
-        description = "Añade 2 de ataque";
+        player = GameObject.Find("player").GetComponent<Player>();
+        descriptionItem = "Añade 2 de ataque";
     }
 
     // Update is called once per frame
@@ -23,5 +24,14 @@ public class Piedra_afilar : Item
     {
         base.grabItem(p);
         p.statDamage += 2;
+    }
+
+    public void OnTriggerEnter2D(Collider2D collision)
+    {
+        // Verifica si el objeto que ha tocado el ítem tiene la etiqueta "player"
+        if (collision.CompareTag("player"))
+        {
+            grabItem(player); // Llamamos a la funcion de recoger el item
+        }
     }
 }
