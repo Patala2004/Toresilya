@@ -27,7 +27,7 @@ public class Test : MonoBehaviour
 		Destroy(en);
 	}*/
 
-	void Start() {
+	public void Start() {
 		TestDano();
 		//TestAttack();
 	}
