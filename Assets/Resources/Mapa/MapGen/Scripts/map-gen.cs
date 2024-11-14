@@ -1522,15 +1522,15 @@ public static class RoomType{
     // Room sizes
 
     // PLEASE MAKE SURE ROOM-SIZE-4 IS DIVISIBLE BY 2 ( (..._ROOM_(SIZE/WIDTH/LENGTH) - 4 ) % 2 == 0)
-    public const int MAX_ROOM_SIZE = 26;
-    public const int NORMAL_CORRIDOR_LENGTH = 10;
-    public const int LARGE_ROOM_CORRIDOR_LENGTH = 6;
+    public const int MAX_ROOM_SIZE = 32;
+    public const int NORMAL_CORRIDOR_LENGTH = 13;
+    public const int LARGE_ROOM_CORRIDOR_LENGTH = 9;
     public const int CORRIDOR_WIDTH = 4;
-    public const int NORMAL_ROOM_WIDTH = 18;
-    public const int NORMAL_ROOM_LENGTH = 18;
+    public const int NORMAL_ROOM_WIDTH = 24;
+    public const int NORMAL_ROOM_LENGTH = 24;
 
-    public const int LARGE_ROOM_WIDTH = 26;
-    public const int LARGE_ROOM_LENGTH = 26;
+    public const int LARGE_ROOM_WIDTH = 32;
+    public const int LARGE_ROOM_LENGTH = 32;
 }
 
 

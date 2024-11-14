@@ -60,6 +60,9 @@ TagManager:
   - name: player
     uniqueID: 984901699
     locked: 0
+  - name: paredes
+    uniqueID: 133922023
+    locked: 0
   - name: dopamina
     uniqueID: 3985442501
     locked: 0
