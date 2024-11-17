@@ -16,12 +16,26 @@ public class Enemy : MonoBehaviour
     public float knockbackResistance; // 0 sin resistencia 100 con resistencia
     public float[] damage = new float[2];
     public Room room;
+
+	AStar astar;
     // Start is called before the first frame update
     public void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.Find("player").GetComponent<Player>();
     }
+
+	public void EnableAStar() {
+		astar = new AStar(room.nodeMatrix, player);
+		Debug.Log("Enabled a star");
+		if(room.nodeMatrix == null) {
+			Debug.LogError("Matriz de nodos nula");
+		}
+		if(player == null) {
+			Debug.LogError("Jugador");
+		}
+	}
+
     public void FixedUpdate()
     {
         rb.velocity += velImpulse;
@@ -99,4 +113,10 @@ public class Enemy : MonoBehaviour
         float ang = Mathf.Rad2Deg * (Mathf.Atan2(dir.y, dir.x));
         sR.flipX = (ang > 90 || ang < -90);
     }
+
+	public List<Node> pathToPlayer() {
+		Node origin = astar.getNearestNode(this.gameObject);
+		Node end = astar.getNearestNode(player.gameObject);
+		return astar.FindPath(origin, end);
+	}
 }

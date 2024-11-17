@@ -83,6 +83,7 @@ public class Room : MonoBehaviour
             newEnemy.transform.parent = this.transform;
             aliveEnemies++;
             newEnemy.GetComponent<Enemy>().room = this;
+			newEnemy.GetComponent<Enemy>().EnableAStar();
         }
     }
 
