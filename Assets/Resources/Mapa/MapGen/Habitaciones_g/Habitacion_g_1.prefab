@@ -750,7 +750,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6300159543158709410}
   m_Layer: 0
-  m_Name: Habitacion_s_1
+  m_Name: Habitacion_g_1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

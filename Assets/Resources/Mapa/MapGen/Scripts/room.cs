@@ -34,7 +34,6 @@ public class Room : MonoBehaviour
 
 
     private MapGen mapManager;
-    private EnemySpawner enemySpawner;
 
     private bool spawned = false;
     public int aliveEnemies = 0;
@@ -47,7 +46,6 @@ public class Room : MonoBehaviour
     void Start()
     {
         mapManager = GameObject.Find("MapGenerator").GetComponent<MapGen>();
-        enemySpawner = GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>();
         minimapCamera = GameObject.Find("MiniMapCamera");
         minimapCameraWide = GameObject.Find("MiniMapCameraWide");
     }
