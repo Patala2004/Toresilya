@@ -13,7 +13,7 @@ public class ParticulaTexto : MonoBehaviour
     void Start()
     {
         mProTexto = GetComponent<TextMeshPro>();
-        mProTexto.text = "-" + (Mathf.Round(damage * 10f) / 10f).ToString();
+        mProTexto.text = "-" + Mathf.Round(damage).ToString();
         Destroy(gameObject, dismissTime);
     }
 

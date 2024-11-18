@@ -1012,6 +1012,33 @@ public class RoomCreator{
                 GameObject prefab = GameObject.Instantiate(Resources.Load<GameObject>("Mapa/MapGen/Prefabs/EndRoom_1"));
                 prefab.transform.parent = newRoom.transform; // Set as child            
                 prefab.transform.localPosition = new Vector3(0,0,0);  
+            }else if (roomType[i] == RoomType.NORMAL_ENEMY_ROOM_CODE)
+            {
+                GameObject[] prefabHabitaciones = Resources.LoadAll<GameObject>("Mapa/MapGen/Habitaciones_s");
+                GameObject prefab = GameObject.Instantiate(prefabHabitaciones[(int)UnityEngine.Random.Range(0,prefabHabitaciones.Length)]);
+                prefab.transform.parent = newRoom.transform;
+                prefab.transform.localPosition = new(0, 0, 0);
+            }
+            else if (roomType[i] == RoomType.LARGE_ENEMY_ROOM_CODE)
+            {
+                GameObject[] prefabHabitaciones = Resources.LoadAll<GameObject>("Mapa/MapGen/Habitaciones_g");
+                GameObject prefab = GameObject.Instantiate(prefabHabitaciones[(int)UnityEngine.Random.Range(0, prefabHabitaciones.Length)]);
+                prefab.transform.parent = newRoom.transform;
+                prefab.transform.localPosition = new(0, 0, 0);
+            }
+            else if (roomType[i] == RoomType.STRECHED_ENEMY_ROOM_H_CODE)
+            {
+                GameObject[] prefabHabitaciones = Resources.LoadAll<GameObject>("Mapa/MapGen/Habitaciones_gs");
+                GameObject prefab = GameObject.Instantiate(prefabHabitaciones[(int)UnityEngine.Random.Range(0, prefabHabitaciones.Length)]);
+                prefab.transform.parent = newRoom.transform;
+                prefab.transform.localPosition = new(0, 0, 0);
+            }
+            else if (roomType[i] == RoomType.STRECHED_ENEMY_ROOM_V_CODE)
+            {
+                GameObject[] prefabHabitaciones = Resources.LoadAll<GameObject>("Mapa/MapGen/Habitaciones_sg");
+                GameObject prefab = GameObject.Instantiate(prefabHabitaciones[(int)UnityEngine.Random.Range(0, prefabHabitaciones.Length)]);
+                prefab.transform.parent = newRoom.transform;
+                prefab.transform.localPosition = new(0, 0, 0);
             }
 
             /*
@@ -1044,7 +1071,7 @@ public class RoomCreator{
 
             */
 
-            
+
         }
     }
 }

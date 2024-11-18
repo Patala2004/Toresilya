@@ -115,7 +115,7 @@ MonoBehaviour:
   attackDistance: 1.5
   attackForce: 6
   timer: 0
-  timerReset: 0.7
+  timerReset: 1
   isJumping: 0
 --- !u!50 &5830796725177033867
 Rigidbody2D:

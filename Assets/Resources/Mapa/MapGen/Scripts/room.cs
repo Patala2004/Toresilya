@@ -34,10 +34,9 @@ public class Room : MonoBehaviour
 
 
     private MapGen mapManager;
-    private EnemySpawner enemySpawner;
 
     private bool spawned = false;
-    private int aliveEnemies = 0;
+    public int aliveEnemies = 0;
 
     private GameObject minimapCamera;
     private GameObject minimapCameraWide;
@@ -47,7 +46,6 @@ public class Room : MonoBehaviour
     void Start()
     {
         mapManager = GameObject.Find("MapGenerator").GetComponent<MapGen>();
-        enemySpawner = GameObject.Find("EnemySpawner").GetComponent<EnemySpawner>();
         minimapCamera = GameObject.Find("MiniMapCamera");
         minimapCameraWide = GameObject.Find("MiniMapCameraWide");
     }
@@ -65,28 +63,11 @@ public class Room : MonoBehaviour
             spawned = true;
             Debug.Log("cerrando pasillos");
             CloseCorridors();
-            SpawnEnemies((int) UnityEngine.Random.Range(2,5));
         }
 
         // Crear habitacion de minimapa
         createMiniMapRoom();
     }
-
-    private void SpawnEnemies(int enemyAmm){
-        System.Random rand = new System.Random();
-        for(int i = 0; i < enemyAmm; i++){
-            // Get free coordinates on a radius arround the player but not too near the walls
-            int randW = rand.Next(2,width-2);
-            int randL = rand.Next(2,length-2);
-            // Spawn Enemy
-            GameObject newEnemy = enemySpawner.SpawnEnemy(x + randW, y + randL);
-            newEnemy.transform.parent = this.transform;
-            aliveEnemies++;
-            newEnemy.GetComponent<Enemy>().room = this;
-        }
-    }
-
-
     public void CommunicateEnemyDeath(){
         aliveEnemies--;
         if(aliveEnemies == 0){
