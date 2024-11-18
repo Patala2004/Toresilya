@@ -29,7 +29,7 @@ public class Item : MonoBehaviour
     public virtual void grabItem(Player p){
         // Add stats
 
-        Debug.Log("El m�todo grabItem ha sido llamado para el item " + nombre);
+        Debug.Log("El metodo grabItem ha sido llamado para el item " + nombre);
 
     }
     
