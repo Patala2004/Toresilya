@@ -20,6 +20,7 @@ public class EnemySpawn : MonoBehaviour
                 rng = randomized ? (int)Random.Range(0, enemies.Length) : 0;
                 GameObject newEnemy = Instantiate(enemies[rng]);
                 newEnemy.transform.position = this.transform.position;
+                newEnemy.transform.parent = transform.parent.gameObject.transform.parent.transform;
                 newEnemy.GetComponent<Enemy>().room = room.GetComponent<Room>();
             }
         }
