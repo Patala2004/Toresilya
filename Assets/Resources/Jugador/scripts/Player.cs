@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -63,11 +64,18 @@ public class Player : MonoBehaviour
     {
         //movimiento
         Moving();
-        vel = (blocking ? velBlock : velWalk); // C:
+        vel = (blocking ? velBlock : velWalk); // mirar si esta moviendose
+
+
         //vida
         health = Mathf.Clamp(health,0,healthMax); // limita la vida a maxHealth
+        if (health <= 0) {
+            ToDie();
+        }
+
+
         //resistencia y parry
-        resistance = Mathf.Clamp(resistance, 0, resistanceMax); // limita la resis a maxHealth
+        resistance = Mathf.Clamp(resistance, 0, resistanceMax); // limita la resis a maxRes
         parryTime = Mathf.Clamp(parryTime, 0, parryTimerClamp); // se queda en 1 bajar para hacer mas facil hacer parry
         //esta haciendo parry
         parrying = (parryTime > 0 && parryTime < parryTimerCheck && blocking); // calcula cuando esta haciendo parry
@@ -93,7 +101,6 @@ public class Player : MonoBehaviour
             parryTime -= Time.deltaTime;
         }
         //direccion en la que esta mirando el personaje
-        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         ang = CalcularAngulo();
         if(Time.timeScale > 0) sR.flipX = (ang > 90 || ang < -90); // Que no cambie el sentido del jugador basado en a donde apuntas mientras el juego esta en pausa
         
@@ -109,6 +116,7 @@ public class Player : MonoBehaviour
     //Funcion que calcula en angulo respecto al cursor
     public float CalcularAngulo()
     {
+        mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         float adyacente = mousePos.x - transform.position.x;
         float opuesto = mousePos.y - transform.position.y ;
         return Mathf.Rad2Deg*(Mathf.Atan2(opuesto,adyacente));
@@ -214,4 +222,10 @@ public class Player : MonoBehaviour
         yield return new WaitForSeconds(waitseconds);
         resistanceRegen = true;
     }
+    // Funcion que se llama cuando el jugador muere
+    private void ToDie()
+    {
+        SceneManager.LoadScene("SampleScene");
+    }
+
 }
