@@ -10,9 +10,19 @@ public class EnemySpawn : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        rng = randomized ? (int)Random.Range(0,enemies.Length) : 0;
-        GameObject newEnemy = Instantiate(enemies[rng]);
-        newEnemy.transform.position = this.transform.position;
+        if (transform.parent != null)
+        {
+            if (transform.parent.gameObject.transform.parent != null)
+            {
+                GameObject room = transform.parent.gameObject.transform.parent.gameObject;
+                Debug.Log("El enemigo pertenece a la sala: " + room.name);
+                room.GetComponent<Room>().aliveEnemies++;
+                rng = randomized ? (int)Random.Range(0, enemies.Length) : 0;
+                GameObject newEnemy = Instantiate(enemies[rng]);
+                newEnemy.transform.position = this.transform.position;
+                newEnemy.GetComponent<Enemy>().room = room.GetComponent<Room>();
+            }
+        }
     }
 
     // Update is called once per frame

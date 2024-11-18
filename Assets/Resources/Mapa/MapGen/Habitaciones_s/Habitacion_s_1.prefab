@@ -902,7 +902,7 @@ PrefabInstance:
     - target: {fileID: 1488132394881162949, guid: 081ee8aaa7ebbd647a97d2d3b75a75dd, type: 3}
       propertyPath: enemies.Array.data[0]
       value: 
-      objectReference: {fileID: 2687714359759941155, guid: 2ca89753bd9503e31873a0cac4f62f57, type: 3}
+      objectReference: {fileID: 6159802974911976144, guid: 2ca89753bd9503e31873a0cac4f62f57, type: 3}
     - target: {fileID: 5659229337424874668, guid: 081ee8aaa7ebbd647a97d2d3b75a75dd, type: 3}
       propertyPath: m_Name
       value: EnemySpawner (1)
@@ -1030,7 +1030,7 @@ PrefabInstance:
     - target: {fileID: 1488132394881162949, guid: 081ee8aaa7ebbd647a97d2d3b75a75dd, type: 3}
       propertyPath: enemies.Array.data[0]
       value: 
-      objectReference: {fileID: 2687714359759941155, guid: d083456b95d910594a105c299a2cd312, type: 3}
+      objectReference: {fileID: 6159802974911976144, guid: d083456b95d910594a105c299a2cd312, type: 3}
     - target: {fileID: 5659229337424874668, guid: 081ee8aaa7ebbd647a97d2d3b75a75dd, type: 3}
       propertyPath: m_Name
       value: EnemySpawner
