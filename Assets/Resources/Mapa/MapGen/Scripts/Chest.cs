@@ -6,6 +6,7 @@ public class Chest : MonoBehaviour
 {
 
     [SerializeField] private GameObject BoxSprite;
+    bool hasBeenOpened = false;
 
     private ItemGenerator itemGen;
     // Start is called before the first frame update
@@ -21,9 +22,11 @@ public class Chest : MonoBehaviour
     }
 
     public void OnTriggerEnter2D(){
+        if(hasBeenOpened) return;
         GameObject newItem = itemGen.getItem();
         newItem.transform.SetParent(this.transform, false);
         newItem.transform.localPosition = new Vector2(0,0);
         Destroy(BoxSprite);
+        hasBeenOpened = true;
     }
 }
