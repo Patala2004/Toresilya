@@ -58,15 +58,17 @@ public class Room : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other){
         Debug.Log("ENTERED");
+        if(other.gameObject.name != "player"){
+            return;
+        }
         // If collision was with player and the room is an EnemyRoom
-        if(other.gameObject.name == "player" && roomType > 4 && !spawned){
+        if( roomType > 4 && !spawned){
             spawned = true;
             Debug.Log("cerrando pasillos");
-            CloseCorridors();
-        }
-
+            CloseCorridors();            
+        }   
         // Crear habitacion de minimapa
-        createMiniMapRoom();
+        createMiniMapRoom();     
     }
     public void CommunicateEnemyDeath(){
         aliveEnemies--;

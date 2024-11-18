@@ -42,14 +42,4 @@ public class Item_1 : Item
         }
     }
 
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        // Verifica si el objeto que ha tocado el ítem tiene la etiqueta "player"
-        if (collision.CompareTag("player"))
-        {
-            grabItem(player); // Llamamos a la funcion de recoger el item
-        }
-    }
-
-
 }
