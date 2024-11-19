@@ -44,7 +44,8 @@ public class Player : MonoBehaviour
     //Items
     public bool item_162 = false;
     public bool aplicadoItem162 = false;
-    public float bonusItem162 = 0;
+    public bool item_163 = false;
+    public bool aplicadoItem163 = false;
     // Array de funciones de mecánicas 
     public List<Action<Enemy[]>> attackMechanics = new List<Action<Enemy[]>>(); // Ocurren cada ataque (que golpee o no a enemigos, eso lo revisa la función)
     public List<Action<Enemy[]>> criticalAttackMechanics = new List<Action<Enemy[]>>(); // Ocurren cada ataque crítico
@@ -120,7 +121,11 @@ public class Player : MonoBehaviour
         }
 
         //Para item 162 y 163, cada vez que recibo dano miro actualizo mi defena si los tengo
-        ActualizarDefensa();
+        if(item_162 || item_163)
+        {
+            ActualizarDefensa();
+        }
+        
 
     }
     //Funcion que calcula en angulo respecto al cursor
@@ -242,17 +247,27 @@ public class Player : MonoBehaviour
 
     private void ActualizarDefensa()
     {
-        if (health < 0.4f * healthMax && item_162 && !aplicadoItem162)
+        if (health <= 0.4f * healthMax && item_162 && !aplicadoItem162)
         {
-            // Si la vida está por debajo del 40% y no tiene el bonus
-            defensaReal += defensa * 0.1f; // Aumentar un 10% de la defensa base
+            defensaReal += defensa * 0.1f;
             aplicadoItem162 = true;
         }
-        else if (health >= 0.4f * healthMax && aplicadoItem162)
+        else if (health > 0.4f * healthMax && aplicadoItem162)
         {
-            // Si la vida sube del 40% y tiene el bonus
-            defensaReal -= defensa * 0.1f; // Remover el 10% de la defensa base
+            defensaReal -= defensa * 0.1f; 
             aplicadoItem162 = false;
+        }
+
+        if(health <= 0.2f * healthMax && item_163 && !aplicadoItem163)
+        {
+            defensaReal += defensa * 0.2f; 
+            aplicadoItem163 = true;
+        }
+        else if (health > 0.2f * healthMax && aplicadoItem163)
+        {
+            defensaReal -= defensa * 0.2f; 
+            aplicadoItem163 = false;
+          
         }
     }
 
