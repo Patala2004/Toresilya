@@ -34,22 +34,7 @@ public class Item_14 : Item
         p.sword.attackKnockback*=attackKNC; //AUMENTO EL KNOCKBACK
         p.sword.attackDamage[0] *= attackDMG;
         p.sword.attackDamage[1] *= attackDMG;
-        p.attackMechanics.Add(printA);
 
-    }
-    public void printA(Enemy[] enemyList)
-    {
-        if (enemyList.Length == 0)
-        {
-            Debug.Log("MECANICA DE ATAAQUE RAHHHHHHHHHHHHH");
-        }
-        else
-        {
-            foreach (Enemy e in enemyList)
-            {
-                Debug.Log("MECANICA EXtrA AL TONTO DE " + e.gameObject.name);
-            }
-        }
     }
 }
 

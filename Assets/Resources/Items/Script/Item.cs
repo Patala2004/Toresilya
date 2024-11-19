@@ -33,5 +33,10 @@ public class Item : MonoBehaviour
 
     }
     
+    public virtual IEnumerator putOnCooldown(float seconds, bool cc)
+    {
+        yield return new WaitForSeconds(seconds);
+        cc = true;
+    }
 
 }

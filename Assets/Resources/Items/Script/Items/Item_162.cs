@@ -5,7 +5,7 @@ using UnityEngine;
 public class Item_162 : Item
 {
     //Declaramos stats o cosas que modificara el item
-
+    public bool aplicadoItem162=false;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,34 +29,22 @@ public class Item_162 : Item
     {
         base.grabItem(p);
         //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM
-        p.item_162 = true;
-        p.attackMechanics.Add(printA);
+        p.defenseTempAddMechanics.Add(metodoItem162);
 
     }
 
-
-    public void printA(Enemy[] enemyList)
+    public void metodoItem162()
     {
-        if (enemyList.Length == 0)
+        if (player.health <= 0.4f * player.healthMax)
         {
-            Debug.Log("MECANICA DE ATAAQUE RAHHHHHHHHHHHHH");
+            player.defensaReal += player.defensa * 0.1f;
+            aplicadoItem162 = true;
         }
-        else
+        else if (player.health > 0.4f * player.healthMax )
         {
-            foreach (Enemy e in enemyList)
-            {
-                Debug.Log("MECANICA EXtrA AL TONTO DE " + e.gameObject.name);
-            }
+            player.defensaReal -= player.defensa * 0.1f;
+            aplicadoItem162 = false;
         }
     }
 
-    //Metodo que mira cuando el objeto haya sido tocado por el jugador
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        // Verifica si el objeto que ha tocado el �tem tiene la etiqueta "player"
-        if (collision.CompareTag("player"))
-        {
-            grabItem(player); // Llamamos a la funcion de recoger el item
-        }
-    }
 }

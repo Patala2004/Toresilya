@@ -56,16 +56,6 @@ public class Item_Base_Structure : Item
         }
     }
 
-    //Metodo que mira cuando el objeto haya sido tocado por el jugador
-    public void OnTriggerEnter2D(Collider2D collision)
-    {
-        // Verifica si el objeto que ha tocado el �tem tiene la etiqueta "player"
-        if (collision.CompareTag("player"))
-        {
-            grabItem(player); // Llamamos a la funcion de recoger el item
-        }
-    }
-
     //FUNCIONES QUE NECESITE EL OBJETO EXTRA
 
 

@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     public float healthMax = 50;
     public float health = 50;
     // DEFENSA
-    private float defensa = 1; //Fluctua de 1 a 2. para el jugador mejor mostrarle que el % como tal creo 
+    public float defensa = 1; //Fluctua de 1 a 2. para el jugador mejor mostrarle que el % como tal creo 
     public float defensaReal = 1; //Si esto llega a 2 no recibe daño
     // PARRY
     public float resistanceMax = 50;
@@ -41,16 +41,17 @@ public class Player : MonoBehaviour
     Rigidbody2D rb;
     SpriteRenderer sR;
     Animator ani;
-    //Items
-    public bool item_162 = false;
-    public bool aplicadoItem162 = false;
-    public bool item_163 = false;
-    public bool aplicadoItem163 = false;
+    
+    //Estados
+    public bool stuned=false;
     // Array de funciones de mecánicas 
     public List<Action<Enemy[]>> attackMechanics = new List<Action<Enemy[]>>(); // Ocurren cada ataque (que golpee o no a enemigos, eso lo revisa la función)
     public List<Action<Enemy[]>> criticalAttackMechanics = new List<Action<Enemy[]>>(); // Ocurren cada ataque crítico
     public List<Action<Enemy>> parryMechanics = new List<Action<Enemy>>();
     public List<Action<Enemy>> perfectParryMechanics = new List<Action<Enemy>>();
+    //Array de funciones de items
+    public List<Action> stunMechanics = new List<Action>();
+    public List<Action> defenseTempAddMechanics = new List<Action>();
 
 
 
@@ -120,12 +121,15 @@ public class Player : MonoBehaviour
             ani.SetFloat("velocity", velMovimiento.magnitude); 
         }
 
-        //Para item 162 y 163, cada vez que recibo dano miro actualizo mi defena si los tengo
-        if(item_162 || item_163)
+        if(stuned)
         {
-            ActualizarDefensa();
+            velMovimiento = Vector2.zero;
+            //ani.secFloat("velocity", vector2.zero);
+            return;
         }
-        
+
+        //Comprobar en cada frame la lista de defenseTempAddMechanics 
+
 
     }
     //Funcion que calcula en angulo respecto al cursor
@@ -226,8 +230,8 @@ public class Player : MonoBehaviour
             
         }
         else
-        {
-            health -= (damage- (damage*(defensaReal-1))); //Preguntar a Alvaro si se tiene dudas de la ecuacion
+        {   //Comentado todo lo de defensa por si si
+            // health -= (damage- (damage*(defensaReal-1))); //Preguntar a Alvaro si se tiene dudas de la ecuacion
             StartCoroutine(Impulse(0.2f, ang, knockback)); // empuje
         }
         
@@ -245,30 +249,11 @@ public class Player : MonoBehaviour
         SceneManager.LoadScene("SampleScene");
     }
 
-    private void ActualizarDefensa()
+    //Metodo para aplicar stun al jugador durante 1,5 seg
+    public IEnumerator GetStuned()
     {
-        if (health <= 0.4f * healthMax && item_162 && !aplicadoItem162)
-        {
-            defensaReal += defensa * 0.1f;
-            aplicadoItem162 = true;
-        }
-        else if (health > 0.4f * healthMax && aplicadoItem162)
-        {
-            defensaReal -= defensa * 0.1f; 
-            aplicadoItem162 = false;
-        }
-
-        if(health <= 0.2f * healthMax && item_163 && !aplicadoItem163)
-        {
-            defensaReal += defensa * 0.2f; 
-            aplicadoItem163 = true;
-        }
-        else if (health > 0.2f * healthMax && aplicadoItem163)
-        {
-            defensaReal -= defensa * 0.2f; 
-            aplicadoItem163 = false;
-          
-        }
+        stuned = true;
+        yield return new WaitForSeconds(1.5f);
+        stuned = false;
     }
-
 }
