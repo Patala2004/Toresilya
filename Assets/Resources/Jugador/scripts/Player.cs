@@ -44,6 +44,7 @@ public class Player : MonoBehaviour
     
     //Estados
     public bool stuned=false;
+    public bool invulnerable = false;
     // Array de funciones de mecánicas 
     public List<Action<Enemy[]>> attackMechanics = new List<Action<Enemy[]>>(); // Ocurren cada ataque (que golpee o no a enemigos, eso lo revisa la función)
     public List<Action<Enemy[]>> criticalAttackMechanics = new List<Action<Enemy[]>>(); // Ocurren cada ataque crítico
@@ -128,6 +129,7 @@ public class Player : MonoBehaviour
             return;
         }
 
+
         //Comprobar en cada frame la lista de defenseTempAddMechanics 
 
 
@@ -198,6 +200,11 @@ public class Player : MonoBehaviour
     // Funcion que sirve para recibir da�o
     public void TakeDamage(float damage,float ang,float knockback,GameObject gObject = null)
     {
+        if (invulnerable) //Si es invulnerable no recibe daño
+        {
+            return;
+        }
+
         if(resistance > 0 && blocking)
         {
             // Parry perfecto
@@ -231,7 +238,7 @@ public class Player : MonoBehaviour
         }
         else
         {   //Comentado todo lo de defensa por si si
-            // health -= (damage- (damage*(defensaReal-1))); //Preguntar a Alvaro si se tiene dudas de la ecuacion
+            health -= (damage);//- (damage*(defensaReal-1))); //Preguntar a Alvaro si se tiene dudas de la ecuacion
             StartCoroutine(Impulse(0.2f, ang, knockback)); // empuje
         }
         
