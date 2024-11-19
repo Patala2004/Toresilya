@@ -10,6 +10,9 @@ public class Player : MonoBehaviour
     // VIDA
     public float healthMax = 50;
     public float health = 50;
+    // DEFENSA
+    public float defensa = 10;
+    public float defensaReal = 10;
     // PARRY
     public float resistanceMax = 50;
     public float resistance = 50;
@@ -38,7 +41,10 @@ public class Player : MonoBehaviour
     Rigidbody2D rb;
     SpriteRenderer sR;
     Animator ani;
-
+    //Items
+    public bool item_162 = false;
+    public bool aplicadoItem162 = false;
+    public float bonusItem162 = 0;
     // Array de funciones de mecánicas 
     public List<Action<Enemy[]>> attackMechanics = new List<Action<Enemy[]>>(); // Ocurren cada ataque (que golpee o no a enemigos, eso lo revisa la función)
     public List<Action<Enemy[]>> criticalAttackMechanics = new List<Action<Enemy[]>>(); // Ocurren cada ataque crítico
@@ -112,6 +118,10 @@ public class Player : MonoBehaviour
         else { 
             ani.SetFloat("velocity", velMovimiento.magnitude); 
         }
+
+        //Para item 162 y 163, cada vez que recibo dano miro actualizo mi defena si los tengo
+        ActualizarDefensa();
+
     }
     //Funcion que calcula en angulo respecto al cursor
     public float CalcularAngulo()
@@ -208,12 +218,14 @@ public class Player : MonoBehaviour
                     mechanic.Invoke(gObject.GetComponent<Enemy>()); 
                 }
             }
+            
         }
         else
         {
-            health -= damage;
+            health -= damage; //MODIFICAR EN BASE DEFNESA
             StartCoroutine(Impulse(0.2f, ang, knockback)); // empuje
         }
+        
     }
     // Parry y manejo de resistencia
     IEnumerator ParryCooldown(float waitseconds)
@@ -226,6 +238,22 @@ public class Player : MonoBehaviour
     private void ToDie()
     {
         SceneManager.LoadScene("SampleScene");
+    }
+
+    private void ActualizarDefensa()
+    {
+        if (health < 0.4f * healthMax && item_162 && !aplicadoItem162)
+        {
+            // Si la vida está por debajo del 40% y no tiene el bonus
+            defensaReal += defensa * 0.1f; // Aumentar un 10% de la defensa base
+            aplicadoItem162 = true;
+        }
+        else if (health >= 0.4f * healthMax && aplicadoItem162)
+        {
+            // Si la vida sube del 40% y tiene el bonus
+            defensaReal -= defensa * 0.1f; // Remover el 10% de la defensa base
+            aplicadoItem162 = false;
+        }
     }
 
 }
