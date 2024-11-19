@@ -11,8 +11,8 @@ public class Player : MonoBehaviour
     public float healthMax = 50;
     public float health = 50;
     // DEFENSA
-    public float defensa = 10;
-    public float defensaReal = 10;
+    private float defensa = 1; //Fluctua de 1 a 2. para el jugador mejor mostrarle que el % como tal creo 
+    public float defensaReal = 1; //Si esto llega a 2 no recibe daño
     // PARRY
     public float resistanceMax = 50;
     public float resistance = 50;
@@ -227,7 +227,7 @@ public class Player : MonoBehaviour
         }
         else
         {
-            health -= damage; //MODIFICAR EN BASE DEFNESA
+            health -= (damage- (damage*(defensaReal-1))); //Preguntar a Alvaro si se tiene dudas de la ecuacion
             StartCoroutine(Impulse(0.2f, ang, knockback)); // empuje
         }
         
