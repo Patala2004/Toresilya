@@ -73,7 +73,7 @@ public class Item_1 : Item
                 Debug.Log(hit[i].collider.gameObject);
                 Enemy target = hit[i].collider.gameObject.GetComponent<Enemy>();
                 // Do damage and connect lighting to it
-                target.TakeDamage(UnityEngine.Random.Range(player.sword.attackDamage[0], player.sword.attackDamage[1]) * multDanoRayo, player.ang, player.sword.attackKnockback * (player.sword.knockbackMultiplicator<0? 0:player.sword.knockbackMultiplicator), new Color(0,0,0.5f,1));
+                target.TakeDamage(UnityEngine.Random.Range(player.sword.attackDamage[0], player.sword.attackDamage[1]) * multDanoRayo, player.ang, player.sword.attackKnockback * (player.sword.knockbackMultiplicator<0? 0:player.sword.knockbackMultiplicator), Color.yellow);
                 
                 Lightning_effect rayo = Instantiate(Resources.Load<GameObject>("Items/Prefabs efectos/rayo")).GetComponent<Lightning_effect>();
 
