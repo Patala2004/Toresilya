@@ -28,15 +28,15 @@ public class Enemy : MonoBehaviour
 
     // Efectos de estado
         // Paralizado -> puede atacar pero no moverse
-    private float paralizedTime = 0f;
+    public float paralizedTime = 0f;
     public bool isParalized = false;
 
         // Caos -> no puede ni moverse ni atacar
-    private float caosTime = 0f;
+    public float caosTime = 0f;
     public bool isCaos = false;
 
         //Debil -> Su defensa disminue un 20% durante durDebil en item.cs
-    private float debilTime = 0f;
+    public float debilTime = 0f;
     public bool isDebil = false;
 
 
@@ -91,9 +91,9 @@ public class Enemy : MonoBehaviour
             multiplicadorDefensa += 0.2f;
         }
         //If que pone el estado debil
-        if(!esDebil && debilTime > 0)
+        if(!isDebil && debilTime > 0)
         {
-            esDebil = true;
+            isDebil = true;
             multiplicadorDefensa -= 0.2f;
         }
       

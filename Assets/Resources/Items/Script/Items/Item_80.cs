@@ -33,12 +33,10 @@ public class Item_80 : Item
         p.perfectParryMechanics.Add(perfectBlocktoDebil);
     }
 
-    public void perfectBlocktoDebil(Enemy[] enemyList)
+    public void perfectBlocktoDebil(Enemy enemy)
     {
-        for (int i = 0; i < enemyList.Length; i++)
-        {
-            Enemy[i].isDebil = true;
-            Enemy[i].debilTime = Item.durDebil;
-        }
+            enemy.isDebil = true;
+            enemy.debilTime = Item.durDebil;
+       
     }
 }
