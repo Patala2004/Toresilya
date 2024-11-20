@@ -21,6 +21,7 @@ public class Item : MonoBehaviour
     public static float probCaosRayo = 0f;
     public static float durParalizadoRayo = 2f;
     public static int nBurst = 1;
+    public static int nRebotesRayo = 1;
 
     public String rarity = "common";
     public int precio;
