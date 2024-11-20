@@ -163,9 +163,10 @@ public class Enemy : MonoBehaviour
 	}
     public void TakeDamage(float damage,float ang,float attackKnockback, Color color = default)
     {
-        ReduceHealth(damage);
+        float tempDamage = damage / defensa;
+        ReduceHealth(tempDamage);
         StartCoroutine(Impulse(player.sword.attackAnimation, ang, attackKnockback));
-        GetComponent<GenParticulaTexto>().comenzar(damage, ang, color);
+        GetComponent<GenParticulaTexto>().comenzar(tempDamage, ang, color);
     }
     // Manejo sprites
     public void DoFlipX(SpriteRenderer sR,Vector2 dir) // girar sprite depende de donde mire
@@ -192,6 +193,14 @@ public class Enemy : MonoBehaviour
         isCaos = true;
         if(duration > caosTime){ // Si ya esta paralizado solo queremos aumentar a la nueva duracion si es mayor a la restante
             caosTime = duration;
+        }
+    }
+    public void Debil(float duration)
+    {
+        isDebil = true;
+        if (duration > debilTime)
+        { // Si ya esta paralizado solo queremos aumentar a la nueva duracion si es mayor a la restante
+            debilTime = duration;
         }
     }
 

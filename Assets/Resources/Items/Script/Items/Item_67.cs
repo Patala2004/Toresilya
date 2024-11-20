@@ -29,9 +29,25 @@ public class Item_67 : Item
     public override void grabItem(Player p)
     {
         base.grabItem(p);
-        //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM
+        //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM   
+        if (Item.probDebil == 0)
+        {
+            p.attackMechanics.Add(anadirDebil);
+        }
         Item.probDebil += addProbDebil;
 
+    }
 
+    public void anadirDebil(Enemy[] enemyList)
+    {
+        for (int i = 0; i < enemyList.Length; i++)
+        {
+            int random = Random.Range(1, 101);
+            if (random < Item.probDebil)
+            {
+                Enemy enemyAct = enemyList[i];
+                enemyAct.isDebil = true;
+            }
+        }
     }
 }

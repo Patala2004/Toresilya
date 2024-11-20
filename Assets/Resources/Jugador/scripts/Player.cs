@@ -257,7 +257,7 @@ public class Player : MonoBehaviour
             {
                 mechanic.Invoke(gObject.GetComponent<Enemy>());
             }
-            health -= (damage);//- (damage*(defensaReal-1))); //Preguntar a Alvaro si se tiene dudas de la ecuacion
+            health -= (damage/defensa); //Preguntar a Alvaro si se tiene dudas de la ecuacion
             StartCoroutine(Impulse(0.2f, ang, knockback)); // empuje
         }
 

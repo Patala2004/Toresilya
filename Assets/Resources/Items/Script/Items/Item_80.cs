@@ -37,6 +37,7 @@ public class Item_80 : Item
     {
             enemy.isDebil = true;
             enemy.debilTime = Item.durDebil;
+            
        
     }
 }
