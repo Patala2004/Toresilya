@@ -8,13 +8,11 @@ public class Item_1 : Item
 
     // Start is called before the first frame update
 
-    GameObject rayo;
 
     void Start()
     {
         player = GameObject.Find("player").GetComponent<Player>();
         descriptionItem = "Lanza un rayo cuando atacas a un enemigo";
-        rayo = Instantiate(Resources.Load<GameObject>("Items/Prefabs efectos/rayo"));
     }
 
     // Update is called once per frame
@@ -33,9 +31,12 @@ public class Item_1 : Item
     public void lanzarRayo(Enemy[] e){
         foreach(Enemy enemy in e){
             // Lanzar rayo al enemigo
-            
+            Lightning_effect rayo = Instantiate(Resources.Load<GameObject>("Items/Prefabs efectos/rayo")).GetComponent<Lightning_effect>();
             enemy.TakeDamage(UnityEngine.Random.Range(player.sword.attackDamage[0], player.sword.attackDamage[1]) * multDanoRayo, player.ang, player.sword.attackKnockback * (player.sword.knockbackMultiplicator<0? 0:player.sword.knockbackMultiplicator));
             rayo.transform.position = enemy.gameObject.transform.position;
+            rayo.pointA = player.transform;
+            rayo.pointB = enemy.transform;
+            rayo.setDuration(0.3f);
             // Poner estados
             if(Random.Range(0f,1f) < probCaosRayo){
                 // Poner estado caos
