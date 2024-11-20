@@ -35,7 +35,7 @@ public class Room : MonoBehaviour
 
     private MapGen mapManager;
 
-    private bool spawned = false;
+    public bool spawned = false;
     public int aliveEnemies = 0;
 
     private GameObject minimapCamera;
