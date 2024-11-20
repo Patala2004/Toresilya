@@ -19,9 +19,17 @@ public class Enemy : MonoBehaviour
     
     //Defensa enemigo funciona como player
     public float defensa = 1; //Fluctua de 1 a 2. para el jugador mejor mostrarle que el % como tal creo 
-    public float multiplicadorDefensa = 1; //Si esto llega a 2 no recibe daño, si es menor que 1 recibe mas dano
+    public float multiplicadorDefensa = 1; //Si esto llega a 2 no recibe daï¿½o, si es menor que 1 recibe mas dano
 
     AStar astar;
+
+
+    // Efectos de estado
+        // Paralizado -> puede atacar pero no moverse
+    private float paralizedTime = 0f;
+    public bool isParalized = false;
+
+
     // Start is called before the first frame update
     public void Start()
     {
@@ -43,6 +51,16 @@ public class Enemy : MonoBehaviour
     public void FixedUpdate()
     {
         rb.velocity += velImpulse;
+        if(isParalized) rb.velocity = new Vector2(0f,0f);
+
+        // Update efect status timers
+        if(paralizedTime > 0){
+            paralizedTime -= Time.deltaTime;
+        }
+        else if(paralizedTime <= 0){
+            paralizedTime = 0;
+            isParalized = false;
+        }
     }
     // Update is called once per frame
     public void Update()
@@ -123,4 +141,14 @@ public class Enemy : MonoBehaviour
 		Node end = astar.getNearestNode(player.gameObject);
 		return astar.FindPath(origin, end);
 	}
+
+
+    // Funciones para efectos de estado
+    public void Paralize(int duration){
+        isParalized = true;
+        if(duration > paralizedTime){ // Si ya esta paralizado solo queremos aumentar a la nueva duracion si es mayor a la restante
+            paralizedTime = duration;
+        }
+    }
+
 }

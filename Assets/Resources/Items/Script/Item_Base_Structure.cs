@@ -37,6 +37,7 @@ public class Item_Base_Structure : Item
         //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM
 
         p.attackMechanics.Add(printA);
+        
 
     }
 
