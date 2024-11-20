@@ -37,11 +37,15 @@ public class Item_37 : Item
 
     public void randomAttackToInmune(Enemy[] enemylist)
     {
-        int random = Random.Range(1, 101);
-        if (random == 33) //1% de posibilidades
-        {
-            player.invulnerable = true;
-            StartCoroutine(rutinaInmune());
+        bool found = false;
+        for(int i = 0; i < enemylist.Length && !found; i++){
+            int random = Random.Range(1, 101);
+            if (random == 33) //1% de posibilidades
+            {
+                found = true;
+                player.invulnerable = true;
+                StartCoroutine(rutinaInmune());
+            }
         }
     }
 
