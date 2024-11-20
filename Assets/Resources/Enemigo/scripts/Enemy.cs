@@ -16,8 +16,12 @@ public class Enemy : MonoBehaviour
     public float knockbackResistance; // 0 sin resistencia 100 con resistencia
     public float[] damage = new float[2];
     public Room room;
+    
+    //Defensa enemigo funciona como player
+    public float defensa = 1; //Fluctua de 1 a 2. para el jugador mejor mostrarle que el % como tal creo 
+    public float multiplicadorDefensa = 1; //Si esto llega a 2 no recibe daño, si es menor que 1 recibe mas dano
 
-	AStar astar;
+    AStar astar;
     // Start is called before the first frame update
     public void Start()
     {
