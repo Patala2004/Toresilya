@@ -54,6 +54,8 @@ public class Player : MonoBehaviour
     public List<Action> stunMechanics = new List<Action>();
     public List<Action> defenseTempAddMechanics = new List<Action>();
 
+    public List<Action> enterRoomMechanics = new List<Action>(); // Funciones que se llaman al entrar a una habitacion
+
 
 
     // Start is called before the first frame update
@@ -262,5 +264,11 @@ public class Player : MonoBehaviour
         stuned = true;
         yield return new WaitForSeconds(1.5f);
         stuned = false;
+    }
+
+    public void OnRoomEnter(){ // Funcion llamada desde la habitacion al entrar
+        foreach(Action mechanic in enterRoomMechanics){
+            mechanic.Invoke(); 
+        }
     }
 }

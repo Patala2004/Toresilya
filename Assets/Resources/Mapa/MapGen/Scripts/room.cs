@@ -69,6 +69,9 @@ public class Room : MonoBehaviour
         }   
         // Crear habitacion de minimapa
         createMiniMapRoom();     
+
+        // Llamar a funciones de entrada a habitacion de player
+        other.gameObject.GetComponent<Player>().OnRoomEnter();
     }
     public void CommunicateEnemyDeath(){
         aliveEnemies--;
