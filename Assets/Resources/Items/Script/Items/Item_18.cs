@@ -41,12 +41,14 @@ public class Item_18 : Item
         StartCoroutine(rutinaEntrar());
     }
 
-    public IEnumerator rutinaEntrar(){
+    public IEnumerator rutinaEntrar()
     {
+        {
             yield return new WaitForSeconds(5f);
-            player.sword.dmgMultiplicator-= addDamage;
+            player.sword.dmgMultiplicator -= addDamage;
+        }
+
+
+
     }
-
-
-
 }
