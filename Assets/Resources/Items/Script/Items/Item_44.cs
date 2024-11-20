@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class NewBehaviourScript : Item
+public class Item_44 : Item
 {
     //Declaramos stats o cosas que modificara el item
     public float addDefense = 0.1f;
