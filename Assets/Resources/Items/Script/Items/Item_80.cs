@@ -31,16 +31,18 @@ public class Item_80 : Item
         base.grabItem(p);
         //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM
 
-       
+
 
 
     }
 
     public void perfectBlocktoDebil(Enemy[] enemyList)
     {
-        for (int i=0; i<enemyList.Length; i++) {
+        for (int i = 0; i < enemyList.Length; i++)
+        {
             if (enemyList[i] != null)
             {
             }
-    } 
+        }
+    }
 }

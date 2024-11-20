@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour
     public bool isCaos = false;
 
         //Debil -> Su defensa disminue un 20% durante durDebil en item.cs
-    private float paralizedTime = 0f;
+    private float debilTime = 0f;
     public bool isDebil = false;
 
 
