@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7234342372192615119}
   - component: {fileID: 3204295789388870930}
   - component: {fileID: -7833537593688698582}
-  - component: {fileID: -8047776844277813281}
+  - component: {fileID: 1938677232577866859}
   m_Layer: 0
   m_Name: ITEM 18
   m_TagString: Untagged
@@ -74,7 +74,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300000, guid: 378a0f00091fc2fdda3aa0a952a813e5, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -131,7 +131,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.60745436, y: 0.6455585}
   m_EdgeRadius: 0
---- !u!114 &-8047776844277813281
+--- !u!114 &1938677232577866859
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,7 +140,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 47358985663487322}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 791cbd6c89f64d24b8fede9fd5728f88, type: 3}
+  m_Script: {fileID: 11500000, guid: 46f41bc700859d043aa0209cb869a03d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
@@ -150,3 +150,4 @@ MonoBehaviour:
   unique: 0
   rarity: common
   precio: 0
+  addDamage: 0.2
