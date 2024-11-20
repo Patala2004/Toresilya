@@ -56,7 +56,17 @@ public class Item_Base_Structure : Item
             }
         }
     }
-
+    //USAR PARA TEST
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        // Verificar si el objeto con el que colisionamos es el jugador
+        if (other.gameObject.CompareTag("player"))
+        {
+            grabItem(player);
+            Debug.Log("TUS MUERTOS");
+            Destroy(gameObject); // Destruir el objeto después de recogerlo
+        }
+    }
     //FUNCIONES QUE NECESITE EL OBJETO EXTRA
 
 

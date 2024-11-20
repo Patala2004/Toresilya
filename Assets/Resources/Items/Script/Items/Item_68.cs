@@ -30,8 +30,15 @@ public class Item_68 : Item
     {
         base.grabItem(p);
         //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM
+        p.perfectParryMechanics.Add(perfectBlocktoDebil);
 
-       
+
+
+    }
+
+    public void perfectBlocktoDebil(Enemy enemy)
+    {
+        enemy.Debil(durDebil);
 
 
     }
