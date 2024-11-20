@@ -51,9 +51,5 @@ public class Item_1 : Item
         }
     }
 
-    public void OnTriggerEnter2D(){
-        grabItem(player);
-        Destroy(this);
-    }
 
 }
