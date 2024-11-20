@@ -35,13 +35,13 @@ public class Item_37 : Item
 
     }
 
-    public void randomAttackToInmune()
+    public void randomAttackToInmune(Enemy[] enemylist)
     {
         int random = Random.Range(1, 101);
         if (random == 33) //1% de posibilidades
         {
             player.invulnerable = true;
-            StartCoroutine(rutinaInmune);
+            StartCoroutine(rutinaInmune());
         }
     }
 
