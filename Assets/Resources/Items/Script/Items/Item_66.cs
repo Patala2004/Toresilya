@@ -31,7 +31,8 @@ public class Item_66 : Item
     {
         base.grabItem(p);
         //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM
-
+        p.sword.dmgMultiplicator += addDamage;
+        Item.probDebil += addProbDebil;
        
 
     }
