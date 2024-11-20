@@ -44,9 +44,9 @@ public class Player : MonoBehaviour
 
     //Estados
     public bool stuned = false;
-    Coroutine stunedI;
+    public float stunedTime;
     public bool invulnerable = false;
-    Coroutine invulnerableI;
+    float invulnerableTime;
     // Array de funciones de mecánicas 
     public List<Action<Enemy[]>> attackMechanics = new List<Action<Enemy[]>>(); // Ocurren cada ataque (que golpee o no a enemigos, eso lo revisa la función)
     public List<Action<Enemy[]>> criticalAttackMechanics = new List<Action<Enemy[]>>(); // Ocurren cada ataque crítico
@@ -73,6 +73,29 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         rb.velocity = velMovimiento + velImpulse; // la velocidad del movimiento mas la del recoil del sword
+
+        // Update efect status timers
+        if (invulnerableTime > 0)
+        {
+            invulnerableTime -= Time.deltaTime;
+            invulnerable = true;
+        }
+        else if (invulnerableTime <= 0)
+        {
+            invulnerableTime = 0;
+            invulnerable = false;
+        }
+
+        if (stunedTime > 0)
+        {
+            stunedTime -= Time.deltaTime;
+            stuned = true;
+        }
+        else if (stunedTime <= 0)
+        {
+            stunedTime = 0;
+            stuned = false;
+        }
     }
     private void Update()
     {
@@ -128,15 +151,6 @@ public class Player : MonoBehaviour
         {
             ani.SetFloat("velocity", velMovimiento.magnitude);
         }
-
-        if (stuned)
-        {
-            velMovimiento = Vector2.zero;
-            //ani.secFloat("velocity", vector2.zero);
-            return;
-        }
-
-
         //Comprobar en cada frame la lista de defenseTempAddMechanics 
         foreach (Action mechanic in defenseTempAddMechanics)
         {
@@ -162,7 +176,7 @@ public class Player : MonoBehaviour
         {
             dir.Normalize();
         }
-        velMovimiento = dir * vel;
+        velMovimiento = !stuned ? dir * vel : new(0, 0);
     }
     //Funcion atacar
     IEnumerator Attack(float waitseconds) // funcion ataque
@@ -281,36 +295,13 @@ public class Player : MonoBehaviour
     //Metodo para aplicar stun al jugador durante 1,5 seg
     public void GetStuned(float waitseconds)
     {
-        if (stunedI != null)
-        {
-            StopCoroutine(stunedI);
-        }
-        StartCoroutine(IStuned(waitseconds));
-
-    }
-    public IEnumerator IStuned(float waitseconds)
-    {
-        stuned = true;
-        yield return new WaitForSeconds(waitseconds);
-        stuned = false;
+        stunedTime = waitseconds;
     }
     //Metodo para invulnerabilidad
     public void GetInvulnerable(float waitseconds)
     {
-        if (stunedI != null)
-        {
-            StopCoroutine(stunedI);
-        }
-        StartCoroutine(IInvulnerable(waitseconds));
-
+        invulnerableTime = waitseconds;
     }
-    public IEnumerator IInvulnerable(float waitseconds)
-    {
-        invulnerable = true;
-        yield return new WaitForSeconds(waitseconds);
-        invulnerable = false;
-    }
-
     public void OnRoomEnter()
     { // Funcion llamada desde la habitacion al entrar
         foreach (Action mechanic in enterRoomMechanics)
