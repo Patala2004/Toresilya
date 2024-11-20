@@ -24,6 +24,8 @@ public class Enemy : MonoBehaviour
     AStar astar;
 
 
+
+
     // Efectos de estado
         // Paralizado -> puede atacar pero no moverse
     private float paralizedTime = 0f;
@@ -32,6 +34,7 @@ public class Enemy : MonoBehaviour
     // Caos -> no puede ni moverse ni atacar
     private float caosTime = 0f;
     public bool isCaos = false;
+
 
 
     // Start is called before the first frame update
@@ -55,7 +58,7 @@ public class Enemy : MonoBehaviour
     public void FixedUpdate()
     {
         rb.velocity += velImpulse;
-        if(isParalized) rb.velocity = new Vector2(0f,0f);
+        if(isParalized || isCaos) rb.velocity = new Vector2(0f,0f);
 
         // Update efect status timers
         if(paralizedTime > 0){
@@ -120,7 +123,7 @@ public class Enemy : MonoBehaviour
     {
 
         if(isCaos) return; // El efecto de estado de caos no deja atacar
-        
+
         allowAttack = false;
 
         float dm = Random.Range(damage[0], damage[1]);
@@ -139,11 +142,11 @@ public class Enemy : MonoBehaviour
 	public void ReduceHealth(float damage) {
 		health -= damage;
 	}
-    public void TakeDamage(float damage,float ang,float attackKnockback)
+    public void TakeDamage(float damage,float ang,float attackKnockback, Color color = default)
     {
         ReduceHealth(damage);
         StartCoroutine(Impulse(player.sword.attackAnimation, ang, attackKnockback));
-        GetComponent<GenParticulaTexto>().comenzar(damage, ang);
+        GetComponent<GenParticulaTexto>().comenzar(damage, ang, color);
     }
     // Manejo sprites
     public void DoFlipX(SpriteRenderer sR,Vector2 dir) // girar sprite depende de donde mire

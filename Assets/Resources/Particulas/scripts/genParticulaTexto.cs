@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Data.Common;
+using TMPro;
 using UnityEngine;
 using UnityEngineInternal;
 
@@ -21,15 +22,19 @@ public class GenParticulaTexto : MonoBehaviour
     {
    
     }
-    public void comenzar(float damage,float ang)
+    public void comenzar(float damage,float ang, Color color = default)
     {
+
+        if(color == default) color = Color.red;
+
         //Calculamos dispersion de la particula
         ang = Random.Range(ang - particulaDispersion, ang + particulaDispersion);
-        //Calculamos vector dirección
+        //Calculamos vector direcciï¿½n
         Vector2 dir = new Vector3(Mathf.Cos(ang * Mathf.Deg2Rad), Mathf.Sin(ang * Mathf.Deg2Rad));
         dir += Vector2.up * particulaUpRig; 
         //Instanciamos la particula
         ParticulaTexto temp = Instantiate(particula, new Vector3(transform.position.x, transform.position.y, 0), transform.rotation).GetComponent<ParticulaTexto>();
+        temp.gameObject.GetComponent<TextMeshPro>().color = color;
         temp.vel = dir * particulaVel;
         temp.damage = damage;
        
