@@ -29,7 +29,19 @@ public class Item_1 : Item
         foreach(Enemy enemy in e){
             // Lanzar rayo al enemigo
             
-            enemy.TakeDamage(UnityEngine.Random.Range(player.sword.attackDamage[0], player.sword.attackDamage[1]), player.ang, player.sword.attackKnockback * (player.sword.knockbackMultiplicator<0? 0:player.sword.knockbackMultiplicator));
+            enemy.TakeDamage(UnityEngine.Random.Range(player.sword.attackDamage[0], player.sword.attackDamage[1]) * multDanoRayo, player.ang, player.sword.attackKnockback * (player.sword.knockbackMultiplicator<0? 0:player.sword.knockbackMultiplicator));
+
+            // Poner estados
+            if(Random.Range(0f,1f) < probCaosRayo){
+                // Poner estado caos
+            }
+
+            if(Random.Range(0f,1f) < probParalizarRayo){
+                // Poner paralizar en el enemigo
+            }
+
+            // ...
+
         }
     }
 
