@@ -41,15 +41,18 @@ public class Player : MonoBehaviour
     Rigidbody2D rb;
     SpriteRenderer sR;
     Animator ani;
-    
+
     //Estados
-    public bool stuned=false;
+    public bool stuned = false;
+    Coroutine stunedI;
     public bool invulnerable = false;
+    Coroutine invulnerableI;
     // Array de funciones de mecánicas 
     public List<Action<Enemy[]>> attackMechanics = new List<Action<Enemy[]>>(); // Ocurren cada ataque (que golpee o no a enemigos, eso lo revisa la función)
     public List<Action<Enemy[]>> criticalAttackMechanics = new List<Action<Enemy[]>>(); // Ocurren cada ataque crítico
     public List<Action<Enemy>> parryMechanics = new List<Action<Enemy>>();
     public List<Action<Enemy>> perfectParryMechanics = new List<Action<Enemy>>();
+    public List<Action<Enemy>> takeHealthDamageMechanics = new List<Action<Enemy>>();
     //Array de funciones de items
     public List<Action> stunMechanics = new List<Action>();
     public List<Action> defenseTempAddMechanics = new List<Action>();
@@ -75,12 +78,13 @@ public class Player : MonoBehaviour
     {
         //movimiento
         Moving();
-        vel = (blocking ? velBlock : velWalk); // mirar si esta moviendose
+        vel = ((blocking || stuned) ? velBlock : velWalk); // mirar si esta moviendose
 
 
         //vida
-        health = Mathf.Clamp(health,0,healthMax); // limita la vida a maxHealth
-        if (health <= 0) {
+        health = Mathf.Clamp(health, 0, healthMax); // limita la vida a maxHealth
+        if (health <= 0)
+        {
             ToDie();
         }
 
@@ -95,36 +99,37 @@ public class Player : MonoBehaviour
             resistance += 5 * Time.deltaTime;
         }
         //atacar
-        if (Input.GetMouseButtonDown(0) && !attacking && Time.timeScale > 0)
+        if (Input.GetMouseButtonDown(0) && !attacking && Time.timeScale > 0 && !stuned)
         {
             StartCoroutine(Attack(sword.attackSpeed));
             StartCoroutine(AttackAnimation(sword.attackAnimation));
         }
         //block
-        if (Input.GetMouseButton(1) && !attackingAnimation && resistance != 0  && Time.timeScale > 0) // cuando bloqueas tenemos en cuenta la animacion de ataque no el attack speed
+        if (Input.GetMouseButton(1) && !attackingAnimation && resistance != 0 && Time.timeScale > 0 && !stuned) // cuando bloqueas tenemos en cuenta la animacion de ataque no el attack speed
         {
             Block();
             parryTime += Time.deltaTime; // a�ade tiempo al parry time para que no puedas spamear el boton de atacar
         }
-        else if(parryTime > 0)
+        else if (parryTime > 0)
         {
             blocking = false;
             parryTime -= Time.deltaTime;
         }
         //direccion en la que esta mirando el personaje
         ang = CalcularAngulo();
-        if(Time.timeScale > 0) sR.flipX = (ang > 90 || ang < -90); // Que no cambie el sentido del jugador basado en a donde apuntas mientras el juego esta en pausa
-        
+        if (Time.timeScale > 0) sR.flipX = (ang > 90 || ang < -90); // Que no cambie el sentido del jugador basado en a donde apuntas mientras el juego esta en pausa
+
         //animacion
         if (attackingAnimation)
         {
             //ani.SetFloat("velocity", 0);
         }
-        else { 
-            ani.SetFloat("velocity", velMovimiento.magnitude); 
+        else
+        {
+            ani.SetFloat("velocity", velMovimiento.magnitude);
         }
 
-        if(stuned)
+        if (stuned)
         {
             velMovimiento = Vector2.zero;
             //ani.secFloat("velocity", vector2.zero);
@@ -141,8 +146,8 @@ public class Player : MonoBehaviour
     {
         mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         float adyacente = mousePos.x - transform.position.x;
-        float opuesto = mousePos.y - transform.position.y ;
-        return Mathf.Rad2Deg*(Mathf.Atan2(opuesto,adyacente));
+        float opuesto = mousePos.y - transform.position.y;
+        return Mathf.Rad2Deg * (Mathf.Atan2(opuesto, adyacente));
     }
     //Funcion que devuelve el vector2 del mocvimiento del jugador
     public void Moving()
@@ -161,14 +166,16 @@ public class Player : MonoBehaviour
     {
         attacking = true;
         sword.Attack();
-        Enemy[][] hitData = sword.HitboxPlayer(transform.position, sword.hitboxSize, 0, (mousePos-transform.position).normalized , 1f);
+        Enemy[][] hitData = sword.HitboxPlayer(transform.position, sword.hitboxSize, 0, (mousePos - transform.position).normalized, 1f);
         StartCoroutine(Impulse(sword.attackAnimation, ang, sword.recoil)); // calcular el impulso(mejor con el tiempo de la animacion)
         // Llamar a mecánicas de items de ataque
-        foreach(Action<Enemy[]> mechanic in attackMechanics){
-            mechanic.Invoke(hitData[0]); 
+        foreach (Action<Enemy[]> mechanic in attackMechanics)
+        {
+            mechanic.Invoke(hitData[0]);
         }
         // Mecanicas de ataques críticos
-        foreach(Action<Enemy[]> mechanic in criticalAttackMechanics){
+        foreach (Action<Enemy[]> mechanic in criticalAttackMechanics)
+        {
             mechanic.Invoke(hitData[1]);
         }
         yield return new WaitForSeconds(waitseconds);
@@ -187,7 +194,7 @@ public class Player : MonoBehaviour
         blocking = true;
     }
     //Funcion que a�ade un impulso en una direccion
-    public IEnumerator Impulse(float waitseconds,float ang,float recoil) 
+    public IEnumerator Impulse(float waitseconds, float ang, float recoil)
     {
         float elapsedTime = 0;
         Vector2 dir = new Vector3(Mathf.Cos(ang * Mathf.Deg2Rad), Mathf.Sin(ang * Mathf.Deg2Rad));
@@ -200,14 +207,14 @@ public class Player : MonoBehaviour
         velImpulse = Vector2.zero;
     }
     // Funcion que sirve para recibir da�o
-    public void TakeDamage(float damage,float ang,float knockback,GameObject gObject = null)
+    public void TakeDamage(float damage, float ang, float knockback, GameObject gObject = null)
     {
         if (invulnerable) //Si es invulnerable no recibe daño
         {
             return;
         }
 
-        if(resistance > 0 && blocking)
+        if (resistance > 0 && blocking)
         {
             // Parry perfecto
             if (parrying && gObject != null) // se hace el parry a un Enemy
@@ -216,12 +223,17 @@ public class Player : MonoBehaviour
                 StartCoroutine(gObject.GetComponent<Enemy>().Impulse(0.1f, ang, 1)); // aplica empuje en la dir que haces el parry
                 attacking = false; // cuando haces parry reseteas que el jugador pueda atacar(punish)
 
-                foreach(Action<Enemy> mechanic in perfectParryMechanics){
-                    mechanic.Invoke(gObject.GetComponent<Enemy>()); 
+                foreach (Action<Enemy> mechanic in perfectParryMechanics) // Ejecutamos mecanicas de parry
+                {
+                    mechanic.Invoke(gObject.GetComponent<Enemy>());
+                }
+                foreach (Action<Enemy> mechanic in parryMechanics) // Ejecutamos mecanicas de bloqueo
+                {
+                    mechanic.Invoke(gObject.GetComponent<Enemy>());
                 }
             }
             // Parry normal
-            else
+            else if (gObject != null)
             {
                 resistance -= damage;
                 StartCoroutine(Impulse(0.2f, ang, knockback)); // empuje
@@ -232,18 +244,23 @@ public class Player : MonoBehaviour
                 }
                 IcooldownRes = StartCoroutine(ParryCooldown(parryTimerCooldown));
 
-                foreach(Action<Enemy> mechanic in parryMechanics){
-                    mechanic.Invoke(gObject.GetComponent<Enemy>()); 
+                foreach (Action<Enemy> mechanic in parryMechanics) // Ejecutamos mecanicas de bloqueo
+                {
+                    mechanic.Invoke(gObject.GetComponent<Enemy>());
                 }
             }
-            
+
         }
         else
         {   //Comentado todo lo de defensa por si si
+            foreach (Action<Enemy> mechanic in takeHealthDamageMechanics) // Ejecutamos mecanicas de bloqueo
+            {
+                mechanic.Invoke(gObject.GetComponent<Enemy>());
+            }
             health -= (damage);//- (damage*(defensaReal-1))); //Preguntar a Alvaro si se tiene dudas de la ecuacion
             StartCoroutine(Impulse(0.2f, ang, knockback)); // empuje
         }
-        
+
     }
     // Parry y manejo de resistencia
     IEnumerator ParryCooldown(float waitseconds)
@@ -259,16 +276,43 @@ public class Player : MonoBehaviour
     }
 
     //Metodo para aplicar stun al jugador durante 1,5 seg
-    public IEnumerator GetStuned()
+    public void GetStuned(float waitseconds)
+    {
+        if (stunedI != null)
+        {
+            StopCoroutine(stunedI);
+        }
+        StartCoroutine(IStuned(waitseconds));
+
+    }
+    public IEnumerator IStuned(float waitseconds)
     {
         stuned = true;
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(waitseconds);
         stuned = false;
     }
+    //Metodo para invulnerabilidad
+    public void GetInvulnerable(float waitseconds)
+    {
+        if (stunedI != null)
+        {
+            StopCoroutine(stunedI);
+        }
+        StartCoroutine(IInvulnerable(waitseconds));
 
-    public void OnRoomEnter(){ // Funcion llamada desde la habitacion al entrar
-        foreach(Action mechanic in enterRoomMechanics){
-            mechanic.Invoke(); 
+    }
+    public IEnumerator IInvulnerable(float waitseconds)
+    {
+        invulnerable = true;
+        yield return new WaitForSeconds(waitseconds);
+        invulnerable = false;
+    }
+
+    public void OnRoomEnter()
+    { // Funcion llamada desde la habitacion al entrar
+        foreach (Action mechanic in enterRoomMechanics)
+        {
+            mechanic.Invoke();
         }
     }
 }
