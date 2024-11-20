@@ -88,13 +88,11 @@ public class Enemy : MonoBehaviour
         {
             debilTime = 0;
             isDebil = false;
-            multiplicadorDefensa += 0.2f;
         }
         //If que pone el estado debil
         if(!isDebil && debilTime > 0)
         {
             isDebil = true;
-            multiplicadorDefensa -= 0.2f;
         }
       
 
