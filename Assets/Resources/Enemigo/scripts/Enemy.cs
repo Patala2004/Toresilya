@@ -118,6 +118,9 @@ public class Enemy : MonoBehaviour
     //funciones que se llaman para atacar al player
     public void HitPlayer(float ang,float[] damage,float knockback)
     {
+
+        if(isCaos) return; // El efecto de estado de caos no deja atacar
+        
         allowAttack = false;
 
         float dm = Random.Range(damage[0], damage[1]);
