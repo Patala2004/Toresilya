@@ -11,6 +11,9 @@ public class Item : MonoBehaviour
     public String nombre = "";
     public bool unique = false;
 
+    // Duracion estandar de estados (es compartida)
+    public static float durDebil = 2f;
+
     public String rarity = "common";
     public int precio;
 
