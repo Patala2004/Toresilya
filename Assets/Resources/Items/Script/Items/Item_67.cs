@@ -2,11 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item_66 : Item
+public class Item_67 : Item
 {
     //Declaramos stats o cosas que modificara el item
-    float addDamage = 0.05f;
-    float addProbDebil = 20f;
+    float addProbDebil = 40f;
 
     // Start is called before the first frame update
     void Start()
@@ -31,10 +30,8 @@ public class Item_66 : Item
     {
         base.grabItem(p);
         //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM
-        p.sword.dmgMultiplicator += addDamage;
         Item.probDebil += addProbDebil;
-       
+
 
     }
 }
-
