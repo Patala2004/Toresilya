@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item_1 : Item
+public class Item_ejemplo : Item
 {
     //Declaramos stats o cosas que modificará el item
     int attackDMG = 10000;

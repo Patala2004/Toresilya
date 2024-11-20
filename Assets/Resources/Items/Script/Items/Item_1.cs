@@ -25,6 +25,12 @@ public class Item_1 : Item
  
     }
 
-
+    public void lanzarRayo(Enemy[] e){
+        foreach(Enemy enemy in e){
+            // Lanzar rayo al enemigo
+            
+            enemy.TakeDamage(UnityEngine.Random.Range(player.sword.attackDamage[0], player.sword.attackDamage[1]), player.ang, player.sword.attackKnockback * (player.sword.knockbackMultiplicator<0? 0:player.sword.knockbackMultiplicator));
+        }
+    }
 
 }
