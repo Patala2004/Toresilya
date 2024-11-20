@@ -29,6 +29,10 @@ public class Enemy : MonoBehaviour
     private float paralizedTime = 0f;
     public bool isParalized = false;
 
+    // Caos -> no puede ni moverse ni atacar
+    private float caosTime = 0f;
+    public bool isCaos = false;
+
 
     // Start is called before the first frame update
     public void Start()
@@ -61,6 +65,15 @@ public class Enemy : MonoBehaviour
             paralizedTime = 0;
             isParalized = false;
         }
+
+        if(caosTime > 0){
+            caosTime -= Time.deltaTime;
+        }
+        else if(caosTime <= 0){
+            caosTime = 0;
+            isCaos = false;
+        }
+        
     }
     // Update is called once per frame
     public void Update()
@@ -144,10 +157,16 @@ public class Enemy : MonoBehaviour
 
 
     // Funciones para efectos de estado
-    public void Paralize(int duration){
+    public void Paralize(float duration){
         isParalized = true;
         if(duration > paralizedTime){ // Si ya esta paralizado solo queremos aumentar a la nueva duracion si es mayor a la restante
             paralizedTime = duration;
+        }
+    }
+    public void Caos(float duration){
+        isCaos = true;
+        if(duration > caosTime){ // Si ya esta paralizado solo queremos aumentar a la nueva duracion si es mayor a la restante
+            caosTime = duration;
         }
     }
 

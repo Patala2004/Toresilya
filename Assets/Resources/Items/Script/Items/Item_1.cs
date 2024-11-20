@@ -44,6 +44,7 @@ public class Item_1 : Item
 
             if(Random.Range(0f,1f) < probParalizarRayo){
                 // Poner paralizar en el enemigo
+                enemy.Paralize(durParalizadoRayo);
             }
 
             // ...
