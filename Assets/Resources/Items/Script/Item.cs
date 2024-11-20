@@ -12,7 +12,14 @@ public class Item : MonoBehaviour
     public bool unique = false;
 
     // Duracion estandar de estados (es compartida)
+    // Estado debil
     public static float durDebil = 2f;
+
+    // Rayis
+    public static float multDanoRayo = 0.5f;
+    public static float probParalizarRayo = 0.05f;
+    public static float probCaosRayo = 0f;
+    public static int nBurst = 1;
 
     public String rarity = "common";
     public int precio;
