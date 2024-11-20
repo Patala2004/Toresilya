@@ -14,7 +14,7 @@ public class Item : MonoBehaviour
     // Duracion estandar de estados (es compartida)
     // Estado debil
     public static float durDebil = 2f;
-
+    public static float probDebil = 0f;
     // Rayis
     public static float multDanoRayo = 0.5f;
     public static float probParalizarRayo = 0.05f;
