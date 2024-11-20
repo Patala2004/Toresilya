@@ -216,8 +216,13 @@ public class Player : MonoBehaviour
                 StartCoroutine(gObject.GetComponent<Enemy>().Impulse(0.1f, ang, 1)); // aplica empuje en la dir que haces el parry
                 attacking = false; // cuando haces parry reseteas que el jugador pueda atacar(punish)
 
-                foreach(Action<Enemy> mechanic in perfectParryMechanics){
+                foreach(Action<Enemy> mechanic in perfectParryMechanics) // Ejecutamos mecanicas de parry
+                { 
                     mechanic.Invoke(gObject.GetComponent<Enemy>()); 
+                }
+                foreach (Action<Enemy> mechanic in parryMechanics) // Ejecutamos mecanicas de bloqueo
+                {
+                    mechanic.Invoke(gObject.GetComponent<Enemy>());
                 }
             }
             // Parry normal
@@ -232,7 +237,8 @@ public class Player : MonoBehaviour
                 }
                 IcooldownRes = StartCoroutine(ParryCooldown(parryTimerCooldown));
 
-                foreach(Action<Enemy> mechanic in parryMechanics){
+                foreach(Action<Enemy> mechanic in parryMechanics) // Ejecutamos mecanicas de bloqueo
+                { 
                     mechanic.Invoke(gObject.GetComponent<Enemy>()); 
                 }
             }
