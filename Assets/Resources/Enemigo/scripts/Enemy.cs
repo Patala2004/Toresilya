@@ -31,10 +31,13 @@ public class Enemy : MonoBehaviour
     private float paralizedTime = 0f;
     public bool isParalized = false;
 
-    // Caos -> no puede ni moverse ni atacar
+        // Caos -> no puede ni moverse ni atacar
     private float caosTime = 0f;
     public bool isCaos = false;
 
+        //Debil -> Su defensa disminue un 20% durante durDebil en item.cs
+    private float paralizedTime = 0f;
+    public bool isDebil = false;
 
 
     // Start is called before the first frame update
