@@ -11,9 +11,8 @@ GameObject:
   - component: {fileID: 7234342372192615119}
   - component: {fileID: 3204295789388870930}
   - component: {fileID: -7833537593688698582}
-  - component: {fileID: 5724020646944538878}
   m_Layer: 0
-  m_Name: ITEM EJEMPLO
+  m_Name: ITEM PUTERO
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -132,25 +131,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &5724020646944538878
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 47358985663487322}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b5a7117df5ca3d84389519408f662d3d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  descriptionItem: 
-  descripcionRecoger: 
-  nombre: 
-  unique: 0
-  rarity: common
-  precio: 0
 --- !u!1 &749775184052525620
 GameObject:
   m_ObjectHideFlags: 0

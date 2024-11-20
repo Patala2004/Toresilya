@@ -35,8 +35,7 @@ public class Item_80 : Item
 
     public void perfectBlocktoDebil(Enemy enemy)
     {
-            enemy.isDebil = true;
-            enemy.debilTime = Item.durDebil;
+        enemy.Debil(durDebil);
             
        
     }

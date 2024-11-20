@@ -138,7 +138,10 @@ public class Player : MonoBehaviour
 
 
         //Comprobar en cada frame la lista de defenseTempAddMechanics 
-
+        foreach (Action mechanic in defenseTempAddMechanics)
+        {
+            mechanic.Invoke();
+        }
 
     }
     //Funcion que calcula en angulo respecto al cursor

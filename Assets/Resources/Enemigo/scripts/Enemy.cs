@@ -23,7 +23,7 @@ public class Enemy : MonoBehaviour
 
     AStar astar;
 
-
+    //Lista de metodos temporales segun estados
 
 
     // Efectos de estado
@@ -89,11 +89,7 @@ public class Enemy : MonoBehaviour
             debilTime = 0;
             isDebil = false;
         }
-        //If que pone el estado debil
-        if(!isDebil && debilTime > 0)
-        {
-            isDebil = true;
-        }
+        
       
 
     }
@@ -163,7 +159,7 @@ public class Enemy : MonoBehaviour
 	}
     public void TakeDamage(float damage,float ang,float attackKnockback, Color color = default)
     {
-        float tempDamage = damage / defensa;
+        float tempDamage = damage / (defensa * (isDebil? Item.debilDefReductionMult : 1)) ;
         ReduceHealth(tempDamage);
         StartCoroutine(Impulse(player.sword.attackAnimation, ang, attackKnockback));
         GetComponent<GenParticulaTexto>().comenzar(tempDamage, ang, color);

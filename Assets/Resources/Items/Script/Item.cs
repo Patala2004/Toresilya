@@ -15,6 +15,7 @@ public class Item : MonoBehaviour
     // Estado debil
     public static float durDebil = 2f;
     public static float probDebil = 0f;
+    public static float debilDefReductionMult = 0.8f;
     // Rayis
     public static float multDanoRayo = 0.5f;
     public static float probParalizarRayo = 0.05f;

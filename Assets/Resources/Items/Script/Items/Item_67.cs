@@ -46,7 +46,7 @@ public class Item_67 : Item
             if (random < Item.probDebil)
             {
                 Enemy enemyAct = enemyList[i];
-                enemyAct.isDebil = true;
+                enemyAct.Debil(Item.durDebil);
             }
         }
     }

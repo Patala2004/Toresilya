@@ -35,15 +35,24 @@ public class Item_162 : Item
 
     public void metodoItem162()
     {
-        if (player.health <= 0.4f * player.healthMax)
+        if (player.health <= 0.4f * player.healthMax && !aplicadoItem162)
         {
             player.multiplicadorDefensa += 0.1f;
             aplicadoItem162 = true;
         }
-        else if (player.health > 0.4f * player.healthMax )
+        else if (player.health > 0.4f * player.healthMax &&aplicadoItem162 )
         {
             player.multiplicadorDefensa -= 0.1f;
             aplicadoItem162 = false;
+        }
+    }
+
+    public void OnTriggerEnter(Collider other)
+    {
+        // Verificar si el objeto con el que colisionamos es el jugador
+        if (other.gameObject.CompareTag("Player"))
+        {
+            grabItem(player);
         }
     }
 
