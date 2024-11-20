@@ -79,7 +79,25 @@ public class Enemy : MonoBehaviour
             caosTime = 0;
             isCaos = false;
         }
-        
+
+        if (debilTime > 0)
+        {
+            debilTime -= Time.deltaTime;
+        }
+        else if (debilTime <= 0)
+        {
+            debilTime = 0;
+            isDebil = false;
+            multiplicadorDefensa += 0.2f;
+        }
+        //If que pone el estado debil
+        if(!esDebil && debilTime > 0)
+        {
+            esDebil = true;
+            multiplicadorDefensa -= 0.2f;
+        }
+      
+
     }
     // Update is called once per frame
     public void Update()
