@@ -39,6 +39,8 @@ public class Item_80 : Item
     public void perfectBlocktoDebil(Enemy[] enemyList)
     {
         for (int i=0; i<enemyList.Length; i++) {
-            if (enemyList[i] != null) {
+            if (enemyList[i] != null)
+            {
+            }
     } 
 }
