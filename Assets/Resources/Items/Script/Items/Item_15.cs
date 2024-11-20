@@ -5,7 +5,7 @@ using UnityEngine;
 public class Item_15 : Item
 {
     //Declaramos stats o cosas que modificara el item
-    float attackKNC = 2;
+    float attackKNC = 1; // 1 porque hace +100%
 
     // Start is called before the first frame update
     void Start()
@@ -30,7 +30,7 @@ public class Item_15 : Item
     {
         base.grabItem(p);
         //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM
-        p.sword.attackKnockback *= attackKNC;
+        p.sword.knockbackMultiplicator += attackKNC;
 
     }
 

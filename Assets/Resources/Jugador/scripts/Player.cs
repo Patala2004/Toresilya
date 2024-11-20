@@ -12,7 +12,7 @@ public class Player : MonoBehaviour
     public float health = 50;
     // DEFENSA
     public float defensa = 1; //Fluctua de 1 a 2. para el jugador mejor mostrarle que el % como tal creo 
-    public float defensaReal = 1; //Si esto llega a 2 no recibe daño
+    public float multiplicadorDefensa = 1; //Si esto llega a 2 no recibe daño
     // PARRY
     public float resistanceMax = 50;
     public float resistance = 50;

@@ -18,7 +18,6 @@ public class Item_32 :Item
         unique = false;
         rarity = "";
         precio = 0;
-        
     }
 
     // Update is called once per frame
@@ -41,8 +40,15 @@ public class Item_32 :Item
         {
             player.stuned = false;
             enCooldown = true;
-            base.putOnCooldown(cooldown, enCooldown);
+            StartCoroutine(putOnCooldown(cooldown));
         }
+    }
+
+
+    public virtual IEnumerator putOnCooldown(float seconds)
+    {
+        yield return new WaitForSeconds(seconds);
+        enCooldown = false;
     }
     
     

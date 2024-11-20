@@ -11,10 +11,12 @@ public class Sword : MonoBehaviour
     SpriteRenderer sR;
     public float recoil = 10f; // recoil del arma(empuje cuando)
     public float attackKnockback = 4f;// lo lejos que envia al enemigo atacando
+    public float knockbackMultiplicator = 1f;
     public float attackSpeed = 0.2f; // velocidad a la que el player puede atacar(no es la velocidad de la animacion)
     public float attackAnimation = 0.2f; // cuanto dura la animacion *importante que no sea mucho
     //to do manejar rng
     public float[] attackDamage = new float[2]; // da�o de da�omin a da�omax
+    public float dmgMultiplicator = 1f;
     public Vector2 hitboxSize = new(1,2);
     float radioArma = 0.3f;
     float rotacionArma =0;
@@ -58,7 +60,7 @@ public class Sword : MonoBehaviour
             {
                 Enemy enemy = collider.collider.GetComponent<Enemy>();
                 hitEnemies.Add(enemy);
-                float dam = Random.Range(attackDamage[0], attackDamage[1]); // cogemos el daño de la espada base
+                float dam = Random.Range(attackDamage[0], attackDamage[1]) * (dmgMultiplicator<0? 0:dmgMultiplicator); // cogemos el daño de la espada base
                 bool critical = Random.Range(0f, 1f) < player.statCriticalChance; // vemos si ha habido critico
                 if (critical)
                 {
@@ -66,11 +68,11 @@ public class Sword : MonoBehaviour
                     criticallyHitEnemies.Add(enemy);
                 }
 
-                enemy.TakeDamage(dam, player.ang, attackKnockback);
+                enemy.TakeDamage(dam, player.ang, attackKnockback * (knockbackMultiplicator<0? 0:knockbackMultiplicator));
             }
             if (collider.collider.CompareTag("golpeable"))
             {
-                float dam = Random.Range(attackDamage[0], attackDamage[1]);
+                float dam = Random.Range(attackDamage[0], attackDamage[1]) * (dmgMultiplicator<0? 0:dmgMultiplicator);
                 Golpeable golpeable = collider.collider.GetComponent<Golpeable>();
                 golpeable.TakeDamage(dam);
             }
