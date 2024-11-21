@@ -25,7 +25,7 @@ public class EnemySpawn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (room != null) if (room.spawned && !crearEnemigos) actualizarRoom(Instantiate(enemies[rng]));
+        if (room.spawned && !crearEnemigos) actualizarRoom(Instantiate(enemies[rng]));
     }
     private void actualizarRoom(GameObject newEnemy)
     {
