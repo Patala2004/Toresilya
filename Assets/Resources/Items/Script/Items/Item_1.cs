@@ -61,8 +61,6 @@ public class Item_1 : Item
     }
 
     private void reboteRayo(Enemy e, int remainingIterations, GameObject origin){
-        Debug.Log("ReBOTE");
-
         if(remainingIterations == 0) return;
 
         RaycastHit2D[] hit = Physics2D.CircleCastAll(e.transform.position, 5f, new Vector3(0f,0f,0f), 0);
