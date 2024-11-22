@@ -764,7 +764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1899338861}
-  enemigo: {fileID: 541082040500159832, guid: c9dcc9e7305b66b4b9208feaa7e1b520, type: 3}
+  enemigo: {fileID: -6056455052903951165, guid: 2e2d2d39dcdcb804c933693245490923, type: 3}
 --- !u!114 &694331824
 MonoBehaviour:
   m_ObjectHideFlags: 0
