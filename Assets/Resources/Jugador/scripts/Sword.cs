@@ -61,7 +61,7 @@ public class Sword : MonoBehaviour
                 Enemy enemy = collider.collider.GetComponent<Enemy>();
                 hitEnemies.Add(enemy);
                 float dam = Random.Range(attackDamage[0], attackDamage[1]) * (dmgMultiplicator<0? 0:dmgMultiplicator); // cogemos el daño de la espada base
-                bool critical = Random.Range(0f, 1f) < player.statCriticalChance; // vemos si ha habido critico
+                bool critical = Random.Range(0f, 1f) < (player.statCriticalChance + (enemy.isDebil? Item.debilCritChance : 0)); // vemos si ha habido critico
                 if (critical)
                 {
                     dam *= player.statCriticalDamage;
