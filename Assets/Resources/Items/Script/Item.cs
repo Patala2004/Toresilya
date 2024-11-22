@@ -21,6 +21,7 @@ public class Item : MonoBehaviour
     public static float probParalizarRayo = 0.05f;
     public static float probCaosRayo = 0f;
     public static float durParalizadoRayo = 2f;
+    public static float durCaosRayo = 2f;
     public static int nBurst = 1;
     public static int nRebotesRayo = 1;
     public static int multRebotesRayo = 1;

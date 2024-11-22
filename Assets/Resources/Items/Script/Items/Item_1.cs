@@ -50,6 +50,7 @@ public class Item_1 : Item
         // Poner estados
             if(Random.Range(0f,1f) < probCaosRayo){
                 // Poner estado caos
+                enemy.Caos(durCaosRayo);
             }
 
             if(Random.Range(0f,1f) < probParalizarRayo){
