@@ -32,6 +32,6 @@ public class Item_80 : Item
         //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM
         Item.durDebil += aumentoDurDebil;
     }
+    
 
-   
 }
