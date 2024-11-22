@@ -38,7 +38,8 @@ public class Enemy : MonoBehaviour
         //Debil -> Su defensa disminue un 20% durante durDebil en item.cs
     public float debilTime = 0f;
     public bool isDebil = false;
-
+    // Animaciones
+    Coroutine coroutineIndicatorColor;
 
     // Start is called before the first frame update
     public void Start()
@@ -162,6 +163,12 @@ public class Enemy : MonoBehaviour
         float tempDamage = damage / (defensa * (isDebil? Item.debilDefReductionMult : 1)) ;
         ReduceHealth(tempDamage);
         StartCoroutine(Impulse(player.sword.attackAnimation, ang, attackKnockback));
+        //animaciones
+        if(coroutineIndicatorColor != null)
+        {
+            StopCoroutine(coroutineIndicatorColor);
+        }
+        coroutineIndicatorColor = StartCoroutine(IColorDamage(0.4f,color == default ? Color.red:color));
         GetComponent<GenParticulaTexto>().comenzar(tempDamage, ang, color);
     }
     // Manejo sprites
@@ -170,6 +177,21 @@ public class Enemy : MonoBehaviour
         float ang = Mathf.Rad2Deg * (Mathf.Atan2(dir.y, dir.x));
         sR.flipX = (ang > 90 || ang < -90);
     }
+
+    IEnumerator IColorDamage(float waitseconds,Color color)
+    {
+        SpriteRenderer sR = GetComponent<SpriteRenderer>();
+        float elapsedTime = 0;
+        sR.color = color;
+        while(elapsedTime < waitseconds)
+        {
+            sR.color = new Color(color.r + (1 - color.r) * (elapsedTime/waitseconds), color.g + (1 - color.g) * (elapsedTime / waitseconds), color.b + (1 - color.b) * (elapsedTime / waitseconds), 1);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
+        sR.color = Color.white;
+    }
+
 
 	public List<Node> pathToPlayer() {
 		Node origin = astar.getNearestNode(this.gameObject);

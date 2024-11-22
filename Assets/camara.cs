@@ -20,5 +20,9 @@ public class camara : MonoBehaviour
             Instantiate(enemigo.gameObject, new Vector2(player.transform.position.x +5, player.transform.position.y),Quaternion.identity);
         }
         transform.position = new Vector3(player.transform.position.x, player.transform.position.y,-20);
+        if (Input.GetKeyUp(KeyCode.O))
+        {
+            Instantiate(Resources.Load<GameObject>("Proyectiles/arrow"), new Vector2(player.transform.position.x + 5, player.transform.position.y), Quaternion.identity);
+        }
     }
 }

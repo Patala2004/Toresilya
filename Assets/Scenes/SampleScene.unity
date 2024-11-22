@@ -764,7 +764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1899338861}
-  enemigo: {fileID: 5431344267532036789, guid: 02ca91e8da018014fb996dee6330102d, type: 3}
+  enemigo: {fileID: 541082040500159832, guid: c9dcc9e7305b66b4b9208feaa7e1b520, type: 3}
 --- !u!114 &694331824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -787,10 +787,6 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
-      propertyPath: arma
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: sword
       value: 
       objectReference: {fileID: 1088749462}
@@ -811,44 +807,24 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
-      propertyPath: statDamage
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: resistanceMax
       value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
-      propertyPath: statCriticalChance
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: statCriticalDamage
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 674154930639325253, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
-      propertyPath: m_Offset.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 674154930639325253, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: m_Offset.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2631732413121222874, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
-      propertyPath: m_Name
-      value: sword
-      objectReference: {fileID: 0}
-    - target: {fileID: 3047238827151199654, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
-      propertyPath: m_Name
-      value: mouse
+      value: -0.2
       objectReference: {fileID: 0}
     - target: {fileID: 3239231867532664413, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.02
       objectReference: {fileID: 0}
     - target: {fileID: 3239231867532664413, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 0.04
       objectReference: {fileID: 0}
     - target: {fileID: 3239231867532664413, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: m_LocalPosition.z
@@ -860,15 +836,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3239231867532664413, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3239231867532664413, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3239231867532664413, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 3239231867532664413, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -886,27 +862,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: player
       objectReference: {fileID: 0}
-    - target: {fileID: 3941905580847453079, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
-      propertyPath: m_TagString
-      value: player
-      objectReference: {fileID: 0}
-    - target: {fileID: 4828342796627309653, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 1899338861}
     - target: {fileID: 7757474557007384813, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: m_Mass
       value: 100
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 4828342796627309653, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
-    m_RemovedGameObjects:
-    - {fileID: 3047238827151199654, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 2631732413121222874, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
-      insertIndex: 2
-      addedObject: {fileID: 1088749462}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
 --- !u!1 &824661746
 GameObject:
@@ -1577,32 +1540,17 @@ Transform:
   - {fileID: 834535021}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1088749461 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2631732413121222874, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
+--- !u!114 &1088749462 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9147010881120606703, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
   m_PrefabInstance: {fileID: 711699708}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1088749462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1088749461}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 745f93d93a281ac45880fcc294286a13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 1899338861}
-  recoil: 10
-  attackKnockback: 1.5
-  attackSpeed: 0.2
-  attackAnimation: 0.2
-  attackDamage:
-  - 2
-  - 4
-  hitboxSize: {x: 1, y: 2}
 --- !u!1 &1143696747
 GameObject:
   m_ObjectHideFlags: 0
@@ -2352,10 +2300,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 22dd2378cd5c40b4bafdd28336a1b0b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemies:
-  - {fileID: 8484869543311770916, guid: 02ca91e8da018014fb996dee6330102d, type: 3}
-  - {fileID: 6159802974911976144, guid: d083456b95d910594a105c299a2cd312, type: 3}
-  - {fileID: 7502524114904027516, guid: c9dcc9e7305b66b4b9208feaa7e1b520, type: 3}
 --- !u!4 &1885740177
 Transform:
   m_ObjectHideFlags: 0

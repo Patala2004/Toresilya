@@ -183,7 +183,7 @@ public class Player : MonoBehaviour
     {
         attacking = true;
         sword.Attack();
-        Enemy[][] hitData = sword.HitboxPlayer(transform.position, sword.hitboxSize, 0, (mousePos - transform.position).normalized, 1f);
+        Enemy[][] hitData = sword.HitboxPlayer(transform.position, sword.hitboxSize, ang, (mousePos - transform.position).normalized, 1f);
         StartCoroutine(Impulse(sword.attackAnimation, ang, sword.recoil)); // calcular el impulso(mejor con el tiempo de la animacion)
         // Llamar a mecánicas de items de ataque
         foreach (Action<Enemy[]> mechanic in attackMechanics)
@@ -237,17 +237,24 @@ public class Player : MonoBehaviour
             if (parrying && gObject != null) // se hace el parry a un Enemy
             {
                 parryTime = 0; // cuando haces parry reseteas el timer
-                StartCoroutine(gObject.GetComponent<Enemy>().Impulse(0.1f, ang, 1)); // aplica empuje en la dir que haces el parry
+                if (gObject.GetComponent<Enemy>() != null)
+                {
+                    StartCoroutine(gObject.GetComponent<Enemy>().Impulse(0.2f, (ang + 180), 1)); // aplica empuje en la dir que haces el parry
+                    foreach (Action<Enemy> mechanic in perfectParryMechanics) // Ejecutamos mecanicas de parry
+                    {
+                        mechanic.Invoke(gObject.GetComponent<Enemy>());
+                    }
+                    foreach (Action<Enemy> mechanic in parryMechanics) // Ejecutamos mecanicas de bloqueo
+                    {
+                        mechanic.Invoke(gObject.GetComponent<Enemy>());
+                    }
+                }
+                else if (gObject.GetComponent<Projectile>() != null)
+                {
+                    gObject.GetComponent<Projectile>().ToGetParried();
+                }
                 attacking = false; // cuando haces parry reseteas que el jugador pueda atacar(punish)
 
-                foreach (Action<Enemy> mechanic in perfectParryMechanics) // Ejecutamos mecanicas de parry
-                {
-                    mechanic.Invoke(gObject.GetComponent<Enemy>());
-                }
-                foreach (Action<Enemy> mechanic in parryMechanics) // Ejecutamos mecanicas de bloqueo
-                {
-                    mechanic.Invoke(gObject.GetComponent<Enemy>());
-                }
             }
             // Parry normal
             else if (gObject != null)
@@ -261,18 +268,24 @@ public class Player : MonoBehaviour
                 }
                 IcooldownRes = StartCoroutine(ParryCooldown(parryTimerCooldown));
 
-                foreach (Action<Enemy> mechanic in parryMechanics) // Ejecutamos mecanicas de bloqueo
+                if (gObject.GetComponent<Enemy>() != null)
                 {
-                    mechanic.Invoke(gObject.GetComponent<Enemy>());
+                    foreach (Action<Enemy> mechanic in parryMechanics) // Ejecutamos mecanicas de bloqueo
+                    {
+                        mechanic.Invoke(gObject.GetComponent<Enemy>());
+                    }
                 }
             }
 
         }
         else
         {   //Comentado todo lo de defensa por si si
-            foreach (Action<Enemy> mechanic in takeHealthDamageMechanics) // Ejecutamos mecanicas de bloqueo
+            if (gObject.GetComponent<Enemy>() != null)
             {
-                mechanic.Invoke(gObject.GetComponent<Enemy>());
+                foreach (Action<Enemy> mechanic in takeHealthDamageMechanics) // Ejecutamos mecanicas de bloqueo
+                {
+                    mechanic.Invoke(gObject.GetComponent<Enemy>());
+                }
             }
             health -= (damage/defensa); //Preguntar a Alvaro si se tiene dudas de la ecuacion
             StartCoroutine(Impulse(0.2f, ang, knockback)); // empuje

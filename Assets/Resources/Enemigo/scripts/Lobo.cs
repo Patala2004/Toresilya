@@ -22,7 +22,8 @@ public class Lobo : Enemy
 
 	void HandleJump()
     {
-		HitboxEnemy(transform.position, new(2.7f,1.7f), 0, (player.gameObject.transform.position - gameObject.transform.position).normalized, 0, this.damage, this.knockback);
+        Vector2 dir = (player.gameObject.transform.position - gameObject.transform.position).normalized;
+        HitboxEnemy(transform.position, new(2.7f,1.7f), Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x), dir, 0, this.damage, this.knockback);
         timer -= Time.deltaTime;
 
         if (timer <= 0) {
