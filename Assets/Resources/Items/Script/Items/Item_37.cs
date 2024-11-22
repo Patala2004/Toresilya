@@ -43,8 +43,7 @@ public class Item_37 : Item
             if (random == 33) //1% de posibilidades
             {
                 found = true;
-                player.invulnerable = true;
-                StartCoroutine(rutinaInmune());
+                player.GetInvulnerable(1.5f);
             }
         }
     }
@@ -54,11 +53,7 @@ public class Item_37 : Item
     // Error posible: Si se llama a rutinaInmune dos veces en dos momentos distintos pero muy cercanos la primera rutinaInmune desactivaria la invulnerabilidad 
     // de la segunda llamada antes de que se tuviera que desactivaar
     // Basicamente, hay una condición de carrera mal llevada
-
-    public IEnumerator rutinaInmune()
-    {
-        yield return new WaitForSeconds(1.5f);
-        player.invulnerable = false;
-    }
+    
+    
 
 }

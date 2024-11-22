@@ -50,6 +50,6 @@ public class Item_66 : Item
             }
         }
     }
-    
+
 }
 
