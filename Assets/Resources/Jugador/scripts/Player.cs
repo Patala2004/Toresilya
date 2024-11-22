@@ -239,7 +239,7 @@ public class Player : MonoBehaviour
                 parryTime = 0; // cuando haces parry reseteas el timer
                 if (gObject.GetComponent<Enemy>() != null)
                 {
-                    StartCoroutine(gObject.GetComponent<Enemy>().Impulse(0.2f, (ang + 180), 1)); // aplica empuje en la dir que haces el parry
+                    StartCoroutine(gObject.GetComponent<Enemy>().Impulse(0.15f, (ang + 180), 1)); // aplica empuje en la dir que haces el parry
                     foreach (Action<Enemy> mechanic in perfectParryMechanics) // Ejecutamos mecanicas de parry
                     {
                         mechanic.Invoke(gObject.GetComponent<Enemy>());
