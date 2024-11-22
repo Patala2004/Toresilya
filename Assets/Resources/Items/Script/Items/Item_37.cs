@@ -54,15 +54,6 @@ public class Item_37 : Item
     // de la segunda llamada antes de que se tuviera que desactivaar
     // Basicamente, hay una condición de carrera mal llevada
     
-    public void OnTriggerEnter2D(Collider2D other)
-    {
-        // Verificar si el objeto con el que colisionamos es el jugador
-        if (other.gameObject.CompareTag("player"))
-        {
-            grabItem(player);
-            Debug.Log("TUS MUERTOS");
-            transform.position = new Vector3(10000, 100000, transform.position.z);// Destruir el objeto después de recogerlo
-        }
-    }
+    
 
 }

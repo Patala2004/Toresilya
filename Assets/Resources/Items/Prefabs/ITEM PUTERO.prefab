@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7234342372192615119}
   - component: {fileID: 3204295789388870930}
   - component: {fileID: -7833537593688698582}
-  - component: {fileID: -488829945801296154}
+  - component: {fileID: 4308987884479944745}
   m_Layer: 0
   m_Name: ITEM PUTERO
   m_TagString: Untagged
@@ -132,7 +132,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-488829945801296154
+--- !u!114 &4308987884479944745
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,7 +141,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 47358985663487322}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a1bd846c7c45d842bafc823d3cda1d1, type: 3}
+  m_Script: {fileID: 11500000, guid: 516f631e8a6a5e9459fe62e76c89a71a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
