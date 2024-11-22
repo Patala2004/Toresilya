@@ -41,7 +41,7 @@ public class Item_1 : Item
             
             ponerEstados(enemy);
 
-            reboteRayo(enemy, nRebotesRayo - 1, player.gameObject);
+            reboteRayo(enemy, nRebotesRayo*multRebotesRayo - 1, player.gameObject);
 
         }
     }
