@@ -1018,6 +1018,7 @@ public class RoomCreator{
                 GameObject prefab = GameObject.Instantiate(prefabHabitaciones[(int)UnityEngine.Random.Range(0,prefabHabitaciones.Length)]);
                 prefab.transform.parent = newRoom.transform;
                 prefab.transform.localPosition = new(0, 0, 0);
+                roomScript.createMatrix(width, length, prefab);
             }
             else if (roomType[i] == RoomType.LARGE_ENEMY_ROOM_CODE)
             {
@@ -1025,6 +1026,7 @@ public class RoomCreator{
                 GameObject prefab = GameObject.Instantiate(prefabHabitaciones[(int)UnityEngine.Random.Range(0, prefabHabitaciones.Length)]);
                 prefab.transform.parent = newRoom.transform;
                 prefab.transform.localPosition = new(0, 0, 0);
+                roomScript.createMatrix(width, length, prefab);
             }
             else if (roomType[i] == RoomType.STRECHED_ENEMY_ROOM_H_CODE)
             {
@@ -1032,6 +1034,7 @@ public class RoomCreator{
                 GameObject prefab = GameObject.Instantiate(prefabHabitaciones[(int)UnityEngine.Random.Range(0, prefabHabitaciones.Length)]);
                 prefab.transform.parent = newRoom.transform;
                 prefab.transform.localPosition = new(0, 0, 0);
+                roomScript.createMatrix(width, length, prefab);
             }
             else if (roomType[i] == RoomType.STRECHED_ENEMY_ROOM_V_CODE)
             {
@@ -1039,6 +1042,7 @@ public class RoomCreator{
                 GameObject prefab = GameObject.Instantiate(prefabHabitaciones[(int)UnityEngine.Random.Range(0, prefabHabitaciones.Length)]);
                 prefab.transform.parent = newRoom.transform;
                 prefab.transform.localPosition = new(0, 0, 0);
+                roomScript.createMatrix(width, length, prefab);
             }
 
             /*

@@ -293,14 +293,10 @@ public class Room : MonoBehaviour
         }
 
         foreach(Transform obstacle in roomPrefab.transform){
-            int x = (int)(obstacle.position.x - 0.5f - this.x);
-            int y =  (int)(obstacle.position.y - 0.5f - this.y);
-            nodeMatrix[x,y].isWalkable = false;
-            // transform its neightboors pointing to it to null
-            invalidateNodeNeightboors(nodeMatrix[x,y], nodeMatrix);
+           invalidateChildren(obstacle.gameObject);
         }
 
-        /*
+        
         String a = "";
         for(int i = 0; i < width; i++){
             for(int j = 0; j < length; j++){
@@ -308,9 +304,24 @@ public class Room : MonoBehaviour
             }
             a += '\n';
         }
+        Debug.Log(gameObject.name);
         Debug.Log(a);
-        */
         
+        
+    }
+
+    private void invalidateChildren(GameObject go){
+        foreach(Transform child in go.transform){
+            if(child.transform.childCount > 0){
+                invalidateChildren(child.gameObject);
+            }
+            else{
+                int x = (int)(child.position.x - 0.5f - this.x);
+                int y =  (int)(child.position.y - 0.5f - this.y);
+                nodeMatrix[x,y].isWalkable = false;
+                invalidateNodeNeightboors(nodeMatrix[x,y], nodeMatrix);
+            }
+        }
     }
 
     public static void invalidateNodeNeightboors(Node node, Node[,] matrix){
