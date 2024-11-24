@@ -10,7 +10,7 @@ public class Coin : MonoBehaviour
     private const float floatDistance = 6f;
     private const float grabDistance = 1f;
 
-    private float grabTimer = 2f;
+    private float grabTimer = 0.8f;
     public GameObject player;
 
     private bool changedLayerMask = false;
@@ -41,7 +41,7 @@ public class Coin : MonoBehaviour
                 rb.includeLayers = rb.includeLayers & ~(1 << LayerMask.NameToLayer("Default")); // Quitar default del include
                 rb.excludeLayers = rb.excludeLayers | (1 << LayerMask.NameToLayer("Default")); // Añadir default al exclude
             }
-            rb.velocity = (Vector2) (player.transform.position - transform.position).normalized * (dist / floatDistance + 1) * 10;
+            rb.velocity = (Vector2) (player.transform.position - transform.position).normalized * (dist / floatDistance + 1) * 6;
         }
     }
 
