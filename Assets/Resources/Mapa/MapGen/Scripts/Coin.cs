@@ -9,6 +9,8 @@ public class Coin : MonoBehaviour
 
     private const float floatDistance = 6f;
     private const float grabDistance = 1f;
+
+    private float grabTimer = 2f;
     public GameObject player;
 
     private bool changedLayerMask = false;
@@ -22,11 +24,14 @@ public class Coin : MonoBehaviour
     }
 
     void FixedUpdate(){
-        float dist = (transform.position - player.transform.position).magnitude;
-        if(dist < grabDistance){
+        if(grabTimer <= 0){
             player.GetComponent<Player>().monedas += value;
             Debug.Log("DINERO += " + value);
             Destroy(gameObject);
+        }
+        float dist = (transform.position - player.transform.position).magnitude;
+        if(dist < grabDistance){
+            grabTimer -= Time.deltaTime;
         }
         else if(dist < floatDistance){
             if(!changedLayerMask){
