@@ -5,6 +5,7 @@ using Unity.Mathematics;
 using Unity.VisualScripting;
 using Unity.VisualScripting.FullSerializer;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using UnityEngine.Tilemaps;
 
 // Script for parent-room-class. All room classes will inherit this one
@@ -107,22 +108,25 @@ public class Room : MonoBehaviour
             // Spawn gold coins (coin with value 20)
             coin = Instantiate(coinPrefab);
             coin.transform.parent = gameObject.transform;
-            coin.transform.localPosition = new Vector2(0,0);
+            coin.transform.localPosition = new Vector2(0,0) + new Vector2(UnityEngine.Random.Range(0f,1f),UnityEngine.Random.Range(0f,1f));
             coin.GetComponent<Coin>().value = 20;
+            coin.GetComponent<Light2D>().color = new Color32(255,223,0,255);
         }
         for(;silvC > 0; silvC--){
             // Spawn silver coins (coin with value 5)
             coin = Instantiate(coinPrefab);
             coin.transform.parent = gameObject.transform;
-            coin.transform.localPosition = new Vector2(0,0);
+            coin.transform.localPosition = new Vector2(0,0) + new Vector2(UnityEngine.Random.Range(0f,1f),UnityEngine.Random.Range(0f,1f));
             coin.GetComponent<Coin>().value = 5;
+            coin.GetComponent<Light2D>().color = new Color32(192,192,192,255);
         }
         for(;bronzeC > 0; bronzeC--){
             // Spawn bronze coins (coin with value 1)
             coin = Instantiate(coinPrefab);
             coin.transform.parent = gameObject.transform;
-            coin.transform.localPosition = new Vector2(0,0);
+            coin.transform.localPosition = new Vector2(0,0) + new Vector2(UnityEngine.Random.Range(0f,1f),UnityEngine.Random.Range(0f,1f));
             coin.GetComponent<Coin>().value = 1;
+            coin.GetComponent<Light2D>().color = new Color32(205,127,50,255);
         }
 
 
