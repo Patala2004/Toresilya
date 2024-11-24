@@ -41,7 +41,7 @@ public class Coin : MonoBehaviour
                 rb.includeLayers = rb.includeLayers & ~(1 << LayerMask.NameToLayer("Default")); // Quitar default del include
                 rb.excludeLayers = rb.excludeLayers | (1 << LayerMask.NameToLayer("Default")); // Añadir default al exclude
             }
-            rb.velocity = (Vector2) (player.transform.position - transform.position).normalized * (dist / floatDistance + 1) * 6;
+            rb.velocity = (Vector2) (player.transform.position - transform.position).normalized * (1.2f - dist / floatDistance) * 8;
         }
     }
 
