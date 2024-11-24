@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 4033682141725384142}
   m_Layer: 0
   m_Name: Piedra_s(Clone) (3)
-  m_TagString: Untagged
+  m_TagString: Escenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -171,6 +171,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.y
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 6608312231512419035, guid: de2c33735a7cf404cb3a989ce3d13ba6, type: 3}
+      propertyPath: m_TagString
+      value: Escenario
+      objectReference: {fileID: 0}
     - target: {fileID: 6965681772953405482, guid: de2c33735a7cf404cb3a989ce3d13ba6, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.5
@@ -178,6 +182,14 @@ PrefabInstance:
     - target: {fileID: 6965681772953405482, guid: de2c33735a7cf404cb3a989ce3d13ba6, type: 3}
       propertyPath: m_LocalPosition.y
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7440719237017718256, guid: de2c33735a7cf404cb3a989ce3d13ba6, type: 3}
+      propertyPath: m_TagString
+      value: Escenario
+      objectReference: {fileID: 0}
+    - target: {fileID: 7440719237017718256, guid: de2c33735a7cf404cb3a989ce3d13ba6, type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8842011770832846650, guid: de2c33735a7cf404cb3a989ce3d13ba6, type: 3}
       propertyPath: m_LocalPosition.x

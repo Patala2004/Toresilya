@@ -10,10 +10,10 @@ GameObject:
   m_Component:
   - component: {fileID: 3248149349040074599}
   - component: {fileID: 8981912052016568909}
-  - component: {fileID: 8841040034669387848}
   - component: {fileID: -3115256728397106525}
+  - component: {fileID: 3247810428934281794}
   m_Layer: 0
-  m_Name: Arrow
+  m_Name: Goop
   m_TagString: Projectile
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: df7429504a400fa4c979040785eaaa40, type: 3}
+  m_Sprite: {fileID: 21300000, guid: ef677341b3c4c3f4f996a175f4f577b3, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -86,25 +86,6 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &8841040034669387848
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 256563789204644769}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: de857cd22bd61c24296d577ab6009a0f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  direction: {x: -1, y: 0}
-  hitboxSixe: {x: 1, y: 0.5}
-  damage:
-  - 2
-  - 3
-  knockback: 30
-  vel: 10
 --- !u!50 &-3115256728397106525
 Rigidbody2D:
   serializedVersion: 4
@@ -132,3 +113,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!114 &3247810428934281794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 256563789204644769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 935a3d9b2f45a5246a372932b5aa8b80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  direction: {x: -1, y: 0}
+  hitboxSixe: {x: 0.5, y: 0.5}
+  damage:
+  - 2
+  - 3
+  knockback: 20
+  vel: 5

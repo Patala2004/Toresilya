@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Projectile : MonoBehaviour
 {
@@ -47,12 +48,17 @@ public class Projectile : MonoBehaviour
                 golpeable.TakeDamage(dam);
                 ToDie();
             }
+            if (collider.collider.CompareTag("Escenario"))
+            {
+                ToDie();
+            }
         }
     }
     public virtual void ToDie()
     {
+        allowAttack = false;
         rb.velocity = Vector2.zero;
-        Destroy(gameObject, 5);
+        Destroy(gameObject, 4);
     }
     public virtual void ToGetParried()
     {

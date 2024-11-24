@@ -676,7 +676,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -764,7 +764,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1899338861}
-  enemigo: {fileID: 5431344267532036789, guid: 02ca91e8da018014fb996dee6330102d, type: 3}
+  enemigo: {fileID: -6056455052903951165, guid: 2e2d2d39dcdcb804c933693245490923, type: 3}
 --- !u!114 &694331824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1725,6 +1725,10 @@ PrefabInstance:
     - target: {fileID: 621768139957824107, guid: b018b1f33b3303047aac132e297f5c84, type: 3}
       propertyPath: m_SortingLayerID
       value: 133922023
+      objectReference: {fileID: 0}
+    - target: {fileID: 785024494622864852, guid: b018b1f33b3303047aac132e297f5c84, type: 3}
+      propertyPath: m_TagString
+      value: Escenario
       objectReference: {fileID: 0}
     - target: {fileID: 3483607558633178883, guid: b018b1f33b3303047aac132e297f5c84, type: 3}
       propertyPath: m_SortingLayer

@@ -2,21 +2,24 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Arrow : Projectile
+public class Goop : Projectile
 {
     // Start is called before the first frame update
     new void Start()
     {
         base.Start();
     }
-
-    // Update is called once per frame
-    private new void FixedUpdate()
+    new void FixedUpdate()
     {
         base.FixedUpdate();
     }
+    // Update is called once per frame
     void Update()
     {
         
+    }
+    public new void ToDie()
+    {
+        Destroy(gameObject);
     }
 }

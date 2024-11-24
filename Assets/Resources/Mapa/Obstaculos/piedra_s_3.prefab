@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7177209566512042555}
   m_Layer: 0
   m_Name: Piedra_s(Clone) (2)
-  m_TagString: Untagged
+  m_TagString: Escenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -191,7 +191,7 @@ GameObject:
   - component: {fileID: 581655578505409627}
   m_Layer: 0
   m_Name: Piedra_s(Clone) (1)
-  m_TagString: Untagged
+  m_TagString: Escenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -334,7 +334,7 @@ GameObject:
   - component: {fileID: 5830996901793876330}
   m_Layer: 0
   m_Name: Piedra_s(Clone)
-  m_TagString: Untagged
+  m_TagString: Escenario
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
