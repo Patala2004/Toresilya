@@ -57,10 +57,10 @@ public class Room : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other){
-        Debug.Log("ENTERED");
         if(other.gameObject.name != "player"){
             return;
         }
+        Debug.Log("ENTERED");
         // If collision was with player and the room is an EnemyRoom
         if( roomType > 4 && !spawned){
             spawned = true;

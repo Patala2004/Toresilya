@@ -144,7 +144,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  descriptionItem: 
+  descriptionItem: "Haces m\xE1s da\xF1o los primeros segundos tras entrar a una
+    habitacion"
   descripcionRecoger: 
   nombre: 
   unique: 0

@@ -11,7 +11,7 @@ public class Piedra_afilar : Item
     void Start()
     {
         player = GameObject.Find("player").GetComponent<Player>();
-        descriptionItem = "A�ade 1 de ataque";
+        descriptionItem = "Añade 1 de ataque";
     }
 
     // Update is called once per frame

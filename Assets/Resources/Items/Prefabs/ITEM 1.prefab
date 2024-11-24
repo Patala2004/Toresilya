@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  descriptionItem: 
+  descriptionItem: El jugador lanza rayos al atacar
   descripcionRecoger: 
   nombre: 
   unique: 0

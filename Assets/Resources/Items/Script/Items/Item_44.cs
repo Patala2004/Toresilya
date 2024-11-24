@@ -12,7 +12,7 @@ public class Item_44 : Item
     {
         //Declaracion del item
         player = GameObject.Find("player").GetComponent<Player>();
-        descriptionItem = "";
+        descriptionItem = "124124";
         descripcionRecoger = "";
         nombre = "";
         unique = false;

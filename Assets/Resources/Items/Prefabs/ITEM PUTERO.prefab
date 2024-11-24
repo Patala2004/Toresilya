@@ -145,7 +145,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  descriptionItem: 
+  descriptionItem: 67
   descripcionRecoger: 
   nombre: 
   unique: 0

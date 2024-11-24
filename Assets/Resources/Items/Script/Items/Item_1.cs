@@ -13,7 +13,7 @@ public class Item_1 : Item
     void Start()
     {
         player = GameObject.Find("player").GetComponent<Player>();
-        descriptionItem = "Lanza un rayo cuando atacas a un enemigo";
+        this.descriptionItem = "Lanza un rayo cuando atacas a un enemigo";
     }
 
     // Update is called once per frame

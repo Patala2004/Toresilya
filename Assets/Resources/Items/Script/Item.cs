@@ -6,9 +6,9 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public Player player;
-    public String descriptionItem = "";
-    public String descripcionRecoger = "";
-    public String nombre = "";
+    public string descriptionItem = "";
+    public string descripcionRecoger = "";
+    public string nombre = "";
     public bool unique = false;
 
     // Duracion estandar de estados (es compartida)
@@ -27,7 +27,7 @@ public class Item : MonoBehaviour
     public static int nRebotesRayo = 1;
     public static int multRebotesRayo = 1;
 
-    public String rarity = "common";
+    public string rarity = "common";
     public int precio;
 
     // Start is called before the first frame update
