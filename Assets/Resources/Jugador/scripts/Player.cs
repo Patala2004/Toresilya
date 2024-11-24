@@ -42,6 +42,9 @@ public class Player : MonoBehaviour
     SpriteRenderer sR;
     Animator ani;
 
+    // Monedas
+    public int monedas = 0;
+
     //Estados
     public bool stuned = false;
     public float stunedTime;

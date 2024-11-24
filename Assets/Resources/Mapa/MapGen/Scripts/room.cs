@@ -42,12 +42,15 @@ public class Room : MonoBehaviour
     private GameObject minimapCameraWide;
 
     public BoxCollider2D roomCollider;
+
+    private Player player;
     // Start is called before the first frame update
     void Start()
     {
         mapManager = GameObject.Find("MapGenerator").GetComponent<MapGen>();
         minimapCamera = GameObject.Find("MiniMapCamera");
         minimapCameraWide = GameObject.Find("MiniMapCameraWide");
+        player = GameObject.Find("player").GetComponent<Player>();
     }
 
     // Update is called once per frame
@@ -76,8 +79,54 @@ public class Room : MonoBehaviour
     public void CommunicateEnemyDeath(){
         aliveEnemies--;
         if(aliveEnemies == 0){
-            OpenCorridors();
+            RoomCleared();
         }
+    }
+
+    private void RoomCleared(){
+        OpenCorridors();
+        int totalCoinVal = UnityEngine.Random.Range(10,30);
+        GameObject coinPrefab = Resources.Load<GameObject>("Mapa/MapGen/Prefabs/Coin");
+
+        // Divide val into gold coins (20), silver coins (5) and bronze coins (1)
+        int goldC = 0;
+        int silvC = 0;
+        int bronzeC = 0;
+        while(totalCoinVal - 20 >= 0){
+            goldC++;
+            totalCoinVal -= 20;
+        }
+        while(totalCoinVal - 5 >= 0){
+            silvC++;
+            totalCoinVal-=5;
+        }
+        bronzeC = totalCoinVal;
+
+        GameObject coin;
+        for(;goldC > 0; goldC--){
+            // Spawn gold coins (coin with value 20)
+            coin = Instantiate(coinPrefab);
+            coin.transform.parent = gameObject.transform;
+            coin.transform.localPosition = new Vector2(0,0);
+            coin.GetComponent<Coin>().value = 20;
+        }
+        for(;silvC > 0; silvC--){
+            // Spawn silver coins (coin with value 5)
+            coin = Instantiate(coinPrefab);
+            coin.transform.parent = gameObject.transform;
+            coin.transform.localPosition = new Vector2(0,0);
+            coin.GetComponent<Coin>().value = 5;
+        }
+        for(;bronzeC > 0; bronzeC--){
+            // Spawn bronze coins (coin with value 1)
+            coin = Instantiate(coinPrefab);
+            coin.transform.parent = gameObject.transform;
+            coin.transform.localPosition = new Vector2(0,0);
+            coin.GetComponent<Coin>().value = 1;
+        }
+
+
+        
     }
 
     private void CloseCorridors(){
