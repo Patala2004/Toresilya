@@ -236,6 +236,9 @@ public class Player : MonoBehaviour
             // Parry perfecto
             if (parrying && gObject != null) // se hace el parry a un Enemy
             {
+                // Animaciones
+                GetComponent<GenLight>().GenerateLight(sword.transform.position);
+                // El resto
                 parryTime = 0; // cuando haces parry reseteas el timer
                 if (gObject.GetComponent<Enemy>() != null)
                 {
