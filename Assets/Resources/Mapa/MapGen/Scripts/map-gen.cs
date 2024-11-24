@@ -201,6 +201,7 @@ public class MapGen: MonoBehaviour{
         yWallCoords.Dispose();
         allNodes.Dispose();
         startNodeCoords.Dispose();
+        endNodeCoords.Dispose();
         loadingStatus = "DONE";
     }
 
