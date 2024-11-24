@@ -9,6 +9,8 @@ public class ChestTile : MonoBehaviour
     private bool itemHasBeenGrabbed = false;
     private bool entered = false;
 
+    public Item item;
+
     public TextMeshPro text;
     private bool textEnabled;
     // Start is called before the first frame update
@@ -28,6 +30,12 @@ public class ChestTile : MonoBehaviour
             text.enabled = true;
             textEnabled = true;
         }
+
+        if(entered && Input.GetKey(KeyCode.E)){
+            item.grabItem(GameObject.Find("player").GetComponent<Player>());
+            text.enabled = false;
+            this.enabled = false; 
+        }
     }
 
     public void OnTriggerEnter2D(Collider2D other){
@@ -39,7 +47,6 @@ public class ChestTile : MonoBehaviour
     }
 
     public void SetText(String description){
-        Debug.Log("Descripcion: " + description);
-        text.text = description;
+        text.text = "Press [E] to grab" + '\n' +  description;
     }
 }

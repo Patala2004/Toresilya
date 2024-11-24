@@ -21,7 +21,7 @@ public class StoreTile : MonoBehaviour
         if(other.gameObject.name != "player" || itemHasBeenGrabbed) return;
         GameObject item = transform.GetChild(0).gameObject;
         item.GetComponent<Item>().grabItem(other.gameObject.GetComponent<Player>());
-        Destroy(item);
+        //Destroy(item); // Ahora el grabitem los mueve a lejos y no hace falta destruir
         itemHasBeenGrabbed = true;
     }
 }

@@ -30,8 +30,8 @@ public class Chest : MonoBehaviour
         Destroy(BoxSprite);
         hasBeenOpened = true;
         itemHolder.SetActive(true);
-        Debug.Log("TEMP: " + newItem.GetComponent<Item>().descriptionItem + " ITEM: " + newItem.name);
         itemHolder.GetComponent<ChestTile>().SetText(newItem.GetComponent<Item>().descriptionItem);
+        itemHolder.GetComponent<ChestTile>().item = newItem.GetComponent<Item>();
         
     }
 }

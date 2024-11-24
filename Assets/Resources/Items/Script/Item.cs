@@ -46,6 +46,7 @@ public class Item : MonoBehaviour
         // Add stats
 
         Debug.Log("El metodo grabItem ha sido llamado para el item " + nombre);
+        transform.position = new Vector3(-10000, 10000, 0); // Mover a a tomar por culo para no tener que destruir
 
     }
     
