@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 695343165419952752}
   m_Layer: 0
   m_Name: Chest_1
-  m_TagString: Untagged
+  m_TagString: golpeable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 515d30835463ff540ac54850ccb99611, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  health: 6
   BoxSprite: {fileID: 2596318599625921396}
   itemHolder: {fileID: 6628607982360815034}
 --- !u!61 &695343165419952752
@@ -78,7 +79,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 1
+  m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
