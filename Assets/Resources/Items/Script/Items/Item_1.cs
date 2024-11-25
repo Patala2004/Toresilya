@@ -90,10 +90,5 @@ public class Item_1 : Item
     }
 
 
-    // Debug
-    void OnTriggerEnter2D(){
-        grabItem(player);
-    }
-
 
 }
