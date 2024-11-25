@@ -12,11 +12,13 @@ public class Shop : MonoBehaviour
     {
         itemGen = GameObject.Find("ItemGenerator").GetComponent<ItemGenerator>();
 
+        Player player = GameObject.Find("player").GetComponent<Player>();
+
         foreach(GameObject item_slot in itemSlots){
             // Get new Item
-            GameObject newItem = itemGen.getItem();
-            newItem.transform.SetParent(item_slot.transform, false);
-            newItem.transform.localPosition = new Vector2(0,0);
+            StoreTile slotScript = item_slot.GetComponent<StoreTile>();
+            slotScript.player = player;
+            slotScript.SetItem(itemGen.getItem());
         }
     }
 
