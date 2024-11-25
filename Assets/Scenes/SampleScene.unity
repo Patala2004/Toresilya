@@ -2625,50 +2625,6 @@ Tilemap:
   m_CorrespondingSourceObject: {fileID: 988288822346389573, guid: b018b1f33b3303047aac132e297f5c84, type: 3}
   m_PrefabInstance: {fileID: 1204198855}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1885740175
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1885740177}
-  - component: {fileID: 1885740176}
-  m_Layer: 0
-  m_Name: EnemySpawner
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &1885740176
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1885740175}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22dd2378cd5c40b4bafdd28336a1b0b6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!4 &1885740177
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1885740175}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.6220954, y: 0.12099093, z: 0.07850295}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1899338861 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
@@ -2989,7 +2945,6 @@ SceneRoots:
   - {fileID: 1204198855}
   - {fileID: 1984826777}
   - {fileID: 552840993}
-  - {fileID: 1885740177}
   - {fileID: 540879828}
   - {fileID: 1143696748}
   - {fileID: 449465666}
