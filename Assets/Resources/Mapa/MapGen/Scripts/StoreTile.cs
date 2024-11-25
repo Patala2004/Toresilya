@@ -38,6 +38,7 @@ public class StoreTile : MonoBehaviour
         if(entered && Input.GetKey(KeyCode.E) && precio <= player.monedas){
             item.grabItem(player);
             itemHasBeenGrabbed = true;
+            player.monedas -= precio;
             //Destroy(item); // Ahora el grabitem los mueve a lejos y no hace falta destruir
 
             priceTag.text = "<s>  " + priceTag.text + "  </s>";
