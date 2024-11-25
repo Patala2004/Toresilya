@@ -69,7 +69,6 @@ public class Item_1 : Item
         // search for first enemy in hit
         for(int i = 0; i < hit.Length; i++){
             if((hit[i].collider.gameObject.tag == "enemy") && (hit[i].collider.gameObject != origin) && (hit[i].collider.gameObject != e.gameObject)){
-                Debug.Log(hit[i].collider.gameObject);
                 Enemy target = hit[i].collider.gameObject.GetComponent<Enemy>();
                 // Do damage and connect lighting to it
                 target.TakeDamage(UnityEngine.Random.Range(player.sword.attackDamage[0], player.sword.attackDamage[1]) * multDanoRayo, player.ang, player.sword.attackKnockback * (player.sword.knockbackMultiplicator<0? 0:player.sword.knockbackMultiplicator), new(0.5f, 0.75f, 0.95f, 1));

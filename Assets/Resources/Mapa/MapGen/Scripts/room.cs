@@ -64,11 +64,9 @@ public class Room : MonoBehaviour
         if(other.gameObject.name != "player"){
             return;
         }
-        Debug.Log("ENTERED");
         // If collision was with player and the room is an EnemyRoom
         if( roomType > 4 && !spawned){
             spawned = true;
-            Debug.Log("cerrando pasillos");
             CloseCorridors();            
         }   
         // Crear habitacion de minimapa
@@ -260,7 +258,6 @@ public class Room : MonoBehaviour
 
         // Add symbols
         if(roomType == 0){
-            Debug.Log(Resources.Load<Texture2D>("Mapa/Minimap/Symbol_Sprites/casita"));
             minimapRoom.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/casita");
         }
         // Add symbols for neightboring rooms
@@ -349,7 +346,7 @@ public class Room : MonoBehaviour
            invalidateChildren(obstacle.gameObject);
         }
 
-        
+        /*
         String a = "";
         for(int i = 0; i < width; i++){
             for(int j = 0; j < length; j++){
@@ -357,8 +354,7 @@ public class Room : MonoBehaviour
             }
             a += '\n';
         }
-        Debug.Log(gameObject.name);
-        Debug.Log(a);
+        */
         
         
     }

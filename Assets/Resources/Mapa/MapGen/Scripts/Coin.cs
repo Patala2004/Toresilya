@@ -26,7 +26,6 @@ public class Coin : MonoBehaviour
     void FixedUpdate(){
         if(grabTimer <= 0){
             player.GetComponent<Player>().monedas += value;
-            Debug.Log("DINERO += " + value);
             Destroy(gameObject);
         }
         float dist = (transform.position - player.transform.position).magnitude;
