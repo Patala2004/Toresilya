@@ -2,19 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item_67 : Item
+public class Item_79 : Item
 {
     //Declaramos stats o cosas que modificara el item
-    float addProbDebil = 40f;
+    public bool aplicadoItem79=false;
 
     // Start is called before the first frame update
     void Start()
     {
         //Declaracion del item
         player = GameObject.Find("player").GetComponent<Player>();
-        descriptionItem = "1223";
+        descriptionItem = "";
         descripcionRecoger = "";
-        nombre = "Item 66";
+        nombre = "Item 73";
         unique = false;
         rarity = "";
         precio = 0;
@@ -29,27 +29,28 @@ public class Item_67 : Item
     public override void grabItem(Player p)
     {
         base.grabItem(p);
-        //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM   
-        if (Item.probDebil == 0)
-        {
-            p.attackMechanics.Add(anadirDebil);
-        }
-        Item.probDebil += addProbDebil;
+        //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM
+
+        
+
 
     }
 
-    public void anadirDebil(Enemy[] enemyList)
+    public void lessDamageWhenDebil(Enemy e)
     {
-        for (int i = 0; i < enemyList.Length; i++)
+        if (e.isDebil && !aplicadoItem79)
         {
-            int random = Random.Range(1, 101);
-            if (random < Item.probDebil)
-            {
-                Enemy enemyAct = enemyList[i];
-                enemyAct.Debil(Item.durDebil);
-            }
+            e.dmgMultiplicator = 0.5f;
+            aplicadoItem79 = true;
+        } 
+        else if(!e.isDebil && aplicadoItem79)
+        {
+            e.dmgMultiplicator = 1f;
+            aplicadoItem79 = false;
         }
+        
     }
+
     public void OnTriggerEnter2D(Collider2D other)
     {
         // Verificar si el objeto con el que colisionamos es el jugador
@@ -60,5 +61,4 @@ public class Item_67 : Item
             transform.position = new Vector3(10000, 100000, transform.position.z);// Destruir el objeto después de recogerlo
         }
     }
-
 }

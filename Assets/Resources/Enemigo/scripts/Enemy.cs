@@ -21,6 +21,9 @@ public class Enemy : MonoBehaviour
     public float defensa = 1; //Fluctua de 1 a 2. para el jugador mejor mostrarle que el % como tal creo 
     public float multiplicadorDefensa = 1; //Si esto llega a 2 no recibe da�o, si es menor que 1 recibe mas dano
 
+    //Cosas que se han anadido por los items
+    public float dmgMultiplicator = 1f;
+    
     AStar astar;
 
     //Lista de metodos temporales segun estados
@@ -142,7 +145,7 @@ public class Enemy : MonoBehaviour
 
         allowAttack = false;
 
-        float dm = Random.Range(damage[0], damage[1]);
+        float dm = (Random.Range(damage[0], damage[1])) *dmgMultiplicator;
         player.TakeDamage(dm,ang,knockback,gameObject);
     }
     // funciones para el manejo de vida
