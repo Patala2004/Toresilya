@@ -44,6 +44,8 @@ public class Enemy : MonoBehaviour
     // Animaciones
     Coroutine coroutineIndicatorColor;
 
+	protected List<Node> path;
+
     // Start is called before the first frame update
     public void Start()
     {
