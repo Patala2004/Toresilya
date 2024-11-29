@@ -14,6 +14,7 @@ public class Slime : Enemy
         base.Start();
 		jumpTimer = jumpTimerInit;
 		ac = GetComponent<Animator>();
+		EnableAStar();
     }
     new private void FixedUpdate()
     {
