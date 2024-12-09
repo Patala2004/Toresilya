@@ -14,10 +14,14 @@ public class Lobo : Enemy
 	public float timer, timerReset = 1;
 
 	[SerializeField]private bool isJumping;
+
+    // Animacion
+    Animator ani;
     // Start is called before the first frame update
     new void Start()
     {
 		base.Start();
+        ani = GetComponent<Animator>();
     }
 
 	void HandleJump()
@@ -59,6 +63,7 @@ public class Lobo : Enemy
 	void Jump()
     {
         allowAttack = true;
+        ani.SetTrigger("Attacking");
 
         isJumping = true;
         timer = timerReset;
@@ -72,9 +77,13 @@ public class Lobo : Enemy
     {
         Vector2 direction = (player.transform.position - transform.position).normalized;
         rb.velocity = new Vector2(direction.x * displSpeed, direction.y * displSpeed);
+        ani.SetBool("Running", true);
+        ani.SetBool("Idle", false);
     }
 
 	void Idle() {
 		rb.velocity = Vector2.zero;
-	}
+        ani.SetBool("Running", false);
+        ani.SetBool("Idle", true);
+    }
 }

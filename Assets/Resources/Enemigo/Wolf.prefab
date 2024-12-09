@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 4683703552093696882}
   - component: {fileID: 2497783664105118154}
   - component: {fileID: 459127576041441667}
+  - component: {fileID: 4098772828176277999}
   m_Layer: 0
   m_Name: Wolf
   m_TagString: enemy
@@ -77,7 +78,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 04ceb6116145b0b718afc0c2e860ed5b, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3be51f9f5de01714fab4b123e0910115, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -109,6 +110,15 @@ MonoBehaviour:
   - 4
   - 8
   room: {fileID: 0}
+  defensa: 1
+  multiplicadorDefensa: 1
+  dmgMultiplicator: 1
+  paralizedTime: 0
+  isParalized: 0
+  caosTime: 0
+  isCaos: 0
+  debilTime: 0
+  isDebil: 0
   displSpeed: 5
   followDistance: 15
   attackDistance: 4
@@ -175,18 +185,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.2, y: -0.1}
+  m_Offset: {x: -0.2, y: -0.4}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 3.2, y: 1.6}
+    oldSize: {x: 3.125, y: 3.125}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 2.7, y: 1.3}
+  m_Size: {x: 2, y: 1}
   m_EdgeRadius: 0
 --- !u!114 &459127576041441667
 MonoBehaviour:
@@ -204,3 +214,24 @@ MonoBehaviour:
   particulaVel: 8
   particulaDispersion: 40
   particulaUpRig: 0.4
+--- !u!95 &4098772828176277999
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7502524114904027516}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: a7267f889ad044b409f5dc64a5a15fe8, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
