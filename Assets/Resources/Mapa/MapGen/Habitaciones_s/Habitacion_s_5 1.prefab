@@ -47,6 +47,7 @@ MonoBehaviour:
   randomized: 1
   enemies:
   - {fileID: 8484869543311770916, guid: 02ca91e8da018014fb996dee6330102d, type: 3}
+  - {fileID: 7502524114904027516, guid: 2e2d2d39dcdcb804c933693245490923, type: 3}
 --- !u!1 &2332572382667473252
 GameObject:
   m_ObjectHideFlags: 0
@@ -94,6 +95,7 @@ MonoBehaviour:
   randomized: 1
   enemies:
   - {fileID: 8484869543311770916, guid: 02ca91e8da018014fb996dee6330102d, type: 3}
+  - {fileID: 7502524114904027516, guid: 2e2d2d39dcdcb804c933693245490923, type: 3}
 --- !u!1 &4910034570999803102
 GameObject:
   m_ObjectHideFlags: 0
@@ -141,6 +143,7 @@ MonoBehaviour:
   randomized: 1
   enemies:
   - {fileID: 8484869543311770916, guid: 02ca91e8da018014fb996dee6330102d, type: 3}
+  - {fileID: 7502524114904027516, guid: 2e2d2d39dcdcb804c933693245490923, type: 3}
 --- !u!1 &5698045804776944370
 GameObject:
   m_ObjectHideFlags: 0
@@ -227,6 +230,7 @@ MonoBehaviour:
   randomized: 1
   enemies:
   - {fileID: 8484869543311770916, guid: 02ca91e8da018014fb996dee6330102d, type: 3}
+  - {fileID: 7502524114904027516, guid: 2e2d2d39dcdcb804c933693245490923, type: 3}
 --- !u!1001 &3515190353923090583
 PrefabInstance:
   m_ObjectHideFlags: 0
