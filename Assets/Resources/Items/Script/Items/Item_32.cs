@@ -50,6 +50,6 @@ public class Item_32 :Item
         yield return new WaitForSeconds(seconds);
         enCooldown = false;
     }
-    
-    
+  
+
 }

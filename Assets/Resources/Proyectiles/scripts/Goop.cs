@@ -18,7 +18,7 @@ public class Goop : Projectile
     {
         
     }
-    public new void ToDie()
+    public override void ToDie()
     {
         Destroy(gameObject);
     }

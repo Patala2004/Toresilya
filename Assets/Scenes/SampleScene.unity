@@ -710,7 +710,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -472.91, y: 477.98996}
+  m_AnchoredPosition: {x: -464.13983, y: 480}
   m_SizeDelta: {x: 960, y: 120}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &574381750
@@ -849,7 +849,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 6
+  orthographic size: 7
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -937,7 +937,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 1899338861}
-  enemigo: {fileID: -6056455052903951165, guid: 2e2d2d39dcdcb804c933693245490923, type: 3}
+  enemigo: {fileID: 541082040500159832, guid: c9dcc9e7305b66b4b9208feaa7e1b520, type: 3}
 --- !u!114 &694331824
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -960,12 +960,20 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
+      propertyPath: vel
+      value: 6.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: sword
       value: 
       objectReference: {fileID: 1088749462}
     - target: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: health
       value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
+      propertyPath: velWalk
+      value: 6.5
       objectReference: {fileID: 0}
     - target: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: velBlock
@@ -1042,6 +1050,14 @@ PrefabInstance:
     - target: {fileID: 7757474557007384813, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: m_Mass
       value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 7757474557007384813, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
+      propertyPath: m_LinearDrag
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 9147010881120606703, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
+      propertyPath: attackSpeed
+      value: 0.4
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -2230,8 +2246,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -868, y: 476}
-  m_SizeDelta: {x: 661.32, y: 33.82}
+  m_AnchoredPosition: {x: -940.32996, y: 477.15}
+  m_SizeDelta: {x: 742.41, y: 36.12}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1371626665
 MonoBehaviour:
@@ -2595,8 +2611,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -865.9099, y: 359.90927}
-  m_SizeDelta: {x: 368.19, y: 33.878}
+  m_AnchoredPosition: {x: -940.33, y: 359.90927}
+  m_SizeDelta: {x: 442.61, y: 33.88}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!114 &1672831762
 MonoBehaviour:
