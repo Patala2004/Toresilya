@@ -5,6 +5,7 @@ using UnityEngine;
 public class Shop : MonoBehaviour
 {
     [SerializeField] private GameObject[] itemSlots;
+    [SerializeField] private GameObject[] consumableSlots;
 
     private ItemGenerator itemGen;
     // Start is called before the first frame update
@@ -19,6 +20,13 @@ public class Shop : MonoBehaviour
             StoreTile slotScript = item_slot.GetComponent<StoreTile>();
             slotScript.player = player;
             slotScript.SetItem(itemGen.getItem());
+        }
+
+        foreach(GameObject cons_slot in consumableSlots){
+            // Get new Item
+            StoreTile slotScript = cons_slot.GetComponent<StoreTile>();
+            slotScript.player = player;
+            slotScript.SetItem(itemGen.getConsumable());
         }
     }
 
