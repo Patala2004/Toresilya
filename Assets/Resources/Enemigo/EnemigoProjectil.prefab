@@ -200,6 +200,7 @@ MonoBehaviour:
   room: {fileID: 0}
   defensa: 1
   multiplicadorDefensa: 1
+  dmgMultiplicator: 1
   paralizedTime: 0
   isParalized: 0
   caosTime: 0
@@ -207,8 +208,8 @@ MonoBehaviour:
   debilTime: 0
   isDebil: 0
   displSpeed: 5
-  followDistance: 12
-  attackDistance: 6
+  followDistance: 15
+  attackDistance: 10
   jumpForce: 700
   jumpTimerInit: 1.5
   jumpTimer: 0
