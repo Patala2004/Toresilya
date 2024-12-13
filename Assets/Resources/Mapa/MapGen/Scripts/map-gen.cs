@@ -710,7 +710,7 @@ public struct WallCoordinateGetter{
                     wallycoordinates.Add(y + length);
                 }
                 // Paint corridor walls
-                for(int a = 1; a < vertical_corridor_length - 1; a++){
+                for(int a = 1; a < vertical_corridor_length; a++){
                     wallxcoordinates.Add(x + woffset - 1);
                     wallycoordinates.Add(y + length + a);
                     wallxcoordinates.Add(x + woffset + RoomType.CORRIDOR_WIDTH);
@@ -734,7 +734,7 @@ public struct WallCoordinateGetter{
                     wallycoordinates.Add(y + a);                    
                 }
                 // Paint corridor walls
-                for(int a = 1; a < horizontal_corridor_length - 1; a++){
+                for(int a = 1; a < horizontal_corridor_length; a++){
                     wallxcoordinates.Add(x + width + a);
                     wallycoordinates.Add(y + loffset - 1);
                     wallxcoordinates.Add(x + width + a);
@@ -758,7 +758,7 @@ public struct WallCoordinateGetter{
                     wallycoordinates.Add(y - 1);
                 }
                 // Paint corridor walls
-                for(int a = 2; a < vertical_corridor_length; a++){
+                for(int a = 2; a < vertical_corridor_length+1; a++){
                     wallxcoordinates.Add(x + woffset - 1);
                     wallycoordinates.Add(y - a);
                     wallxcoordinates.Add(x + woffset + RoomType.CORRIDOR_WIDTH);
@@ -782,7 +782,7 @@ public struct WallCoordinateGetter{
                     wallycoordinates.Add(y + a);                    
                 }
                 // Paint corridor walls
-                for(int a = 2; a < horizontal_corridor_length; a++){
+                for(int a = 2; a < horizontal_corridor_length+1; a++){
                     wallxcoordinates.Add(x - a);
                     wallycoordinates.Add(y + loffset - 1);
                     wallxcoordinates.Add(x - a);
@@ -1554,15 +1554,15 @@ public static class RoomType{
     // Room sizes
 
     // PLEASE MAKE SURE ROOM-SIZE-4 IS DIVISIBLE BY 2 ( (..._ROOM_(SIZE/WIDTH/LENGTH) - 4 ) % 2 == 0)
-    public const int MAX_ROOM_SIZE = 32;
-    public const int NORMAL_CORRIDOR_LENGTH = 13;
-    public const int LARGE_ROOM_CORRIDOR_LENGTH = 9;
+    public const int MAX_ROOM_SIZE = 30;
+    public const int NORMAL_CORRIDOR_LENGTH = 6;
+    public const int LARGE_ROOM_CORRIDOR_LENGTH = 3;
     public const int CORRIDOR_WIDTH = 4;
     public const int NORMAL_ROOM_WIDTH = 24;
     public const int NORMAL_ROOM_LENGTH = 24;
 
-    public const int LARGE_ROOM_WIDTH = 32;
-    public const int LARGE_ROOM_LENGTH = 32;
+    public const int LARGE_ROOM_WIDTH = 30;
+    public const int LARGE_ROOM_LENGTH = 30;
 }
 
 
