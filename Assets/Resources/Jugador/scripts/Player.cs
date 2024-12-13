@@ -63,8 +63,7 @@ public class Player : MonoBehaviour
     public List<Action> enterRoomMechanics = new List<Action>(); // Funciones que se llaman al entrar a una habitacion
 	// Autoataque
 	public bool autoataque;
-	private bool enrango;
-
+	public bool enrango;
 
     // Start is called before the first frame update
     void Start()
@@ -343,18 +342,4 @@ public class Player : MonoBehaviour
             mechanic.Invoke();
         }
     }
-
-	void OnTriggerEnter2D(Collider2D posene) {
-		
-		if(posene.tag.Equals("enemy")) {
-			Debug.Log("TRIGGEREDDDDDD");
-			enrango = true;
-		}
-	}
-
-	void OnTriggerExit2D(Collider2D posene) {
-		if(posene.tag.Equals("enemy")) {
-			enrango = false;
-		}
-	}
 }
