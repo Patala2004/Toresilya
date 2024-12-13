@@ -61,7 +61,9 @@ public class Player : MonoBehaviour
     public List<Action> defenseTempAddMechanics = new List<Action>();
 
     public List<Action> enterRoomMechanics = new List<Action>(); // Funciones que se llaman al entrar a una habitacion
-
+	// Autoataque
+	public bool autoataque;
+	private bool enrango;
 
 
     // Start is called before the first frame update
@@ -100,6 +102,20 @@ public class Player : MonoBehaviour
             stuned = false;
         }
     }
+
+	private void Attack() {
+
+		StartCoroutine(Attack(sword.attackSpeed));
+		StartCoroutine(AttackAnimation(sword.attackAnimation));
+        
+	}
+
+	private void AutoAttack() {
+		if(autoataque && !blocking && enrango && !attacking && Time.timeScale > 0 && !stuned) {
+			Attack();
+		}
+	}
+
     private void Update()
     {
         //movimiento
@@ -124,12 +140,11 @@ public class Player : MonoBehaviour
         {
             resistance += 5 * Time.deltaTime;
         }
+		AutoAttack();
         //atacar
-        if (Input.GetMouseButtonDown(0) && !attacking && Time.timeScale > 0 && !stuned)
-        {
-            StartCoroutine(Attack(sword.attackSpeed));
-            StartCoroutine(AttackAnimation(sword.attackAnimation));
-        }
+		if (Input.GetMouseButtonDown(0) && !attacking && Time.timeScale > 0 && !stuned) {
+        	Attack();
+		}
         //block
         if (Input.GetMouseButton(1) && !attackingAnimation && resistance != 0 && Time.timeScale > 0 && !stuned) // cuando bloqueas tenemos en cuenta la animacion de ataque no el attack speed
         {
@@ -328,4 +343,18 @@ public class Player : MonoBehaviour
             mechanic.Invoke();
         }
     }
+
+	void OnTriggerEnter2D(Collider2D posene) {
+		
+		if(posene.tag.Equals("enemy")) {
+			Debug.Log("TRIGGEREDDDDDD");
+			enrango = true;
+		}
+	}
+
+	void OnTriggerExit2D(Collider2D posene) {
+		if(posene.tag.Equals("enemy")) {
+			enrango = false;
+		}
+	}
 }
