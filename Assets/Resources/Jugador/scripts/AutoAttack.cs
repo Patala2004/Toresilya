@@ -19,13 +19,13 @@ public class AutoAttack : MonoBehaviour
 
 	void OnTriggerEnter2D(Collider2D collider) {
 		if(collider.tag.Equals("enemy")) {
-			p.enrango = true;
+			p.enrango++;
 		}
 	}
 
 	void OnTriggerExit2D(Collider2D collider) {
 		if(collider.tag.Equals("enemy")) {
-			p.enrango = false;
+			p.enrango--;
 		}
 	}
 }

@@ -63,7 +63,7 @@ public class Player : MonoBehaviour
     public List<Action> enterRoomMechanics = new List<Action>(); // Funciones que se llaman al entrar a una habitacion
 	// Autoataque
 	public bool autoataque;
-	public bool enrango;
+	public int enrango;
 
     // Start is called before the first frame update
     void Start()
@@ -110,7 +110,7 @@ public class Player : MonoBehaviour
 	}
 
 	private void AutoAttack() {
-		if(autoataque && !blocking && enrango && !attacking && Time.timeScale > 0 && !stuned) {
+		if(autoataque && !blocking && enrango > 0 && !attacking && Time.timeScale > 0 && !stuned) {
 			Attack();
 		}
 	}
