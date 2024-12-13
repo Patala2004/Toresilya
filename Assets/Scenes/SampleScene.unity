@@ -537,6 +537,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   items: []
+  consumables: []
 --- !u!4 &540879828
 Transform:
   m_ObjectHideFlags: 0
@@ -984,6 +985,10 @@ PrefabInstance:
       value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
+      propertyPath: autoataque
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 161952172803752721, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       propertyPath: resistance
       value: 10
       objectReference: {fileID: 0}
@@ -1066,6 +1071,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3941905580847453079, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
       insertIndex: 3
       addedObject: {fileID: 1899338867}
+    - targetCorrespondingSourceObject: {fileID: 3941905580847453079, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1899338873}
   m_SourcePrefab: {fileID: 100100000, guid: 8bb482ce55d77bb44b7fb1171755321d, type: 3}
 --- !u!1 &824661746
 GameObject:
@@ -2751,6 +2759,41 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   luz: {fileID: 5335606718005917581, guid: 57568f9b1f427f248ad15e218084031c, type: 3}
   intensity: 1
+--- !u!58 &1899338873
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1580918420}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Radius: 3
 --- !u!1 &1984826776
 GameObject:
   m_ObjectHideFlags: 0
