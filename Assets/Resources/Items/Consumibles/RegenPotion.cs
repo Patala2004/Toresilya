@@ -30,7 +30,7 @@ public class RegenPotion : Item
         int nextSec = (int) duration;
         while(duration > 0f){
             if(nextSec >= duration && Time.deltaTime > 0){
-                player.health += hps;
+                p.health += hps;
                 nextSec = (int) (duration-Time.deltaTime);
             }
             else{
