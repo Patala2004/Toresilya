@@ -64,7 +64,7 @@ public class Sword : MonoBehaviour
                 bool critical = Random.Range(0f, 1f) < (player.statCriticalChance + (enemy.isDebil? Item.debilCritChance : 0)); // vemos si ha habido critico
                 if (critical)
                 {
-                    dam *= player.statCriticalDamage;
+                    dam *= (player.statCriticalDamage+ +(enemy.isDebil ? Item.debilCritDamage : 0));
                     criticallyHitEnemies.Add(enemy);
                 }
 
