@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 
-public class Item_2 : Item
+public class Item_6 : Item
 {
     //Declaramos stats o cosas que modificará el item
 
