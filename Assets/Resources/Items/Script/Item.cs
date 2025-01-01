@@ -13,7 +13,7 @@ public class Item : MonoBehaviour
 
     // Duracion estandar de estados (es compartida)
     // Estado debil
-    public static float durDebil = 2f;
+    public static float durDebil = 20f;
     public static float probDebil = 0f;
     public static float debilDefReductionMult = 0.8f;
     public static float debilCritChance = 0f;
@@ -46,7 +46,8 @@ public class Item : MonoBehaviour
         // Add stats
 
         Debug.Log("El metodo grabItem ha sido llamado para el item " + nombre);
-        transform.position = new Vector3(-10000, 10000, 0); // Mover a a tomar por culo para no tener que destruir
+        transform.position = new Vector3(-10000, 10000, 0); // Mover a a tomar por culo para no tener que destruir 
+        
 
     }
     

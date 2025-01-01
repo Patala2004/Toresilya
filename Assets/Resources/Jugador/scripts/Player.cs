@@ -53,9 +53,9 @@ public class Player : MonoBehaviour
     // Array de funciones de mecánicas 
     public List<Action<Enemy[]>> attackMechanics = new List<Action<Enemy[]>>(); // Ocurren cada ataque (que golpee o no a enemigos, eso lo revisa la función)
     public List<Action<Enemy[]>> criticalAttackMechanics = new List<Action<Enemy[]>>(); // Ocurren cada ataque crítico
-    public List<Action<Enemy>> parryMechanics = new List<Action<Enemy>>();
-    public List<Action<Enemy>> perfectParryMechanics = new List<Action<Enemy>>();
-    public List<Action<Enemy>> takeHealthDamageMechanics = new List<Action<Enemy>>();
+    public List<Action<Enemy>> parryMechanics = new List<Action<Enemy>>();  //Ocurren en cada parry
+    public List<Action<Enemy>> perfectParryMechanics = new List<Action<Enemy>>();  //Ocurren en cada parry perfecto
+    public List<Action<Enemy>> takeHealthDamageMechanics = new List<Action<Enemy>>(); //Ocurren al recibir dano
     //Array de funciones de items
     public List<Action> stunMechanics = new List<Action>();
     public List<Action> defenseTempAddMechanics = new List<Action>();
@@ -302,7 +302,7 @@ public class Player : MonoBehaviour
         {   //Comentado todo lo de defensa por si si
             if (gObject.GetComponent<Enemy>() != null)
             {
-                foreach (Action<Enemy> mechanic in takeHealthDamageMechanics) // Ejecutamos mecanicas de bloqueo
+                foreach (Action<Enemy> mechanic in takeHealthDamageMechanics) // Ejecutamos mecanicas de recivir dano
                 {
                     mechanic.Invoke(gObject.GetComponent<Enemy>());
                 }

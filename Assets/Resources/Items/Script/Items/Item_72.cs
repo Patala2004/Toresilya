@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Xml;
 using UnityEngine;
 
-public class Item_73 : Item
+public class Item_72 : Item
 {
     //Declaramos stats o cosas que modificara el item
-    public bool aplicadoItem73=false;
+    public float addDefense = 0.05f; //Siempre es fija salvo un 0.05 extra si enemigo debil (enemigo hace un 5%  menos de dano)
+    public bool aplicadoItem72 = false;
 
     // Start is called before the first frame update
     void Start()
@@ -14,7 +16,7 @@ public class Item_73 : Item
         player = GameObject.Find("player").GetComponent<Player>();
         descriptionItem = "";
         descripcionRecoger = "";
-        nombre = "Item 73";
+        nombre = "Item 72";
         unique = false;
         rarity = "";
         precio = 0;
@@ -30,24 +32,24 @@ public class Item_73 : Item
     {
         base.grabItem(p);
         //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM
-        p.takeHealthDamageMechanics.Add(lessDamageWhenDebil);
-
+        p.multiplicadorDefensa += addDefense;
+        p.takeHealthDamageMechanics.Add(metodoItem72);
     }
-
-    public void lessDamageWhenDebil(Enemy e)
+    public void metodoItem72(Enemy e)
     {
-        if (e.isDebil && !aplicadoItem73)
+        if (e.isDebil && !aplicadoItem72)
         {
-            e.dmgMultiplicator -= 0.5f;
-            aplicadoItem73 = true;
-        } 
-        else if(!e.isDebil && aplicadoItem73)
-        {
-            e.dmgMultiplicator += 0.5f;
-            aplicadoItem73 = false;
+            e.dmgMultiplicator -= 0.05f;
+            aplicadoItem72 = true;
         }
-        
+        else if (!e.isDebil && aplicadoItem72)
+        {
+            e.dmgMultiplicator += 0.05f;
+            aplicadoItem72 = false;
+        }
     }
+
+
     public void OnTriggerEnter2D(Collider2D other)
     {
         // Verificar si el objeto con el que colisionamos es el jugador
@@ -58,5 +60,4 @@ public class Item_73 : Item
             transform.position = new Vector3(10000, 100000, transform.position.z);// Destruir el objeto después de recogerlo
         }
     }
-
 }
