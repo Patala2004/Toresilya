@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Xml;
 using UnityEngine;
 
-public class Item_52 : Item
+public class Item_56 : Item
 {
     //Declaramos stats o cosas que modificara el item
     public float disminuirVelocidad = 0.2f;
