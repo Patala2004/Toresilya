@@ -14,8 +14,8 @@ public class Item_89 : Item
         //Declaracion del item
         player = GameObject.Find("player").GetComponent<Player>();
         descriptionItem = "";
-        descripcionRecoger = "";
-        nombre = "";
+        descripcionRecoger = "SIIIIIIIIIIIIIIIIIIIIII";
+        nombre = "ITEM 89";
         unique = false;
         rarity = "";
         precio = 0;
@@ -29,7 +29,7 @@ public class Item_89 : Item
 
     public override void grabItem(Player p)
     {
-        base.grabItem(p);
+        base.grabItem2(p, nombre, descripcionRecoger);
         //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM
         Item.debilCritDamage += masCritDamage;
 
