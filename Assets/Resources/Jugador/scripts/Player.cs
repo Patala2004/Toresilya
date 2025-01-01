@@ -94,12 +94,20 @@ public class Player : MonoBehaviour
         {
             stunedTime -= Time.deltaTime;
             stuned = true;
+            
+            
         }
         else if (stunedTime <= 0)
         {
             stunedTime = 0;
             stuned = false;
         }
+
+        foreach (Action mechanic in stunMechanics)
+        {
+            mechanic.Invoke();
+        }
+
     }
 
 	private void Attack() {

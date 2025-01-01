@@ -39,6 +39,7 @@ public class Item_32 :Item
         if (player.stuned && !enCooldown)
         {
             player.stuned = false;
+            player.stunedTime = 0;
             enCooldown = true;
             StartCoroutine(putOnCooldown(cooldown));
         }
@@ -50,6 +51,16 @@ public class Item_32 :Item
         yield return new WaitForSeconds(seconds);
         enCooldown = false;
     }
-  
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        // Verificar si el objeto con el que colisionamos es el jugador
+        if (other.gameObject.CompareTag("player"))
+        {
+            grabItem(player);
+            Debug.Log("TUS MUERTOS");
+            transform.position = new Vector3(10000, 100000, transform.position.z);// Destruir el objeto después de recogerlo
+        }
+    }
 
 }
