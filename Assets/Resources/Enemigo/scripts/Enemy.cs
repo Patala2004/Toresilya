@@ -16,6 +16,9 @@ public class Enemy : MonoBehaviour
     public float knockbackResistance; // 0 sin resistencia 100 con resistencia
     public float[] damage = new float[2];
     public Room room;
+
+    //Anadido para item
+    public float multiplicadorVelocidad = 1f; //Modificar velocidad de los scripts de los bichos para que se basen en un multiplicador de velocidad este asi modificarse.
     
     //Defensa enemigo funciona como player
     public float defensa = 1; //Fluctua de 1 a 2. para el jugador mejor mostrarle que el % como tal creo 
