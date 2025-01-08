@@ -79,12 +79,12 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: -268128105, guid: acd74a1990af5ec4a8f76129d8ca3271, type: 3}
+  m_Sprite: {fileID: -1594344948, guid: d9df985af8caab14583eb2c6efcc682e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 0.32, y: 0.32}
+  m_Size: {x: 4, y: 4}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
@@ -100,7 +100,7 @@ Animator:
   m_GameObject: {fileID: 997465767563590800}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 770814b82924678499f292fd83cddc4e, type: 2}
+  m_Controller: {fileID: 9100000, guid: 42a5b8fed426081439790b50657ff64c, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -120,18 +120,19 @@ MonoBehaviour:
   m_GameObject: {fileID: 997465767563590800}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: daf6b0d698380e44585365c895bebcb1, type: 3}
+  m_Script: {fileID: 11500000, guid: 061cbc5ede80da5479bf61a47879d4b8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   allowAttack: 1
-  health: 200
-  knockback: 30
-  knockbackResistance: 0
+  health: 15
+  knockback: 20
+  knockbackResistance: 30
   damage:
-  - 0
-  - 0
+  - 8
+  - 12
   room: {fileID: 0}
+  multiplicadorVelocidad: 1
   defensa: 1
   multiplicadorDefensa: 1
   dmgMultiplicator: 1
@@ -141,6 +142,10 @@ MonoBehaviour:
   isCaos: 0
   debilTime: 0
   isDebil: 0
+  distanceToPlayer: 0
+  patron: 0
+  stayOnPattern: 0
+  flipX: 0
 --- !u!50 &3863602660175568570
 Rigidbody2D:
   serializedVersion: 4
@@ -204,8 +209,8 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 2, y: 2}
-    newSize: {x: 0.32, y: 0.32}
+    oldSize: {x: 4, y: 4}
+    newSize: {x: 4, y: 4}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
@@ -240,6 +245,7 @@ GameObject:
   - component: {fileID: 2415989882162045322}
   - component: {fileID: 1645067694123700124}
   - component: {fileID: 5281845029429719595}
+  - component: {fileID: 6300853199062281348}
   m_Layer: 0
   m_Name: SwordBoss
   m_TagString: Untagged
@@ -256,7 +262,7 @@ Transform:
   m_GameObject: {fileID: 2208018468529966150}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.7, y: -0.22, z: 0}
+  m_LocalPosition: {x: 0.512, y: -0.353, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -303,7 +309,7 @@ SpriteRenderer:
   m_SortingLayerID: 296492903
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: -1984493997, guid: 8bfab7df5c3c35f449bcd92c26d09ab6, type: 3}
+  m_Sprite: {fileID: 997509037, guid: bfeeea7ef2718664aac9e69f06e72f4e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -324,7 +330,7 @@ Animator:
   m_GameObject: {fileID: 2208018468529966150}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6114e02fe294cf34ebfb47683f545171, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7f3a3c18fbfc877488af1b1ff824be0e, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -335,3 +341,16 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &6300853199062281348
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2208018468529966150}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 00b02000dccb1ee48b578c66e394b6fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  miniBoss: {fileID: 3762634596864311483}

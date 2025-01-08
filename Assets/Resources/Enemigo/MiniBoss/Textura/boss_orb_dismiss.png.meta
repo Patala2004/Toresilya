@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: acd74a1990af5ec4a8f76129d8ca3271
+guid: 515764573bc2e004b98f2d6ca29e65e8
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -93,24 +93,11 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: pixilart-sprite_0
+      name: boss_orb_dismiss_0
       rect:
         serializedVersion: 2
         x: 0
@@ -118,20 +105,20 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a40e44e386f17c347988ebe36aad6f7a
-      internalID: -268128105
+      spriteID: 4a2979e9d03cd6d4a9bb88902a488cac
+      internalID: -1024158671
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pixilart-sprite_1
+      name: boss_orb_dismiss_1
       rect:
         serializedVersion: 2
         x: 32
@@ -139,20 +126,20 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a6ca9ab14f582a646ba50a673e81d504
-      internalID: 1042017771
+      spriteID: 58121bbbc7a01394486e9b57195902ca
+      internalID: 1398411368
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pixilart-sprite_2
+      name: boss_orb_dismiss_2
       rect:
         serializedVersion: 2
         x: 64
@@ -160,20 +147,20 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 07eb16559dbda9a4ab18e9d498ccbf5b
-      internalID: 692549546
+      spriteID: 8c4de22d382a3794c815a7641273afde
+      internalID: -699614234
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: pixilart-sprite_3
+      name: boss_orb_dismiss_3
       rect:
         serializedVersion: 2
         x: 96
@@ -181,14 +168,35 @@ TextureImporter:
         width: 32
         height: 32
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8c460dd0924443945815aa6f5b5202b3
-      internalID: 750755805
+      spriteID: bc0a8c497d24731459d9bf520eeee722
+      internalID: -100916567
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_orb_dismiss_4
+      rect:
+        serializedVersion: 2
+        x: 128
+        y: 0
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6cb8e0991fe236418ed03cf282da87e
+      internalID: -1970785505
       vertices: []
       indices: 
       edges: []
@@ -204,10 +212,11 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      pixilart-sprite_0: -268128105
-      pixilart-sprite_1: 1042017771
-      pixilart-sprite_2: 692549546
-      pixilart-sprite_3: 750755805
+      boss_orb_dismiss_0: -1024158671
+      boss_orb_dismiss_1: 1398411368
+      boss_orb_dismiss_2: -699614234
+      boss_orb_dismiss_3: -100916567
+      boss_orb_dismiss_4: -1970785505
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

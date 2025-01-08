@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8bfab7df5c3c35f449bcd92c26d09ab6
+guid: 30b697c6b3bb1ad4fa0733ba9decbc9a
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}
@@ -93,123 +93,131 @@ TextureImporter:
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
-  - serializedVersion: 3
-    buildTarget: WebGL
-    maxTextureSize: 2048
-    resizeAlgorithm: 0
-    textureFormat: -1
-    textureCompression: 1
-    compressionQuality: 50
-    crunchedCompression: 0
-    allowsAlphaSplitting: 0
-    overridden: 0
-    ignorePlatformSupport: 0
-    androidETC2FallbackOverride: 0
-    forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: swordboss_0
+      name: boss_sword_idle_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ec2b0b933d8c9714d8ac9d9af23b8329
-      internalID: -1984493997
+      spriteID: a2eb4094b9e97964ca6db0778bfc39b9
+      internalID: 1935986061
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: swordboss_1
+      name: boss_sword_idle_1
       rect:
         serializedVersion: 2
         x: 32
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dd3da5da00f7a1745a133bd55b0b902e
-      internalID: -502212363
+      spriteID: 3beec16c635b54d40a1efec3c1733275
+      internalID: 890154293
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: swordboss_2
+      name: boss_sword_idle_2
       rect:
         serializedVersion: 2
         x: 64
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7ed4c13f44e2157488070ae69204c696
-      internalID: -378647658
+      spriteID: 18828acd2f338274f9ea14116853771d
+      internalID: -2123674502
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: swordboss_3
+      name: boss_sword_idle_3
       rect:
         serializedVersion: 2
         x: 96
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8bd76b9552087b347ba74545e4ee9e60
-      internalID: 1593427416
+      spriteID: 4a5e9c88c92783f44aa102e2bb269f18
+      internalID: 1002199207
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: swordboss_4
+      name: boss_sword_idle_4
       rect:
         serializedVersion: 2
         x: 128
         y: 0
         width: 32
         height: 32
-      alignment: 0
-      pivot: {x: 0, y: 0}
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 44db8f7354a32e747b51c2be9de07a67
-      internalID: -1050558949
+      spriteID: 51ee8fed7cc4ec346801e0ca175f2afb
+      internalID: 1908456585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: boss_sword_idle_5
+      rect:
+        serializedVersion: 2
+        x: 160
+        y: 0
+        width: 32
+        height: 32
+      alignment: 9
+      pivot: {x: 0.2, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f642c03354026b24e95100ca678e8a1c
+      internalID: -419637370
       vertices: []
       indices: 
       edges: []
@@ -225,11 +233,12 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      swordboss_0: -1984493997
-      swordboss_1: -502212363
-      swordboss_2: -378647658
-      swordboss_3: 1593427416
-      swordboss_4: -1050558949
+      boss_sword_idle_0: 1935986061
+      boss_sword_idle_1: 890154293
+      boss_sword_idle_2: -2123674502
+      boss_sword_idle_3: 1002199207
+      boss_sword_idle_4: 1908456585
+      boss_sword_idle_5: -419637370
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

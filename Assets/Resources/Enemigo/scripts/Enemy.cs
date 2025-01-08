@@ -180,10 +180,11 @@ public class Enemy : MonoBehaviour
         GetComponent<GenParticulaTexto>().comenzar(tempDamage, ang, color);
     }
     // Manejo sprites
-    public void DoFlipX(SpriteRenderer sR,Vector2 dir) // girar sprite depende de donde mire
+    public bool DoFlipX(SpriteRenderer sR,Vector2 dir) // girar sprite depende de donde mire
     {
         float ang = Mathf.Rad2Deg * (Mathf.Atan2(dir.y, dir.x));
-        sR.flipX = (ang > 90 || ang < -90);
+        bool res = sR.flipX = (ang > 90 || ang < -90);
+        return res;
     }
 
     IEnumerator IColorDamage(float waitseconds,Color color)
