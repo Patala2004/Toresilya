@@ -28,36 +28,27 @@ public class MiniBossSword : MonoBehaviour
         {
             case patterns.idle:
                 SetBoolAnimator("idle");
-                Debug.Log("idle");
-
                 break;
             case patterns.change:
                 SetBoolAnimator("change");
-                Debug.Log("Estoy cambiando de arma");
                 break;
             case patterns.follow:
                 SetBoolAnimator("idle");
-                Debug.Log("Estoy persiguiendote");
                 break;
             case patterns.attack_sword:
                 SetBoolAnimator("swordIdle");
-                Debug.Log("Estoy en espada");
                 break;
             case patterns.attack_charge:
                 SetBoolAnimator("dismiss");
-                Debug.Log("Estoy en carga");
                 break;
             case patterns.attack_shoot_1:
                 SetBoolAnimator("idle");
-                Debug.Log("Estoy en shoot 1");
                 break;
             case patterns.attack_shoot_2:
                 SetBoolAnimator("idle");
-                Debug.Log("Estoy en shoot 2");
                 break;
             case patterns.attack_shoot_especial:
                 SetBoolAnimator("idle");
-                Debug.Log("Estoy en shoot espe");
                 break;
         }
     }

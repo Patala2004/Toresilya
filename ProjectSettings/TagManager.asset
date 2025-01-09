@@ -10,6 +10,7 @@ TagManager:
   - enemy
   - Projectile
   - Escenario
+  - miniboss
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - Coins
   - Water
   - UI
-  - 
-  - 
+  - player
+  - miniboss
   - 
   - 
   - 

@@ -15,7 +15,8 @@ GameObject:
   - component: {fileID: 3863602660175568570}
   - component: {fileID: 691542328151919333}
   - component: {fileID: -329076301644730064}
-  m_Layer: 0
+  - component: {fileID: 2213357270464155856}
+  m_Layer: 7
   m_Name: MiniBoss
   m_TagString: enemy
   m_Icon: {fileID: 0}
@@ -76,8 +77,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -151922055
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_Sprite: {fileID: -1594344948, guid: d9df985af8caab14583eb2c6efcc682e, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -142,10 +143,15 @@ MonoBehaviour:
   isCaos: 0
   debilTime: 0
   isDebil: 0
+  miniBossClone: {fileID: -3250884362387746068, guid: 199e3b649cf93f540ac2af399409da55, type: 3}
   distanceToPlayer: 0
   patron: 0
   stayOnPattern: 0
   flipX: 0
+  displSpeed: 3.5
+  timer: 0
+  timerReset: 1
+  countAttacks: 0
 --- !u!50 &3863602660175568570
 Rigidbody2D:
   serializedVersion: 4
@@ -234,6 +240,19 @@ MonoBehaviour:
   particulaVel: 8
   particulaDispersion: 40
   particulaUpRig: 0.4
+--- !u!114 &2213357270464155856
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 997465767563590800}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4c2724f4bc4505240b40caa97acf031d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  projectile: {fileID: 256563789204644769, guid: 85a66877311eaa5478f51400d054fb14, type: 3}
 --- !u!1 &2208018468529966150
 GameObject:
   m_ObjectHideFlags: 0
