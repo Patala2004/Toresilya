@@ -49,11 +49,16 @@ public class Enemy : MonoBehaviour
 
 	protected List<Node> path;
 
+    // Sonido
+    AudioSource aS;
+    AudioClip audioHurt;
     // Start is called before the first frame update
     public void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.Find("player").GetComponent<Player>();
+        aS = GetComponent<AudioSource>();
+        audioHurt = Resources.Load<AudioClip>("Enemigo/Sound/audioHurtEnemy");
     }
 
 	public void EnableAStar() {
@@ -156,11 +161,13 @@ public class Enemy : MonoBehaviour
     // funciones para el manejo de vida
     public virtual void ToDie()
     {
-        Destroy(this.gameObject); // morir
+        //sonido
+        PlayClip(audioHurt);
 
         if(room != null){
             room.CommunicateEnemyDeath();
         }
+        Destroy(this.gameObject); // morir
     }
 
 	public void ReduceHealth(float damage) {
@@ -168,6 +175,8 @@ public class Enemy : MonoBehaviour
 	}
     public void TakeDamage(float damage,float ang,float attackKnockback, Color color = default)
     {
+        //sonido
+        PlayClip(audioHurt);
         float tempDamage = damage / (defensa * (isDebil? Item.debilDefReductionMult : 1)) ;
         ReduceHealth(tempDamage);
         StartCoroutine(Impulse(player.sword.attackAnimation, ang, attackKnockback));
@@ -229,6 +238,12 @@ public class Enemy : MonoBehaviour
         { // Si ya esta paralizado solo queremos aumentar a la nueva duracion si es mayor a la restante
             debilTime = duration;
         }
+    }
+    //Sonido
+    public void PlayClip(AudioClip audioClip)
+    {
+        aS.clip = audioClip;
+        aS.Play();
     }
 
 }

@@ -151,7 +151,7 @@ public class MiniBoss : Enemy
         {
             int rand = Random.Range(0, 4);
             if (rand == 0) { StartCoroutine(ChangePattern(patterns.attack_shoot_1, 4)); }
-            else if(rand == 1) { StartCoroutine(ChangePattern(patterns.attack_shoot_especial, 3)); ; }
+            else if(rand == 1) { StartCoroutine(ChangePattern(patterns.attack_shoot_especial, 7)); ; }
             else if (rand == 2) {StartCoroutine(ChangePattern(patterns.attack_charge, 6)); }
             else { patron = patterns.attack_sword; stayOnPattern = true; }
         }

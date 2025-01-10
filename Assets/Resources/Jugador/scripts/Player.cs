@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
+using static UnityEditor.Rendering.CameraUI;
 
 public class Player : MonoBehaviour
 {
@@ -64,6 +65,12 @@ public class Player : MonoBehaviour
 	// Autoataque
 	public bool autoataque;
 	public int enrango;
+    // Sonido
+    AudioSource aS;
+    public AudioClip audioParry;
+    public AudioClip audioAttack;
+    public AudioClip audioHurt;
+    public AudioClip audioBlock;
 
     // Start is called before the first frame update
     void Start()
@@ -71,6 +78,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sR = rb.GetComponent<SpriteRenderer>();
         ani = GetComponent<Animator>();
+        aS = ani.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -207,8 +215,12 @@ public class Player : MonoBehaviour
     IEnumerator Attack(float waitseconds) // funcion ataque
     {
         attacking = true;
+        // Sonido
+        PlayClip(audioAttack);
+        // Sword
         sword.Attack();
         Enemy[][] hitData = sword.HitboxPlayer(transform.position, sword.hitboxSize, ang, (mousePos - transform.position).normalized, 1f);
+        // Impulso
         StartCoroutine(Impulse(sword.attackAnimation, ang, sword.recoil)); // calcular el impulso(mejor con el tiempo de la animacion)
         // Llamar a mecánicas de items de ataque
         foreach (Action<Enemy[]> mechanic in attackMechanics)
@@ -261,6 +273,8 @@ public class Player : MonoBehaviour
             // Parry perfecto
             if (parrying && gObject != null) // se hace el parry a un Enemy
             {
+                // Sonido
+                PlayClip(audioParry);
                 // Animaciones
                 GetComponent<GenLight>().GenerateLight(sword.transform.position);
                 // El resto
@@ -287,6 +301,9 @@ public class Player : MonoBehaviour
             // Parry normal
             else if (gObject != null)
             {
+                // sonido
+                PlayClip(audioBlock);
+
                 resistance -= damage;
                 StartCoroutine(Impulse(0.2f, ang, knockback)); // empuje
                 // cooldown de parry
@@ -307,7 +324,11 @@ public class Player : MonoBehaviour
 
         }
         else
-        {   //Comentado todo lo de defensa por si si
+
+        {
+            // sonido
+            PlayClip(audioHurt);
+            //Comentado todo lo de defensa por si si
             if (gObject.GetComponent<Enemy>() != null)
             {
                 foreach (Action<Enemy> mechanic in takeHealthDamageMechanics) // Ejecutamos mecanicas de recivir dano
@@ -350,4 +371,12 @@ public class Player : MonoBehaviour
             mechanic.Invoke();
         }
     }
+
+    // Audio
+    public void PlayClip(AudioClip audioClip)
+    {
+        aS.clip = audioClip;
+        aS.Play();
+    }
+
 }

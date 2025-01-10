@@ -8,6 +8,7 @@ public class Slime : Enemy
     public float persecutionRadius = 5.0f;
 	public float jumpForce = 120f, jumpTimerInit = 1f, jumpTimer;
 	private Animator ac;
+
     // Start is called before the first frame update
     new void Start()
     {
@@ -28,10 +29,7 @@ public class Slime : Enemy
 				rb.AddForce(dir*jumpForce);
                 jumpTimer = jumpTimerInit;
                 allowAttack = true;
-			}
-			else // empieza a saltar
-			{
-                HitboxEnemy(transform.position, transform.localScale, 0, (player.gameObject.transform.position - gameObject.transform.position).normalized, 0, this.damage, this.knockback);
+                StartCoroutine(ControlAtaque(0.2f));
             }
 		} else {
 			ac.SetBool("detectedPlayer", false);
@@ -42,5 +40,15 @@ public class Slime : Enemy
     new void Update()
     {
 		base.Update();
+    }
+    IEnumerator ControlAtaque(float waitseconds)
+    {
+        float elapsedTime = 0;
+        while (elapsedTime < waitseconds)
+        {
+            HitboxEnemy(transform.position, transform.localScale, 0, (player.gameObject.transform.position - gameObject.transform.position).normalized, 0, this.damage, this.knockback);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
     }
 }
