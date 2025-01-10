@@ -11,7 +11,9 @@ GameObject:
   - component: {fileID: 7234342372192615119}
   - component: {fileID: 3204295789388870930}
   - component: {fileID: -7833537593688698582}
-  - component: {fileID: -6991410092392923568}
+  - component: {fileID: 3043998310696945254}
+  - component: {fileID: -6552041985191728971}
+  - component: {fileID: 3591737022633540868}
   m_Layer: 0
   m_Name: ITEM EJEMPLO
   m_TagString: Untagged
@@ -132,7 +134,45 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-6991410092392923568
+--- !u!114 &3043998310696945254
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47358985663487322}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c74716ef3ae7ff34ba10bd7b6669be24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  descriptionItem: 
+  descripcionRecoger: ESTO ES UNA DESCRIPCION BUENA
+  nombre: PRUEBA HOLIWI
+  unique: 0
+  rarity: common
+  precio: 0
+--- !u!114 &-6552041985191728971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 47358985663487322}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4102b74127597264d97b372d2997ec84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  descriptionItem: 
+  descripcionRecoger: ESTO ES UNA DESCRIPCION BUENA
+  nombre: PRUEBA HOLIWI
+  unique: 0
+  rarity: common
+  precio: 0
+--- !u!114 &3591737022633540868
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -141,17 +181,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 47358985663487322}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f5921b976f4794043bff2fe9ae3c5345, type: 3}
+  m_Script: {fileID: 11500000, guid: f4c4e68201d3f4b429db835b1865eb3b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   descriptionItem: 
-  descripcionRecoger: 
-  nombre: 
+  descripcionRecoger: ESTO ES UNA DESCRIPCION BUENA
+  nombre: PRUEBA HOLIWI
   unique: 0
   rarity: common
   precio: 0
-  masCritDamage: 0.15
 --- !u!1 &749775184052525620
 GameObject:
   m_ObjectHideFlags: 0
