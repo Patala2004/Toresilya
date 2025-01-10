@@ -160,7 +160,7 @@ public class MiniBoss : Enemy
             int rand = Random.Range(0, 4);
             if (rand == 0) { StartCoroutine(ChangePattern(patterns.attack_shoot_1, 6)); }
             else if (rand == 1) { StartCoroutine(ChangePattern(patterns.follow, 5)); }
-            else if (rand == 2) { StartCoroutine(ChangePattern(patterns.attack_shoot_especial, 3)); }
+            else if (rand == 2) { StartCoroutine(ChangePattern(patterns.attack_shoot_especial, 7)); }
             else { StartCoroutine(ChangePattern(patterns.attack_shoot_2, 6)); }
         }
         else

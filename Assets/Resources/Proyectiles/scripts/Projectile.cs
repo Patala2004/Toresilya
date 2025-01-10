@@ -7,7 +7,7 @@ using UnityEngine.Rendering;
 public class Projectile : MonoBehaviour
 {
     // Start is called before the first frame update
-    Rigidbody2D rb;
+    public Rigidbody2D rb;
     public Vector2 direction = Vector2.left;
     public Vector2 hitboxSixe = new(1,1);
     public float[] damage = {2,3};
