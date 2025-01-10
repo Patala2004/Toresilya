@@ -128,6 +128,7 @@ MonoBehaviour:
   attackForce: 6
   timer: 0
   timerReset: 1.5
+  tipoGoblin: hacha
 --- !u!50 &5830796725177033867
 Rigidbody2D:
   serializedVersion: 4

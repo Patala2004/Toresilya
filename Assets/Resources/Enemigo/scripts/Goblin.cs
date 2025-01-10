@@ -12,7 +12,7 @@ public class Goblin : Enemy
 
 	public float timer, timerReset = 1;
 
-
+    public string tipoGoblin;
 
     // Animacion
     Animator ani;
@@ -39,10 +39,6 @@ public class Goblin : Enemy
 		float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
         //Timers
         timer -= Time.deltaTime;
-        if(displTemp < displSpeed)
-        {
-            displTemp += Time.deltaTime * displSpeed/2;
-        }
 
         if (distanceToPlayer <= attackDistance) {
             Jump();
@@ -64,7 +60,11 @@ public class Goblin : Enemy
             HitboxEnemy(transform.position, new(1, 2), Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x), dir, 1, this.damage, this.knockback);
             rb.AddForce(dir * attackForce, ForceMode2D.Impulse);
             timer = timerReset;
-            displTemp = 0;
+            if(tipoGoblin == "espada")
+            {
+                StartCoroutine(RecoilAttack(0.6f));
+            }
+            else { StartCoroutine(RecoilAttack(1)); }
         }
     }
 
@@ -81,5 +81,10 @@ public class Goblin : Enemy
         ani.SetBool("Running", false);
         ani.SetBool("Idle", true);
     }
-
+    IEnumerator RecoilAttack(float waitseconds)
+    {
+        displTemp = 0;
+        yield return new WaitForSeconds(waitseconds);
+        displTemp = displSpeed;
+    }
 }
