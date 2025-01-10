@@ -150,5 +150,5 @@ MonoBehaviour:
   nombre: 
   unique: 0
   rarity: common
-  precio: 0
+  precio: 33
   addDamage: 0.2

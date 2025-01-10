@@ -52,7 +52,7 @@ public class StoreTile : MonoBehaviour
         if(other.gameObject.name != "player" || itemHasBeenGrabbed) return;
 
         itemDescription.enabled = true;
-        entered = true;        
+        entered = true;         
     }
 
     public void OnTriggerExit2D(Collider2D other){
@@ -67,6 +67,7 @@ public class StoreTile : MonoBehaviour
         newItem.transform.localPosition = new Vector2(0,0);
         item = newItem.GetComponent<Item>();
         precio = UnityEngine.Random.Range(20,45);
+        precio = item.precio;
         priceTag.text = precio.ToString();
         itemDescription.text = "Press [E] to grab" + '\n' +  item.descriptionItem;
     }
