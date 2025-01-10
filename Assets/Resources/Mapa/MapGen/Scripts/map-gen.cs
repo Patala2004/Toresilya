@@ -541,20 +541,88 @@ public struct RoomTypeGetter{
         this.starty = starty;
         this.endx = endx;
         this.endy = endy;
-        getRoomTypes(); // So the same struct can be used in many Jobs
+        //getRoomTypes(); // So the same struct can be used in many Jobs // Mejor que haya que llamar al Execute
     }
 
     
 
     // Using rand calculate the room Types
     public void getRoomTypes(){
+        int index = 0;
+        NativeArray<int> result = new NativeArray<int>(allNodes.Length, Allocator.Temp);
+        NativeList<int> tempList1 = new NativeList<int>(Allocator.Temp); // Level 1 of temp lists
+        int num1 = 0;
+        NativeList<int> tempList2 = new NativeList<int>(Allocator.Temp); // Level 2 of temp lists
+        int num2 = 0;
+        NativeList<int> tempList3 = new NativeList<int>(Allocator.Temp); // Level 3 of temp list
+        int num3 = 0;
+        int firstEnemyx = -1;
+        int firstEnemyy = -1;
+        int seccondEnemyx = -1;
+        int seccondEnemyy = -1;
+
+        // Buscar vecinos de inicial y de final para hacer que la primera y ultima sala sean de enemigos
+        foreach(NodeStruct node in allNodes){
+            if(node.x == startx && node.y == starty){
+                // Search for adjacent room to be first enemy room
+                if(node.north){
+                    firstEnemyx = node.x;
+                    firstEnemyy = node.y+1;
+                }
+                else if(node.south){
+                    firstEnemyx = node.x;
+                    firstEnemyy = node.y-1;
+                }
+                else if(node.east){
+                    firstEnemyx = node.x+1;
+                    firstEnemyy = node.y;
+                }else{
+                    firstEnemyx = node.x-1;
+                    firstEnemyy = node.y;
+                }
+            }
+            else if(node.x == endx && node.y == endy){
+                // Search for adjacent room to be first enemy room
+                if(node.north){
+                    seccondEnemyx = node.x;
+                    seccondEnemyy = node.y+1;
+                }
+                else if(node.south){
+                    seccondEnemyx = node.x;
+                    seccondEnemyy = node.y-1;
+                }
+                else if(node.east){
+                    seccondEnemyx = node.x+1;
+                    seccondEnemyy = node.y;
+                }else{
+                    seccondEnemyx = node.x-1;
+                    seccondEnemyy = node.y;
+                }                
+            }
+        }
+        int nTiendas = 1;
+        int nCuraciones = rand.NextInt(0,2); // 2 es exclusivo -> rand 50-50 entre 0 y 1
+        int nCofres = 0;
+        int chanceNCofres = rand.NextInt(0,76);
+        if(chanceNCofres < 25){
+            nCofres = 1;
+        }        
+        else if(chanceNCofres < 50){
+            nCofres = 2;
+        }
+        else if(chanceNCofres < 75){
+            nCofres = 3;
+        }
+        int nEnemigos = allNodes.Length - 4 - nCofres - nTiendas - nCuraciones; // 4 por sala de inicio, final y las dos salas de enemigos que se ponen siempre (primera y ultima sala)
         foreach(NodeStruct node in allNodes){
             // Check if node is start or endnode
             if(node.x == startx && node.y == starty){
-                roomType.Add(RoomType.START_ROOM_CODE);
+                //roomType.Add(RoomType.START_ROOM_CODE);
+                result[index] = RoomType.START_ROOM_CODE;  
             }
             else if(node.x == endx && node.y == endy){
-                roomType.Add(RoomType.END_ROOM_CODE);
+                //roomType.Add(RoomType.END_ROOM_CODE);
+                result[index] = RoomType.END_ROOM_CODE;
             }
             else{
                 // Generate random room Type
@@ -563,30 +631,269 @@ public struct RoomTypeGetter{
                 // chest room = 15%
                 // store room = 10%
                 // healing room = 5%
-                int roomRandNum = rand.NextInt(0,101); // random value between 0 and 100
-                if(roomRandNum < 40){ // Normal enemy room
-                    roomType.Add(RoomType.NORMAL_ENEMY_ROOM_CODE);
+
+                //int roomRandNum = rand.NextInt(0,101); // random value between 0 and 100
+                if(node.x == firstEnemyx && node.y == firstEnemyy){
+                    // SE ENCARGA DE QUE LA PRIMERA SALA SIEMPRE SEA DE ENEMIGOS
+                    int randint = rand.NextInt(0,101);
+                    if(randint < 60){
+                        //roomType.Add(RoomType.NORMAL_ENEMY_ROOM_CODE);
+                        result[index] = RoomType.NORMAL_ENEMY_ROOM_CODE;
+                    }
+                    else if(randint < 80){
+                        //roomType.Add(RoomType.LARGE_ENEMY_ROOM_CODE);
+                        result[index] = RoomType.STRECHED_ENEMY_ROOM_H_CODE;
+                    }
+                    else{
+                        //roomType.Add(RoomType.LARGE_ROOM_WIDTH);
+                        result[index] = RoomType.STRECHED_ENEMY_ROOM_V_CODE;
+                    }
+                } // SE ENCARGA DE QUE LA ULTIMA SALA SIEMPRE SEA DE ENEMIGOS
+                else if(node.x == seccondEnemyx && node.y == seccondEnemyy){
+                    int randint = rand.NextInt(0,101);
+                    if(randint < 60){
+                        //roomType.Add(RoomType.NORMAL_ENEMY_ROOM_CODE);
+                        result[index] = RoomType.NORMAL_ENEMY_ROOM_CODE;
+                    }
+                    else if(randint < 80){
+                        //roomType.Add(RoomType.LARGE_ENEMY_ROOM_CODE);
+                        result[index] = RoomType.STRECHED_ENEMY_ROOM_H_CODE;
+                    }
+                    else{
+                        //roomType.Add(RoomType.LARGE_ROOM_WIDTH);
+                        result[index] = RoomType.STRECHED_ENEMY_ROOM_V_CODE;
+                    }
                 }
-                else if(roomRandNum < 50){
-                    roomType.Add(RoomType.LARGE_ENEMY_ROOM_CODE);
+                else{
+                    tempList1.Add(index);
+                    // if(roomRandNum < 40){ // Normal enemy room
+                    //     //roomType.Add(RoomType.NORMAL_ENEMY_ROOM_CODE);
+                    //     result[index] = RoomType.NORMAL_ENEMY_ROOM_CODE;
+                    // }
+                    // else if(roomRandNum < 50){
+                    //     //roomType.Add(RoomType.LARGE_ENEMY_ROOM_CODE);
+                    //     result[index] = RoomType.LARGE_ENEMY_ROOM_CODE;
+                    // }
+                    // else if(roomRandNum < 60){
+                    //     //roomType.Add(RoomType.STRECHED_ENEMY_ROOM_H_CODE);
+                    //     result[index] = RoomType.STRECHED_ENEMY_ROOM_H_CODE;
+                    // }
+                    // else if(roomRandNum < 70){
+                    //     //roomType.Add(RoomType.STRECHED_ENEMY_ROOM_V_CODE);
+                    //     result[index] = RoomType.STRECHED_ENEMY_ROOM_V_CODE;
+                    // }
+                    // else if(roomRandNum < 85){
+                    //     //roomType.Add(RoomType.CHEST_ROOM_CODE);
+                    //     result[index] = RoomType.CHEST_ROOM_CODE;
+                    // }
+                    // else if(roomRandNum < 95){
+                    //     //roomType.Add(RoomType.STORE_ROOM_CODE);
+                    //     result[index] = RoomType.STORE_ROOM_CODE;
+                    // }
+                    // else if(roomRandNum <= 100){
+                    //     //roomType.Add(RoomType.HEALING_ROOM_CODE);
+                    //     result[index] = RoomType.HEALING_ROOM_CODE;
+                    // }
                 }
-                else if(roomRandNum < 60){
-                    roomType.Add(RoomType.STRECHED_ENEMY_ROOM_H_CODE);
+            }
+            index++;
+            num1++;
+        }
+        
+        // Poner tienda
+        for(; nTiendas > 0; nTiendas--){
+            NativeList<int> usedList;
+            if(tempList1.Length == 0 && tempList2.Length == 0){
+                usedList = tempList3;
+            }
+            else if(tempList1.Length == 0){
+                usedList = tempList2;
+            }
+            else{
+                usedList = tempList1;
+            }
+            int i = rand.NextInt(0,usedList.Length);
+            int roomIndex = usedList[i];
+            result[roomIndex] = RoomType.STORE_ROOM_CODE;
+            usedList.RemoveAt(i);
+            
+            // recorrer tempLists y quitar vecinos
+
+            // Si ya esta vacia la lista 1 mirar la lista 2 (si no quedan salas sin vecinos especiales mirar salas con solo 1 vecino especial)
+            for(i = 0; i < tempList2.Length;){
+                if((allNodes[roomIndex].north && allNodes[tempList2[i]].x == allNodes[roomIndex].x && allNodes[tempList2[i]].y == allNodes[roomIndex].y+1)||
+                (allNodes[roomIndex].south && allNodes[tempList2[i]].x == allNodes[roomIndex].x && allNodes[tempList2[i]].y == allNodes[roomIndex].y-1)||
+                (allNodes[roomIndex].east && allNodes[tempList2[i]].x == allNodes[roomIndex].x+1 && allNodes[tempList2[i]].y == allNodes[roomIndex].y)||
+                (allNodes[roomIndex].west && allNodes[tempList2[i]].x == allNodes[roomIndex].x-1 && allNodes[tempList2[i]].y == allNodes[roomIndex].y)){
+                    tempList3.Add(tempList2[i]);
+                    tempList2.RemoveAt(i);
                 }
-                else if(roomRandNum < 70){
-                    roomType.Add(RoomType.STRECHED_ENEMY_ROOM_V_CODE);
+                else{
+                    i++;
                 }
-                else if(roomRandNum < 85){
-                    roomType.Add(RoomType.CHEST_ROOM_CODE);
+            }
+            for(i = 0; i < tempList1.Length;){
+                if((allNodes[roomIndex].north && allNodes[tempList1[i]].x == allNodes[roomIndex].x && allNodes[tempList1[i]].y == allNodes[roomIndex].y+1)||
+                (allNodes[roomIndex].south && allNodes[tempList1[i]].x == allNodes[roomIndex].x && allNodes[tempList1[i]].y == allNodes[roomIndex].y-1)||
+                (allNodes[roomIndex].east && allNodes[tempList1[i]].x == allNodes[roomIndex].x+1 && allNodes[tempList1[i]].y == allNodes[roomIndex].y)||
+                (allNodes[roomIndex].west && allNodes[tempList1[i]].x == allNodes[roomIndex].x-1 && allNodes[tempList1[i]].y == allNodes[roomIndex].y)){
+                    tempList2.Add(tempList1[i]);
+                    tempList1.RemoveAt(i);
                 }
-                else if(roomRandNum < 95){
-                    roomType.Add(RoomType.STORE_ROOM_CODE);
-                }
-                else if(roomRandNum <= 100){
-                    roomType.Add(RoomType.HEALING_ROOM_CODE);
+                else{
+                    i++;
                 }
             }
         }
+
+        for(; nCuraciones > 0; nCuraciones--){
+            NativeList<int> usedList;
+            if(tempList1.Length == 0 && tempList2.Length == 0){
+                usedList = tempList3;
+            }
+            else if(tempList1.Length == 0){
+                usedList = tempList2;
+            }
+            else{
+                usedList = tempList1;
+            }
+            int i = rand.NextInt(0,usedList.Length);
+            int roomIndex = usedList[i];
+            result[roomIndex] = RoomType.HEALING_ROOM_CODE;
+            usedList.RemoveAt(i);
+            
+            // recorrer tempLists y quitar vecinos
+
+            // Si ya esta vacia la lista 1 mirar la lista 2 (si no quedan salas sin vecinos especiales mirar salas con solo 1 vecino especial)
+            for(i = 0; i < tempList2.Length;){
+                if((allNodes[roomIndex].north && allNodes[tempList2[i]].x == allNodes[roomIndex].x && allNodes[tempList2[i]].y == allNodes[roomIndex].y+1)||
+                (allNodes[roomIndex].south && allNodes[tempList2[i]].x == allNodes[roomIndex].x && allNodes[tempList2[i]].y == allNodes[roomIndex].y-1)||
+                (allNodes[roomIndex].east && allNodes[tempList2[i]].x == allNodes[roomIndex].x+1 && allNodes[tempList2[i]].y == allNodes[roomIndex].y)||
+                (allNodes[roomIndex].west && allNodes[tempList2[i]].x == allNodes[roomIndex].x-1 && allNodes[tempList2[i]].y == allNodes[roomIndex].y)){
+                    tempList3.Add(tempList2[i]);
+                    tempList2.RemoveAt(i);
+                }
+                else{
+                    i++;
+                }
+            }
+            for(i = 0; i < tempList1.Length;){
+                if((allNodes[roomIndex].north && allNodes[tempList1[i]].x == allNodes[roomIndex].x && allNodes[tempList1[i]].y == allNodes[roomIndex].y+1)||
+                (allNodes[roomIndex].south && allNodes[tempList1[i]].x == allNodes[roomIndex].x && allNodes[tempList1[i]].y == allNodes[roomIndex].y-1)||
+                (allNodes[roomIndex].east && allNodes[tempList1[i]].x == allNodes[roomIndex].x+1 && allNodes[tempList1[i]].y == allNodes[roomIndex].y)||
+                (allNodes[roomIndex].west && allNodes[tempList1[i]].x == allNodes[roomIndex].x-1 && allNodes[tempList1[i]].y == allNodes[roomIndex].y)){
+                    tempList2.Add(tempList1[i]);
+                    tempList1.RemoveAt(i);
+                }
+                else{
+                    i++;
+                }
+            }
+        }
+        for(; nCofres > 0; nCofres--){
+            NativeList<int> usedList;
+            if(tempList1.Length == 0 && tempList2.Length == 0){
+                usedList = tempList3;
+            }
+            else if(tempList1.Length == 0){
+                usedList = tempList2;
+            }
+            else{
+                usedList = tempList1;
+            }
+            int i = rand.NextInt(0,usedList.Length);
+            int roomIndex = usedList[i];
+            result[roomIndex] = RoomType.CHEST_ROOM_CODE;
+            usedList.RemoveAt(i);
+            
+            // recorrer tempLists y quitar vecinos
+
+            // Si ya esta vacia la lista 1 mirar la lista 2 (si no quedan salas sin vecinos especiales mirar salas con solo 1 vecino especial)
+            for(i = 0; i < tempList2.Length;){
+                if((allNodes[roomIndex].north && allNodes[tempList2[i]].x == allNodes[roomIndex].x && allNodes[tempList2[i]].y == allNodes[roomIndex].y+1)||
+                (allNodes[roomIndex].south && allNodes[tempList2[i]].x == allNodes[roomIndex].x && allNodes[tempList2[i]].y == allNodes[roomIndex].y-1)||
+                (allNodes[roomIndex].east && allNodes[tempList2[i]].x == allNodes[roomIndex].x+1 && allNodes[tempList2[i]].y == allNodes[roomIndex].y)||
+                (allNodes[roomIndex].west && allNodes[tempList2[i]].x == allNodes[roomIndex].x-1 && allNodes[tempList2[i]].y == allNodes[roomIndex].y)){
+                    tempList3.Add(tempList2[i]);
+                    tempList2.RemoveAt(i);
+                }
+                else{
+                    i++;
+                }
+            }
+            for(i = 0; i < tempList1.Length;){
+                if((allNodes[roomIndex].north && allNodes[tempList1[i]].x == allNodes[roomIndex].x && allNodes[tempList1[i]].y == allNodes[roomIndex].y+1)||
+                (allNodes[roomIndex].south && allNodes[tempList1[i]].x == allNodes[roomIndex].x && allNodes[tempList1[i]].y == allNodes[roomIndex].y-1)||
+                (allNodes[roomIndex].east && allNodes[tempList1[i]].x == allNodes[roomIndex].x+1 && allNodes[tempList1[i]].y == allNodes[roomIndex].y)||
+                (allNodes[roomIndex].west && allNodes[tempList1[i]].x == allNodes[roomIndex].x-1 && allNodes[tempList1[i]].y == allNodes[roomIndex].y)){
+                    tempList2.Add(tempList1[i]);
+                    tempList1.RemoveAt(i);
+                }
+                else{
+                    i++;
+                }
+            }
+        }
+        for(int i = 0; i < tempList1.Length; i++){
+            // tempList1 es una lista de indexes
+
+            // ZUMO HA DICHO QUE NOS FUMAMOS LAS SALAS GRANDES CUADRADAS --> SOLO RECTANGULARES PUEDEN APARECER
+            int roomCode;
+            int probRoomCode = rand.NextInt(0,101);
+            if(probRoomCode < 50){
+                roomCode = RoomType.NORMAL_ENEMY_ROOM_CODE;
+            }
+            else if(probRoomCode < 75){
+                roomCode = RoomType.STRECHED_ENEMY_ROOM_H_CODE;
+            }
+            else{
+                roomCode = RoomType.STRECHED_ENEMY_ROOM_V_CODE;
+            }
+            result[tempList1[i]] = roomCode;
+            tempList1.RemoveAt(i);
+            i--;
+        }
+        for(int i = 0; i < tempList2.Length; i++){
+            // tempList1 es una lista de indexes
+            int roomCode;
+            int probRoomCode = rand.NextInt(0,101);
+            if(probRoomCode < 50){
+                roomCode = RoomType.NORMAL_ENEMY_ROOM_CODE;
+            }
+            else if(probRoomCode < 75){
+                roomCode = RoomType.STRECHED_ENEMY_ROOM_H_CODE;
+            }
+            else{
+                roomCode = RoomType.STRECHED_ENEMY_ROOM_V_CODE;
+            }
+            result[tempList2[i]] = roomCode;
+            tempList2.RemoveAt(i);
+            i--;
+        }
+        for(int i = 0; i < tempList3.Length; i++){
+            // tempList1 es una lista de indexes
+            int roomCode;
+            int probRoomCode = rand.NextInt(0,101);
+            if(probRoomCode < 50){
+                roomCode = RoomType.NORMAL_ENEMY_ROOM_CODE;
+            }
+            else if(probRoomCode < 75){
+                roomCode = RoomType.STRECHED_ENEMY_ROOM_H_CODE;
+            }
+            else{
+                roomCode = RoomType.STRECHED_ENEMY_ROOM_V_CODE;
+            }
+            result[tempList3[i]] = roomCode;
+            tempList3.RemoveAt(i);
+            i--;
+        }
+        foreach(int code in result){
+            roomType.Add(code);
+        }
+        result.Dispose();
+        tempList1.Dispose();
+        tempList2.Dispose();
+        tempList3.Dispose();
     }
 }
 
@@ -1013,7 +1320,13 @@ public class RoomCreator{
                 GameObject prefab = GameObject.Instantiate(Resources.Load<GameObject>("Mapa/MapGen/Prefabs/EndRoom_1"));
                 prefab.transform.parent = newRoom.transform; // Set as child            
                 prefab.transform.localPosition = new Vector3(0,0,0);  
-            }else if (roomType[i] == RoomType.NORMAL_ENEMY_ROOM_CODE)
+            }
+            else if(roomType[i] == RoomType.HEALING_ROOM_CODE){
+                GameObject prefab = GameObject.Instantiate(Resources.Load<GameObject>("Mapa/MapGen/Prefabs/HealingRoom_1"));
+                prefab.transform.parent = newRoom.transform; // Set as child            
+                prefab.transform.localPosition = new Vector3(0,0,0);  
+            }
+            else if (roomType[i] == RoomType.NORMAL_ENEMY_ROOM_CODE)
             {
                 GameObject[] prefabHabitaciones = Resources.LoadAll<GameObject>("Mapa/MapGen/Habitaciones_s");
                 GameObject prefab = GameObject.Instantiate(prefabHabitaciones[(int)UnityEngine.Random.Range(0,prefabHabitaciones.Length)]);
