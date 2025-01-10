@@ -14,6 +14,7 @@ public class Item_1 : Item
     {
         player = GameObject.Find("player").GetComponent<Player>();
         this.descriptionItem = "Lanza un rayo cuando atacas a un enemigo";
+        this.precio = 33;
     }
 
     // Update is called once per frame
