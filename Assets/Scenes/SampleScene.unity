@@ -2144,8 +2144,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 012da888ccb10c14b9df2585847915bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  floorTile: {fileID: 11400000, guid: a2a597d78bf200f48aeced89bda86f33, type: 2}
-  corridorTile: {fileID: 11400000, guid: 6f825c43646150544b8eaecb03f40aac, type: 2}
+  floorTile:
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: b01e0138583a612409bb16dc3f082256, type: 2}
+  - {fileID: 11400000, guid: cbdf6c11e22007e439bb90d72a465a88, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  corridorTile:
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: b01e0138583a612409bb16dc3f082256, type: 2}
+  - {fileID: 11400000, guid: cbdf6c11e22007e439bb90d72a465a88, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
+  - {fileID: 11400000, guid: fb322f4f716cb704babfbbf7c9f0983a, type: 2}
   wallTile: {fileID: 11400000, guid: 0894a9b26aa3a674ab2ea6c4c9ad9f3f, type: 2}
   doorTile: {fileID: 11400000, guid: 0894a9b26aa3a674ab2ea6c4c9ad9f3f, type: 2}
   floorMap: {fileID: 430523385}
