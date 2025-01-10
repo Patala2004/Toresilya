@@ -1,17 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
-public class RegenPotion : Item
+public class HealingRoom : MonoBehaviour
 {
 
-    protected int hps; // healing per seccond
-    protected float duration; // Duration of regen buff
+    private float duration = 5f;
+    private float hps;
+
+    private bool entered = false;
 
     // Start is called before the first frame update
-    public virtual void Start()
+    void Start()
     {
-        descriptionItem = "Cura " + hps + " vida por segundo durante " + duration + " segundos";
+        
     }
 
     // Update is called once per frame
@@ -20,11 +23,14 @@ public class RegenPotion : Item
         
     }
 
-    public override void grabItem(Player p)
-    {
-        Debug.Log(p.gameObject);
-        StartCoroutine(Regen(p));
+    void OnTriggerEnter2D(Collider2D other){
+        if(other.gameObject.tag == "player" && !entered){
+            hps = ((float)(other.gameObject.GetComponent<Player>().healthMax - other.gameObject.GetComponent<Player>().health))/duration;
+            StartCoroutine(Regen(other.gameObject.GetComponent<Player>()));
+            entered = true;
+        }
     }
+
 
     public IEnumerator Regen(Player p){
         int nextSec = (int) duration;

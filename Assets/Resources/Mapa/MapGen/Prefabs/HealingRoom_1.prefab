@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2550994326883809391}
-  - component: {fileID: 3286871132414364118}
+  - component: {fileID: 813406294123894336}
   - component: {fileID: 695343165419952752}
   m_Layer: 0
   m_Name: HealingRoom_1
@@ -35,7 +35,7 @@ Transform:
   - {fileID: 7870212475781979525}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3286871132414364118
+--- !u!114 &813406294123894336
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -44,12 +44,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 46791193206815031}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 515d30835463ff540ac54850ccb99611, type: 3}
+  m_Script: {fileID: 11500000, guid: 66f84de2e028c73449d3fcfbc549ab2f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 6
-  BoxSprite: {fileID: 2596318599625921396}
-  itemHolder: {fileID: 6628607982360815034}
 --- !u!61 &695343165419952752
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -79,7 +76,7 @@ BoxCollider2D:
   m_CallbackLayers:
     serializedVersion: 2
     m_Bits: 4294967295
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -266,7 +263,6 @@ GameObject:
   m_Component:
   - component: {fileID: 7870212475781979525}
   - component: {fileID: 7945964506000644129}
-  - component: {fileID: 917085867782802561}
   - component: {fileID: 1505554305052212047}
   m_Layer: 0
   m_Name: Area Curacion
@@ -363,20 +359,6 @@ CompositeCollider2D:
   m_OffsetDistance: 0.00005
   m_UseDelaunayMesh: 0
   m_CompositeGameObject: {fileID: 6628607982360815034}
---- !u!114 &917085867782802561
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6628607982360815034}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2cc58ef89fd82c141b83223aa305e9ee, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  item: {fileID: 0}
-  text: {fileID: 0}
 --- !u!50 &1505554305052212047
 Rigidbody2D:
   serializedVersion: 4
