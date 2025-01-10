@@ -551,11 +551,8 @@ public struct RoomTypeGetter{
         int index = 0;
         NativeArray<int> result = new NativeArray<int>(allNodes.Length, Allocator.Temp);
         NativeList<int> tempList1 = new NativeList<int>(Allocator.Temp); // Level 1 of temp lists
-        int num1 = 0;
         NativeList<int> tempList2 = new NativeList<int>(Allocator.Temp); // Level 2 of temp lists
-        int num2 = 0;
         NativeList<int> tempList3 = new NativeList<int>(Allocator.Temp); // Level 3 of temp list
-        int num3 = 0;
         int firstEnemyx = -1;
         int firstEnemyy = -1;
         int seccondEnemyx = -1;
@@ -617,87 +614,44 @@ public struct RoomTypeGetter{
         foreach(NodeStruct node in allNodes){
             // Check if node is start or endnode
             if(node.x == startx && node.y == starty){
-                //roomType.Add(RoomType.START_ROOM_CODE);
                 result[index] = RoomType.START_ROOM_CODE;  
             }
             else if(node.x == endx && node.y == endy){
-                //roomType.Add(RoomType.END_ROOM_CODE);
                 result[index] = RoomType.END_ROOM_CODE;
             }
             else{
-                // Generate random room Type
-                // Room types -> Enemy Room, Large Enemy Room, Streched Enemy Room H, Streched Enemy Room V, Chest room, store room, healing room
-                // Enemy Room -> 70% -> Normal = 40%, large = 10%, streched h = 10%, streched v = 10%
-                // chest room = 15%
-                // store room = 10%
-                // healing room = 5%
-
                 //int roomRandNum = rand.NextInt(0,101); // random value between 0 and 100
                 if(node.x == firstEnemyx && node.y == firstEnemyy){
                     // SE ENCARGA DE QUE LA PRIMERA SALA SIEMPRE SEA DE ENEMIGOS
                     int randint = rand.NextInt(0,101);
                     if(randint < 60){
-                        //roomType.Add(RoomType.NORMAL_ENEMY_ROOM_CODE);
                         result[index] = RoomType.NORMAL_ENEMY_ROOM_CODE;
                     }
-                    else if(randint < 80){
-                        //roomType.Add(RoomType.LARGE_ENEMY_ROOM_CODE);
+                    else if(randint < 80){;
                         result[index] = RoomType.STRECHED_ENEMY_ROOM_H_CODE;
                     }
                     else{
-                        //roomType.Add(RoomType.LARGE_ROOM_WIDTH);
                         result[index] = RoomType.STRECHED_ENEMY_ROOM_V_CODE;
                     }
-                } // SE ENCARGA DE QUE LA ULTIMA SALA SIEMPRE SEA DE ENEMIGOS
+                }
                 else if(node.x == seccondEnemyx && node.y == seccondEnemyy){
+                    // SE ENCARGA DE QUE LA ULTIMA SALA SIEMPRE SEA DE ENEMIGOS
                     int randint = rand.NextInt(0,101);
                     if(randint < 60){
-                        //roomType.Add(RoomType.NORMAL_ENEMY_ROOM_CODE);
                         result[index] = RoomType.NORMAL_ENEMY_ROOM_CODE;
                     }
                     else if(randint < 80){
-                        //roomType.Add(RoomType.LARGE_ENEMY_ROOM_CODE);
                         result[index] = RoomType.STRECHED_ENEMY_ROOM_H_CODE;
                     }
                     else{
-                        //roomType.Add(RoomType.LARGE_ROOM_WIDTH);
                         result[index] = RoomType.STRECHED_ENEMY_ROOM_V_CODE;
                     }
                 }
                 else{
                     tempList1.Add(index);
-                    // if(roomRandNum < 40){ // Normal enemy room
-                    //     //roomType.Add(RoomType.NORMAL_ENEMY_ROOM_CODE);
-                    //     result[index] = RoomType.NORMAL_ENEMY_ROOM_CODE;
-                    // }
-                    // else if(roomRandNum < 50){
-                    //     //roomType.Add(RoomType.LARGE_ENEMY_ROOM_CODE);
-                    //     result[index] = RoomType.LARGE_ENEMY_ROOM_CODE;
-                    // }
-                    // else if(roomRandNum < 60){
-                    //     //roomType.Add(RoomType.STRECHED_ENEMY_ROOM_H_CODE);
-                    //     result[index] = RoomType.STRECHED_ENEMY_ROOM_H_CODE;
-                    // }
-                    // else if(roomRandNum < 70){
-                    //     //roomType.Add(RoomType.STRECHED_ENEMY_ROOM_V_CODE);
-                    //     result[index] = RoomType.STRECHED_ENEMY_ROOM_V_CODE;
-                    // }
-                    // else if(roomRandNum < 85){
-                    //     //roomType.Add(RoomType.CHEST_ROOM_CODE);
-                    //     result[index] = RoomType.CHEST_ROOM_CODE;
-                    // }
-                    // else if(roomRandNum < 95){
-                    //     //roomType.Add(RoomType.STORE_ROOM_CODE);
-                    //     result[index] = RoomType.STORE_ROOM_CODE;
-                    // }
-                    // else if(roomRandNum <= 100){
-                    //     //roomType.Add(RoomType.HEALING_ROOM_CODE);
-                    //     result[index] = RoomType.HEALING_ROOM_CODE;
-                    // }
                 }
             }
             index++;
-            num1++;
         }
         
         // Poner tienda
