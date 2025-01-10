@@ -13,8 +13,8 @@ using Unity.Burst;
 
 public class MapGen: MonoBehaviour{
 
-    public Tile floorTile;
-    public Tile corridorTile;
+    public Tile[] floorTile;
+    public Tile[] corridorTile;
     public Tile wallTile;
     public Tile doorTile;
     public Tilemap floorMap;
@@ -121,6 +121,7 @@ public class MapGen: MonoBehaviour{
         NativeList<int> yCorridorCoords = new NativeList<int>(Allocator.Persistent);
         NativeList<int> xWallCoords = new NativeList<int>(Allocator.Persistent);
         NativeList<int> yWallCoords = new NativeList<int>(Allocator.Persistent);
+        
 
         RoomTypeGetter roomTypeGetter = new RoomTypeGetter(allNodes, rand, roomTypes, startNodeCoords[0], startNodeCoords[1], endNodeCoords[0], endNodeCoords[1]);
         FloorCoordinateGetter floorCoordinateGetter = new FloorCoordinateGetter(allNodes,roomTypes, xFloorCoords, yFloorCoords,xoffset, yoffset);
@@ -187,10 +188,6 @@ public class MapGen: MonoBehaviour{
         GameObject.Find("player").transform.position = new Vector3((startNodeCoords[0] - xoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH + RoomType.NORMAL_ROOM_WIDTH/2, (startNodeCoords[1] - yoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH + RoomType.NORMAL_ROOM_LENGTH/2, 0);
         //GameObject.Find("Enemigo").transform.position = new Vector3((startNodeCoords[0] - xoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH + RoomType.NORMAL_ROOM_WIDTH/2, (startNodeCoords[1] - yoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH + RoomType.NORMAL_ROOM_LENGTH/2 + 3, 0);
 
-
-        // TEMP -> draw other collor at start and endnode
-        floorMap.SetTile(new Vector3Int((startNodeCoords[0] - xoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH + RoomType.NORMAL_ROOM_WIDTH/2, (startNodeCoords[1] - yoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH + RoomType.NORMAL_ROOM_LENGTH/2, 0),corridorTile);
-        floorMap.SetTile(new Vector3Int((endNodeCoords[0] - xoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH  + RoomType.NORMAL_ROOM_WIDTH/2, (endNodeCoords[1] - yoffset) * (RoomType.MAX_ROOM_SIZE + RoomType.NORMAL_CORRIDOR_LENGTH) + RoomType.NORMAL_CORRIDOR_LENGTH  + RoomType.NORMAL_ROOM_LENGTH/2, 0),corridorTile);
 
         roomTypes.Dispose();
         xFloorCoords.Dispose();
@@ -1153,8 +1150,8 @@ public struct CorridorCoordinateGetter{
 
 public class TileRenderer{
 
-    public Tile floorTile;
-    public Tile corridorTile;
+    public Tile[] floorTile;
+    public Tile[] corridorTile;
     public Tile wallTile;
     public NativeList<int> floorxCoordinates;
     public NativeList<int> flooryCoordinates;
@@ -1169,9 +1166,17 @@ public class TileRenderer{
     public Tile[] tileArr;
     public Tile[] wallTileArr;
 
+    private Tile randCorridorTile(){
+        return corridorTile[UnityEngine.Random.Range(0,corridorTile.Length)];
+    }
+
+    private Tile randFloorTile(){
+        return floorTile[UnityEngine.Random.Range(0,floorTile.Length)];
+    }
+
     public TileRenderer(NativeList<int> floorxCoordinates, NativeList<int> flooryCoordinates, NativeList<int> corridorxCoordinates, 
     NativeList<int> corridoryCoordinates, NativeList<int> wallxCoordinates, NativeList<int> wallyCoordinates,
-    Tile floorTile, Tile corridorTile, Tile wallTile, NativeList<int> roomTypes){
+    Tile[] floorTile, Tile[] corridorTile, Tile wallTile, NativeList<int> roomTypes){
         this.floorxCoordinates = floorxCoordinates;
         this.flooryCoordinates = flooryCoordinates;
         this.corridorxCoordinates = corridorxCoordinates;
@@ -1180,6 +1185,7 @@ public class TileRenderer{
         this.wallyCoordinates = wallyCoordinates;
         this.roomTypes = roomTypes;
         this.corridorTile = corridorTile;
+        this.floorTile = floorTile;
         this.wallTile = wallTile;
 
         int arrLens = floorxCoordinates.Length + corridorxCoordinates.Length;
@@ -1191,12 +1197,12 @@ public class TileRenderer{
 
         for(int i = 0; i < floorxCoordinates.Length; i++){
             vectorCoordinates[i] = new Vector3Int(floorxCoordinates[i], flooryCoordinates[i], 0);
-            tileArr[i] = floorTile;
+            tileArr[i] = randFloorTile();
         }
 
         for(int i = 0; i < corridorxCoordinates.Length; i++){
             vectorCoordinates[i + floorxCoordinates.Length] = new Vector3Int(corridorxCoordinates[i], corridoryCoordinates[i], 0);
-            tileArr[i + floorxCoordinates.Length] = corridorTile;
+            tileArr[i + floorxCoordinates.Length] = randCorridorTile();
         }
 
         for(int i = 0; i < wallxCoordinates.Length; i++){
