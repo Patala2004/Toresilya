@@ -11,7 +11,7 @@ public class RegenPotion_Tier2 : RegenPotion
     {
         base.Start();
         hps = 5;
-        duration = 90f;
+        duration = 50f;
     }
 
     // Update is called once per frame
