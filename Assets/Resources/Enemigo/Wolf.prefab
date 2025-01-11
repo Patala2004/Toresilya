@@ -129,6 +129,7 @@ MonoBehaviour:
   timer: 0
   timerReset: 1.5
   isJumping: 0
+  audioAttack: {fileID: 8300000, guid: 547a6500e9e7de3bcb0ca25296120b33, type: 3}
 --- !u!50 &4683703552093696882
 Rigidbody2D:
   serializedVersion: 4

@@ -17,6 +17,7 @@ public class Lobo : Enemy
 
     // Animacion
     Animator ani;
+	public AudioClip audioAttack;
     // Start is called before the first frame update
     new void Start()
     {
@@ -64,6 +65,7 @@ public class Lobo : Enemy
     {
         allowAttack = true;
         ani.SetTrigger("Attacking");
+		PlayClip(audioAttack);
 
         isJumping = true;
         timer = timerReset;

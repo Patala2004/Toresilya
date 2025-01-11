@@ -9,6 +9,8 @@ public class Slime : Enemy
 	public float jumpForce = 120f, jumpTimerInit = 1f, jumpTimer;
 	private Animator ac;
 
+	public AudioClip audioAttack;
+
     // Start is called before the first frame update
     new void Start()
     {
@@ -29,6 +31,7 @@ public class Slime : Enemy
 				rb.AddForce(dir*jumpForce);
                 jumpTimer = jumpTimerInit;
                 allowAttack = true;
+				PlayClip(audioAttack);
                 StartCoroutine(ControlAtaque(0.2f));
             }
 		} else {
