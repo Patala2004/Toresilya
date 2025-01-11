@@ -64,5 +64,9 @@ public class MiniBossSword : MonoBehaviour
             }
         }
     }
+    public void Comenzar()
+    {
+        ani.SetTrigger("slash");
+    }
 
 }

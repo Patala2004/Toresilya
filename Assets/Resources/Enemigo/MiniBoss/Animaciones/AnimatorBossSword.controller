@@ -8,9 +8,6 @@ AnimatorStateTransition:
   m_PrefabAsset: {fileID: 0}
   m_Name: 
   m_Conditions:
-  - m_ConditionMode: 2
-    m_ConditionEvent: change
-    m_EventTreshold: 0
   - m_ConditionMode: 1
     m_ConditionEvent: swordIdle
     m_EventTreshold: 0
@@ -35,10 +32,7 @@ AnimatorStateTransition:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: 
-  m_Conditions:
-  - m_ConditionMode: 1
-    m_ConditionEvent: swordIdle
-    m_EventTreshold: 0
+  m_Conditions: []
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: -3833774510952213551}
   m_Solo: 0
@@ -351,6 +345,9 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: slash
     m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: swordIdle
+    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 3426935611275606917}
   m_Solo: 0
@@ -413,9 +410,6 @@ AnimatorStateTransition:
   - m_ConditionMode: 1
     m_ConditionEvent: dismiss
     m_EventTreshold: 0
-  - m_ConditionMode: 2
-    m_ConditionEvent: change
-    m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 6769065231467943950}
   m_Solo: 0
@@ -467,9 +461,6 @@ AnimatorStateTransition:
   m_Conditions:
   - m_ConditionMode: 1
     m_ConditionEvent: idle
-    m_EventTreshold: 0
-  - m_ConditionMode: 2
-    m_ConditionEvent: change
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 3364558187308712075}

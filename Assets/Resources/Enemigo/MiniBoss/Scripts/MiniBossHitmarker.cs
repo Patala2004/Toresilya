@@ -6,12 +6,14 @@ public class MiniBossHitmarker : MonoBehaviour
 {
     public MiniBoss miniBoss;
     Animator ani;
+    SpriteRenderer sR;
 
     [SerializeField] float bossAngle;
     // Start is called before the first frame update
     void Start()
     {
         ani = GetComponent<Animator>();
+        sR = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
@@ -22,6 +24,7 @@ public class MiniBossHitmarker : MonoBehaviour
     }
     public void Comenzar()
     {
-        ani.SetTrigger("swipe");
+        ani.SetTrigger("slash");
+        sR.flipY = !sR.flipY;
     }
 }

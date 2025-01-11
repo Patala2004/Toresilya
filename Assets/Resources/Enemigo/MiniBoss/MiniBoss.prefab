@@ -129,8 +129,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   allowAttack: 1
-  health: 15
-  knockback: 20
+  health: 200
+  knockback: 60
   knockbackResistance: 30
   damage:
   - 8
@@ -160,6 +160,7 @@ MonoBehaviour:
   direction: {x: 0, y: 0}
   luzDisparo: {fileID: 5335606718005917581, guid: aff3e040af433544697c3dc05d90982e, type: 3}
   luzSword: {fileID: 5335606718005917581, guid: 29103086d483ce841b92f9374b60af6e, type: 3}
+  luzSwordMaximo: {fileID: 5335606718005917581, guid: 8d0c299b141c055498b9d73ca75fa997, type: 3}
 --- !u!50 &3863602660175568570
 Rigidbody2D:
   serializedVersion: 4
@@ -370,7 +371,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   luz: {fileID: 5335606718005917581, guid: aff3e040af433544697c3dc05d90982e, type: 3}
-  intensity: 1
 --- !u!1 &2043073738616058016
 GameObject:
   m_ObjectHideFlags: 0

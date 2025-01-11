@@ -11,7 +11,7 @@ public class camara : MonoBehaviour
     void Start()
     {
         gN = gameObject.AddComponent<GenLight>();
-        gN.luz = Resources.Load<GameObject>("Luces/LuzBossSword");
+        gN.luz = Resources.Load<GameObject>("Luces/LuzBossSwordEpico");
     }
 
     // Update is called once per frame
