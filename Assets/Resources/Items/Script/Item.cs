@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class Item : MonoBehaviour
 {
+
     public Player player;
     public string descriptionItem = "";
     public string descripcionRecoger = "";
@@ -36,8 +37,6 @@ public class Item : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-
-      
     }
 
     // Update is called once per frame
@@ -49,6 +48,12 @@ public class Item : MonoBehaviour
     public virtual void grabItem(Player p)
     {
         // Add stats
+        GameObject listElement = Instantiate(Resources.Load<GameObject>("Hud/Prefabs/ItemListElement"));
+        listElement.GetComponent<Image>().sprite = this.gameObject.GetComponent<SpriteRenderer>().sprite;
+        listElement.GetComponent<ItemListElement>().itemName = this.name;
+        listElement.GetComponent<ItemListElement>().itemDescription = this.descriptionItem;
+        listElement.transform.position = new Vector3(67000,-69420);
+        ItemList.itemList.Add(listElement);
 
         Debug.Log("El metodo grabItem ha sido llamado para el item " + nombre);
         transform.position = new Vector3(-10000, 10000, 0); // Mover a a tomar por culo para no tener que destruir 
@@ -59,7 +64,7 @@ public class Item : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("No se encontró el script Barra en la escena.");
+            Debug.LogWarning("No se encontrï¿½ el script Barra en la escena.");
         }
 
     }
@@ -77,7 +82,7 @@ public class Item : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("No se encontró el script Barra en la escena.");
+            Debug.LogWarning("No se encontrï¿½ el script Barra en la escena.");
         }
 
     }
