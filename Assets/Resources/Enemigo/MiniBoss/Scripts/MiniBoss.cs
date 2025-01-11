@@ -102,7 +102,7 @@ public class MiniBoss : Enemy
                 {
                     timer = 0;
                     countAttacks++;
-                    StartCoroutine(ToSwordAttack(0.45f,strongAttack));
+                    StartCoroutine(ToSwordAttack(0.35f,strongAttack));
                     strongAttack = countAttacks == lastAttack;
                     timerReset = strongAttack ? 2.5f : 0.7f;
                 }
@@ -267,8 +267,6 @@ public class MiniBoss : Enemy
     }
     IEnumerator ChangePattern(patterns patterns,float waitseconds)
     {
-        //sonido
-        PlayClip(audioChange);
 
         stayOnPattern = true;
         patron = patterns.change; // cambiamos de patron

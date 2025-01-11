@@ -169,7 +169,7 @@ MonoBehaviour:
   audioSword2: {fileID: 8300000, guid: 7abd93a08132629429f6017abf8c8880, type: 3}
   audioShoot: {fileID: 8300000, guid: 4dfc857f8603f3942b294c4b4c9cbef3, type: 3}
   audioCharge: {fileID: 8300000, guid: f19fd437491abc34abd22a234f82ff30, type: 3}
-  audioChange: {fileID: 8300000, guid: 030f6366bc72a0344af461f7b5d5bfed, type: 3}
+  audioChange: {fileID: 8300000, guid: f19fd437491abc34abd22a234f82ff30, type: 3}
 --- !u!50 &3863602660175568570
 Rigidbody2D:
   serializedVersion: 4
