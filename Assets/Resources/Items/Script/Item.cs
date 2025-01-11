@@ -63,7 +63,7 @@ public class Item : MonoBehaviour
         Barra hud = FindObjectOfType<Barra>();
         if (hud != null)
         {
-            hud.ShowItemText(nombre, descripcionRecoger);
+            hud.ShowItemText(nombre, rarity);
         }
         else
         {
