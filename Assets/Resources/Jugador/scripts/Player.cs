@@ -328,6 +328,7 @@ public class Player : MonoBehaviour
         {
             // sonido
             PlayClip(audioHurt);
+            camara.shakeAllCameras(((float) damage)/((float)healthMax));
             //Comentado todo lo de defensa por si si
             if (gObject.GetComponent<Enemy>() != null)
             {
