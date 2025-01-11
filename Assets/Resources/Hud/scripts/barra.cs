@@ -51,7 +51,7 @@ public class Barra : MonoBehaviour
 
     public void ShowItemText(string itemName, string itemDescription)
     {
-         itemText.text = itemName+"\nDescripción: "+itemDescription;
+         itemText.text = itemName;
          itemProyectado = true;
          timer = 0f; // Reinicia el temporizador
     }

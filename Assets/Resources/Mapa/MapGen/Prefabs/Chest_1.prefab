@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2550994326883809391}
   - component: {fileID: 3286871132414364118}
   - component: {fileID: 695343165419952752}
+  - component: {fileID: -8304738042299306842}
   m_Layer: 0
   m_Name: Chest_1
   m_TagString: golpeable
@@ -95,6 +96,36 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2, y: 2}
   m_EdgeRadius: 0
+--- !u!114 &-8304738042299306842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 46791193206815031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 0
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 1
+  m_ApplyToSortingLayers: dfa4cf6f00000000b38678a579daf1f6671fac114368b43ae77cfb07c5068ded9f32ce92
+  m_ShapePath:
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  - {x: 0, y: 0, z: 0}
+  m_ShapePathHash: 0
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 94326
+  m_LocalBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0, y: 0, z: 0}
 --- !u!1 &333431855215831984
 GameObject:
   m_ObjectHideFlags: 0
@@ -276,6 +307,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4187737436289803118}
   - component: {fileID: 2730458263688221800}
+  - component: {fileID: 7844274684486472851}
   m_Layer: 0
   m_Name: Chest
   m_TagString: Untagged
@@ -350,6 +382,36 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &7844274684486472851
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2596318599625921396}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: dfa4cf6f00000000b38678a579daf1f6671fac114368b43ae77cfb07c5068ded9f32ce92
+  m_ShapePath:
+  - {x: -0.625, y: -0.5, z: 0}
+  - {x: -0.625, y: 0.5, z: 0}
+  - {x: 0.625, y: 0.5, z: 0}
+  - {x: 0.625, y: -0.5, z: 0}
+  m_ShapePathHash: 0
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -607722
+  m_LocalBounds:
+    m_Center: {x: 0, y: 0, z: 0}
+    m_Extent: {x: 0.625, y: 0.5, z: 0}
 --- !u!1 &6628607982360815034
 GameObject:
   m_ObjectHideFlags: 0

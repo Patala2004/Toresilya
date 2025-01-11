@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class StoreTile : MonoBehaviour
 {
@@ -45,6 +46,7 @@ public class StoreTile : MonoBehaviour
             priceTag.color = new Color32(100,100,100,255); // Grey out the price
             itemDescription.enabled = false;
             this.enabled = false;
+            gameObject.GetComponent<Light2D>().enabled = false;
         }
     }
 
