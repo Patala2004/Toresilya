@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Item_37 : Item
+public class Item_241 : Item
 {
     //Declaramos stats o cosas que modificara el item
 
@@ -12,7 +12,7 @@ public class Item_37 : Item
     {
         //Declaracion del item
         player = GameObject.Find("player").GetComponent<Player>();
-        
+
     }
 
     // Update is called once per frame
@@ -25,25 +25,26 @@ public class Item_37 : Item
     {
         base.grabItem(p);
         //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM
-        player.attackMechanics.Add(randomAttackToInmune);
-        
-
-    }
-
-    public void randomAttackToInmune(Enemy[] enemylist)
-    {
-        bool found = false;
-        for(int i = 0; i < enemylist.Length && !found; i++){
-            int random = Random.Range(1, 101);
-            if (33<= random && random <38) //5% de posibilidades
-            {
-                found = true;
-                player.GetInvulnerable(3f);
-            }
+        if (p.statCriticalChance >= 1 || (p.statCriticalChance + 0.05f) > 1)
+        {
+            p.statCriticalChance = 1;
         }
+        else
+        {
+            p.statCriticalChance += 0.05f;
+        }
+
+        if (p.sword.attackSpeed <= 0.2f || (p.sword.attackSpeed - 0.05f) < 0.2f)
+        {
+            p.sword.attackSpeed = 0.2f;
+        }
+        else
+        {
+            p.sword.attackSpeed -= 0.05f;
+        }
+
+        p.sword.dmgMultiplicator += 0.05f;
+
+
     }
-
-    
-    
-
 }
