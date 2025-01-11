@@ -9,6 +9,7 @@ public class EnemigoProjectile : Enemy
     public float attackForce;
 
     public float timer, timerReset = 1;
+	public AudioClip audioJump;
     // Start is called before the first frame update
     new void Start()
     {
@@ -61,6 +62,7 @@ public class EnemigoProjectile : Enemy
             rb.AddForce(dir * jumpForce);
             jumpTimer = jumpTimerInit;
             allowAttack = true;
+			PlayClip(audioJump);
         }
     }
 

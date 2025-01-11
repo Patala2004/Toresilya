@@ -71,6 +71,7 @@ public class Player : MonoBehaviour
     public AudioClip audioAttack;
     public AudioClip audioHurt;
     public AudioClip audioBlock;
+	public AudioClip audioCoin;
 
     // Start is called before the first frame update
     void Start()
