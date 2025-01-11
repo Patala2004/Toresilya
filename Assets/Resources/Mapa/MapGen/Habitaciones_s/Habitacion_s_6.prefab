@@ -186,15 +186,15 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 6718085473454817470}
+  - {fileID: 5455313048384790714}
   - {fileID: 7098912644959969249}
   - {fileID: 7539353014792131897}
   - {fileID: 7368951033451871613}
   - {fileID: 6728466016803197504}
-  - {fileID: 2454933741003678504}
-  - {fileID: 2852067095367601302}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &3571898874749466211
+--- !u!1 &2362748420484412595
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -202,37 +202,37 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 2852067095367601302}
-  - component: {fileID: 3503953811879632692}
+  - component: {fileID: 6718085473454817470}
+  - component: {fileID: 1629876562701607253}
   m_Layer: 0
-  m_Name: EnemySpawner(Clone) (1)
+  m_Name: EnemySpawner(Clone)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &2852067095367601302
+--- !u!4 &6718085473454817470
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3571898874749466211}
+  m_GameObject: {fileID: 2362748420484412595}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -4, y: -0.5, z: 0}
+  m_LocalPosition: {x: 4, y: -0.5, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 8731698975305108051}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3503953811879632692
+--- !u!114 &1629876562701607253
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3571898874749466211}
+  m_GameObject: {fileID: 2362748420484412595}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7f94887dac54a32479b0e2e4aceea341, type: 3}
@@ -243,6 +243,57 @@ MonoBehaviour:
   - {fileID: 8484869543311770916, guid: 02ca91e8da018014fb996dee6330102d, type: 3}
   - {fileID: 6159802974911976144, guid: d083456b95d910594a105c299a2cd312, type: 3}
   - {fileID: 6159802974911976144, guid: 2ca89753bd9503e31873a0cac4f62f57, type: 3}
+  - {fileID: 7502524114904027516, guid: 2e2d2d39dcdcb804c933693245490923, type: 3}
+--- !u!1 &3302380202682672440
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5455313048384790714}
+  - component: {fileID: 7897057066249471008}
+  m_Layer: 0
+  m_Name: EnemySpawner(Clone) (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5455313048384790714
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3302380202682672440}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -4, y: -0.5, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8731698975305108051}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &7897057066249471008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3302380202682672440}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7f94887dac54a32479b0e2e4aceea341, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  randomized: 1
+  enemies:
+  - {fileID: 8484869543311770916, guid: 02ca91e8da018014fb996dee6330102d, type: 3}
+  - {fileID: 6159802974911976144, guid: d083456b95d910594a105c299a2cd312, type: 3}
+  - {fileID: 6159802974911976144, guid: 2ca89753bd9503e31873a0cac4f62f57, type: 3}
+  - {fileID: 7502524114904027516, guid: 2e2d2d39dcdcb804c933693245490923, type: 3}
 --- !u!1 &4343380668851763287
 GameObject:
   m_ObjectHideFlags: 0
@@ -557,55 +608,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!1 &8516650489211315089
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2454933741003678504}
-  - component: {fileID: 8369958477267136924}
-  m_Layer: 0
-  m_Name: EnemySpawner(Clone)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2454933741003678504
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8516650489211315089}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 4, y: -0.5, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8731698975305108051}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8369958477267136924
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8516650489211315089}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7f94887dac54a32479b0e2e4aceea341, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  randomized: 1
-  enemies:
-  - {fileID: 8484869543311770916, guid: 02ca91e8da018014fb996dee6330102d, type: 3}
-  - {fileID: 6159802974911976144, guid: d083456b95d910594a105c299a2cd312, type: 3}
-  - {fileID: 6159802974911976144, guid: 2ca89753bd9503e31873a0cac4f62f57, type: 3}
 --- !u!1 &8570172410065917720
 GameObject:
   m_ObjectHideFlags: 0
