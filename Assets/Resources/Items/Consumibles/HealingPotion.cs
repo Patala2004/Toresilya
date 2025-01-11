@@ -21,6 +21,7 @@ public class HealingPotion : Item
 
     public override void grabItem(Player p)
     {
-        p.health += healingAmm;
+        if(p.health + healingAmm >= p.healthMax) p.health = p.healthMax;
+        else p.health += healingAmm;
     }
 }
