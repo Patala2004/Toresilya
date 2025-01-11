@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &8289058526646975650
+--- !u!1 &8095598792457568369
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8021060141810762280}
-  - component: {fileID: 3216917633203184273}
-  - component: {fileID: 7569960578994117682}
-  - component: {fileID: -1560200582911774313}
+  - component: {fileID: 920305355110003366}
+  - component: {fileID: 764165411139228942}
+  - component: {fileID: 1837382645287175259}
+  - component: {fileID: 6898748731656432324}
   m_Layer: 0
-  m_Name: ITEM 73
+  m_Name: ITEM 233
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8021060141810762280
+--- !u!4 &920305355110003366
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8289058526646975650}
+  m_GameObject: {fileID: 8095598792457568369}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 3, y: 3, z: 1}
+  m_LocalScale: {x: 5, y: 5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &3216917633203184273
+--- !u!212 &764165411139228942
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8289058526646975650}
+  m_GameObject: {fileID: 8095598792457568369}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -75,7 +75,7 @@ SpriteRenderer:
   m_SortingLayerID: -309524795
   m_SortingLayer: 6
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: cc6e0efeb422510448d7770894e2f637, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1b9d3a35e82e30347b60f6388e280d9a, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -86,33 +86,13 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!114 &7569960578994117682
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8289058526646975650}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e152907ce64ce8c4abb2882b04049d4c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  descriptionItem: 
-  descripcionRecoger: ESTO ES UNA DESCRIPCION BUENA
-  nombre: PRUEBA HOLIWI
-  unique: 0
-  rarity: 
-  precio: 0
-  aplicadoItem73: 0
---- !u!61 &-1560200582911774313
+--- !u!61 &1837382645287175259
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8289058526646975650}
+  m_GameObject: {fileID: 8095598792457568369}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -151,3 +131,22 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.32, y: 0.32}
   m_EdgeRadius: 0
+--- !u!114 &6898748731656432324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8095598792457568369}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef300fa9f11c4bf46997db7b1e3a8d8a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  player: {fileID: 0}
+  descriptionItem: 
+  descripcionRecoger: ESTO ES UNA DESCRIPCION BUENA
+  nombre: PRUEBA HOLIWI
+  unique: 0
+  rarity: 
+  precio: 0
