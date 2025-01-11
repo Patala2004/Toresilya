@@ -131,6 +131,7 @@ MonoBehaviour:
   timer: 0
   timerReset: 1
   tipoGoblin: espada
+  audioAttacking: {fileID: 8300000, guid: df08da1bd15078e47a204fdf80143e85, type: 3}
 --- !u!50 &5830796725177033867
 Rigidbody2D:
   serializedVersion: 4
@@ -423,7 +424,7 @@ MonoBehaviour:
   - {x: 0.2574196, y: -0.39756018, z: 0}
   m_ShapePathHash: 1744816127
   m_Mesh: {fileID: 0}
-  m_InstanceId: 100714
+  m_InstanceId: 61056
   m_LocalBounds:
     m_Center: {x: 0.034850836, y: 0.04331416, z: 0}
     m_Extent: {x: 0.31441665, y: 0.44087434, z: 0}

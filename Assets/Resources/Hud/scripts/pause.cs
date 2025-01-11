@@ -26,10 +26,7 @@ public class pause : MonoBehaviour
                 isPaused = true;
             }
             else{
-                Time.timeScale = 1;
-                pauseMenu.SetActive(false);
-                blurrVolume.enabled = false;
-                isPaused = false;
+                unPause();
             }            
         }
     }
