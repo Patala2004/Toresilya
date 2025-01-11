@@ -8,8 +8,8 @@ public class Item : MonoBehaviour
 {
     public Player player;
     public string descriptionItem = "";
-    public string descripcionRecoger = "ESTO ES UNA DESCRIPCION BUENA";
-    public string nombre = "PRUEBA HOLIWI";
+    public string descripcionRecoger = "";
+    public string nombre = "";
     public bool unique = false;
     public string rarity = "";
     // Duracion estandar de estados (es compartida)

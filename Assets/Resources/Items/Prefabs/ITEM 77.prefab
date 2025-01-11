@@ -99,9 +99,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  descriptionItem: 
-  descripcionRecoger: ESTO ES UNA DESCRIPCION BUENA
-  nombre: PRUEBA HOLIWI
+  descriptionItem: La probabilidad de ejercer el estado DEBIL es el doble
+  descripcionRecoger: 
+  nombre: 
   unique: 0
   rarity: 
   precio: 0

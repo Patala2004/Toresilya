@@ -144,9 +144,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  descriptionItem: 
-  descripcionRecoger: ESTO ES UNA DESCRIPCION BUENA
-  nombre: PRUEBA HOLIWI
+  descriptionItem: Tu ataque puede generar el estado DEBIL
+  descripcionRecoger: 
+  nombre: 
   unique: 0
   rarity: 
   precio: 0
