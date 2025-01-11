@@ -35,6 +35,7 @@ public class MiniBoss : Enemy
     public float timerReset = 1;
     public float countAttacks = 0;
     public Vector2 direction;
+    bool cambioSword = true;
     // Luces
     public GameObject luzDisparo;
     public GameObject luzSword;
@@ -90,9 +91,10 @@ public class MiniBoss : Enemy
                     timer = 0;
                     countAttacks++;
                 }
-                if(countAttacks > 4)
+                if(countAttacks > 4 && cambioSword)
                 {
                     StartCoroutine(WaitToChangePattern(0.6f)); // Terminamos la fase de la espada
+                    cambioSword = false;
                 }
                 break;
             case patterns.attack_charge: // carga contra ti saltando en tu direccion
@@ -243,11 +245,12 @@ public class MiniBoss : Enemy
 
         //timer y contador de ataques
         ShootMovement = 0; // Shoot
-        allowAttack = false;
+        allowAttack = false; // para casi todas las fases
         timer = 0; // para casi todas las fases
         countAttacks = 0; // sword
+        cambioSword = true; // sword
         saltado = false; // attack shoot especial
-        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("player"), LayerMask.NameToLayer("miniboss"), false);
+        Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("player"), LayerMask.NameToLayer("miniboss"), false); // charge
 
         // cambiar al patron de la llamada a funcion despues de haber esperado
         patron = patterns;
@@ -271,12 +274,9 @@ public class MiniBoss : Enemy
         GenerateLight(luzSwordMaximo);
         yield return new WaitForSeconds(waitseconds);
         allowAttack = true;
-        HitboxEnemy(transform.position, new(2f, 2f), Mathf.Rad2Deg * Mathf.Atan2(direction.y, direction.x), direction, 1.5f, tempDamage, 15);
-        if (patron == patterns.attack_sword)
-        {
-            miniBossHitmarker.Comenzar();
-            miniBossSword.Comenzar();
-        }
+        HitboxEnemy(transform.position, new(2f, 2f), Mathf.Rad2Deg * Mathf.Atan2(direction.y, direction.x), direction, 1.5f, tempDamage, knockback);
+        miniBossHitmarker.Comenzar();
+        miniBossSword.Comenzar();
     }
     IEnumerator WaitToChangePattern(float waitseconds) // solo para sword
     {
