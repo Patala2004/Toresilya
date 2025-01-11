@@ -48,11 +48,6 @@ public class Item_37 : Item
         }
     }
 
-    // Esto deberia de estar implementado en player
-    // invunerable deberia ser un float que va disminuyendo cada FixedUpdate
-    // Error posible: Si se llama a rutinaInmune dos veces en dos momentos distintos pero muy cercanos la primera rutinaInmune desactivaria la invulnerabilidad 
-    // de la segunda llamada antes de que se tuviera que desactivaar
-    // Basicamente, hay una condición de carrera mal llevada
     
     
 

@@ -148,6 +148,6 @@ MonoBehaviour:
   descripcionRecoger: ESTO ES UNA DESCRIPCION BUENA
   nombre: PRUEBA HOLIWI
   unique: 0
-  rarity: common
+  rarity: raro
   precio: 10
   addDefense: 0.1

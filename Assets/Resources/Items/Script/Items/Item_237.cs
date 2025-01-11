@@ -12,11 +12,8 @@ public class Item_237 : Item
     {
         //Declaracion del item
         player = GameObject.Find("player").GetComponent<Player>();
-        descriptionItem = "";
-        descripcionRecoger = "";
         nombre = "Item 237";
-        unique = false;
-        rarity = "";
+        rarity = "pocoComun";
         precio = 0;
     }
 
@@ -35,14 +32,5 @@ public class Item_237 : Item
 
 
     }
-    public void OnTriggerEnter2D(Collider2D other)
-    {
-        // Verificar si el objeto con el que colisionamos es el jugador
-        if (other.gameObject.CompareTag("player"))
-        {
-            grabItem(player);
-            Debug.Log("TUS MUERTOS");
-            transform.position = new Vector3(10000, 100000, transform.position.z);// Destruir el objeto después de recogerlo
-        }
-    }
+  
 }

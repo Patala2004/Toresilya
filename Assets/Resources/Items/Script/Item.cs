@@ -11,7 +11,7 @@ public class Item : MonoBehaviour
     public string descripcionRecoger = "ESTO ES UNA DESCRIPCION BUENA";
     public string nombre = "PRUEBA HOLIWI";
     public bool unique = false;
-
+    public string rarity = "";
     // Duracion estandar de estados (es compartida)
     // Estado debil
     public static float durDebil = 2f;
@@ -29,7 +29,7 @@ public class Item : MonoBehaviour
     public static int nRebotesRayo = 1;
     public static int multRebotesRayo = 1;
 
-    public string rarity = "common";
+    
     public int precio;
 
 

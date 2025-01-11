@@ -11,7 +11,8 @@ public class Item_18 : Item
     void Start()
     {
         //Declaracion del item
-        player = GameObject.Find("player").GetComponent<Player>();     
+        player = GameObject.Find("player").GetComponent<Player>();
+        this.rarity = "epico";
     }
 
     // Update is called once per frame

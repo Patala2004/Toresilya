@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &47358985663487322
+--- !u!1 &7813370660277062753
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,39 +8,39 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7234342372192615119}
-  - component: {fileID: 3204295789388870930}
-  - component: {fileID: -7833537593688698582}
-  - component: {fileID: 1938677232577866859}
+  - component: {fileID: 5681128013829751632}
+  - component: {fileID: 4249677376866010420}
+  - component: {fileID: -54036903707456709}
+  - component: {fileID: 277810842101364032}
   m_Layer: 0
-  m_Name: ITEM 18
+  m_Name: ITEM 68
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7234342372192615119
+--- !u!4 &5681128013829751632
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 47358985663487322}
+  m_GameObject: {fileID: 7813370660277062753}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.4, y: 1.4, z: 1}
+  m_LocalScale: {x: 3.5, y: 3.5, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!212 &3204295789388870930
+--- !u!212 &4249677376866010420
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 47358985663487322}
+  m_GameObject: {fileID: 7813370660277062753}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -74,25 +74,25 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -309524795
   m_SortingLayer: 6
-  m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 378a0f00091fc2fdda3aa0a952a813e5, type: 3}
+  m_SortingOrder: 0
+  m_Sprite: {fileID: 21300000, guid: 8a1ce2f7456d9ba489c3ed68cab1808b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
-  m_Size: {x: 11.52, y: 6.48}
+  m_Size: {x: 0.32, y: 0.32}
   m_AdaptiveModeThreshold: 0.5
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
---- !u!61 &-7833537593688698582
+--- !u!61 &-54036903707456709
 BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 47358985663487322}
+  m_GameObject: {fileID: 7813370660277062753}
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
@@ -118,37 +118,35 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: -0.0007903874, y: 0.017734721}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1, y: 1}
-    newSize: {x: 11.52, y: 6.48}
+    oldSize: {x: 0.32, y: 0.32}
+    newSize: {x: 0.32, y: 0.32}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.60745436, y: 0.6455585}
+  m_Size: {x: 0.32, y: 0.32}
   m_EdgeRadius: 0
---- !u!114 &1938677232577866859
+--- !u!114 &277810842101364032
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 47358985663487322}
+  m_GameObject: {fileID: 7813370660277062753}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 46f41bc700859d043aa0209cb869a03d, type: 3}
+  m_Script: {fileID: 11500000, guid: ec8e7500a7f41e04290a54b5d60f14ae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  descriptionItem: "Haces m\xE1s da\xF1o los primeros segundos tras entrar a una
-    habitacion"
-  descripcionRecoger: 
-  nombre: 
+  descriptionItem: 
+  descripcionRecoger: ESTO ES UNA DESCRIPCION BUENA
+  nombre: PRUEBA HOLIWI
   unique: 0
-  rarity: epico
-  precio: 33
-  addDamage: 0.2
+  rarity: 
+  precio: 0
