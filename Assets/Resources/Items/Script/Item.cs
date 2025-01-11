@@ -56,7 +56,7 @@ public class Item : MonoBehaviour
         listElement.GetComponent<ItemListElement>().itemDescription = this.descriptionItem;
         listElement.transform.position = new Vector3(67000,-69420);
         ItemList.itemList.Add(listElement);
-        ItemList.instance.PrepareItemList();
+        //ItemList.instance.PrepareItemList();
 
         Debug.Log("El metodo grabItem ha sido llamado para el item " + nombre);
         transform.position = new Vector3(-10000, 10000, 0); // Mover a a tomar por culo para no tener que destruir 
