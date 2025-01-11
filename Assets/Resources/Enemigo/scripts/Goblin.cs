@@ -52,7 +52,7 @@ public class Goblin : Enemy
 	void Jump()
     {
         Vector2 dir = (player.gameObject.transform.position - gameObject.transform.position).normalized;
-        rb.velocity = new Vector2(dir.x * (displTemp/2), dir.y * (displTemp / 2));
+        rb.velocity += new Vector2(dir.x * (displTemp/2), dir.y * (displTemp / 2));
         if (timer <= 0)
         {
             ani.SetTrigger("Attacking");
@@ -71,7 +71,7 @@ public class Goblin : Enemy
 	void Chase()
     {
         Vector2 direction = (player.transform.position - transform.position).normalized;
-        rb.velocity = new Vector2(direction.x * displTemp, direction.y * displTemp);
+        rb.velocity += new Vector2(direction.x * displTemp * 0.1f, direction.y * displTemp * 0.1f);
         ani.SetBool("Running", true);
         ani.SetBool("Idle", false);
     }

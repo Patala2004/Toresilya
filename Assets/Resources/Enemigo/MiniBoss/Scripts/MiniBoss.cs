@@ -9,6 +9,8 @@ public class MiniBoss : Enemy
     
     Animator ani;
     public MiniBossClone miniBossClone;
+    public MiniBossSword miniBossSword;
+    public MiniBossHitmarker miniBossHitmarker;
     // Patrones de ataque
     public float distanceToPlayer;
     public enum patterns
@@ -32,8 +34,10 @@ public class MiniBoss : Enemy
     public float timer = 0;
     public float timerReset = 1;
     public float countAttacks = 0;
-    // Shoot
-
+    public Vector2 direction;
+    // Luces
+    public GameObject luzDisparo;
+    public GameObject luzSword;
 
     // Charge
 
@@ -55,7 +59,7 @@ public class MiniBoss : Enemy
     {
         base.FixedUpdate();
         distanceToPlayer = Vector2.Distance(transform.position, player.transform.position); // distancia entre player y el boss
-        Vector2 direction = (player.transform.position - transform.position).normalized; // direccion en la que mira el boss
+        direction = (player.transform.position - transform.position).normalized; // direccion en la que mira el boss
         // Como actua el personaje segun patron
         switch (patron)
         {
@@ -68,7 +72,7 @@ public class MiniBoss : Enemy
 
                 break;
             case patterns.follow: // sigue al personaje
-                rb.velocity = new Vector2(direction.x * displSpeed, direction.y * displSpeed);
+                rb.velocity += new Vector2(direction.x * displSpeed * 0.1f, direction.y * displSpeed * 0.1f);
                 break;
             case patterns.attack_sword: // saca una espada y ataca
                 timer += Time.deltaTime;
@@ -92,6 +96,7 @@ public class MiniBoss : Enemy
                 if (timer > timerReset)
                 {
                     Debug.Log("Te salto!");
+                    GenerateLight(luzDisparo);
                     rb.AddForce(direction * 80f, ForceMode2D.Impulse);
                     timer = 0;
                 }
@@ -101,9 +106,10 @@ public class MiniBoss : Enemy
                 timerReset = 0.5f;
                 if (timer > timerReset)
                 {
+                    GenerateLight(luzDisparo);
                     Debug.Log("Te disparo 1!");
                     float[] tempDam = { 2, 4 };
-                    GetComponent<ProjectileGen>().Lanzar_Projectil(transform.position, direction, tempDam , knockback);
+                    GetComponent<ProjectileGen>().Lanzar_Projectil(miniBossSword.transform.position, direction, tempDam , knockback);
                     timer = 0;
                 }
                 break;
@@ -112,8 +118,9 @@ public class MiniBoss : Enemy
                 timerReset = 2f;
                 if (timer > timerReset)
                 {
+                    GenerateLight(luzSword);
                     float[] tempDam = { 4, 12 };
-                    GetComponent<ProjectileGen>().Lanzar_Projectil(transform.position, direction, tempDam, knockback);
+                    GetComponent<ProjectileGen>().Lanzar_Projectil(miniBossSword.transform.position, direction, tempDam, knockback);
                     timer = 0;
                 }
                 break;
@@ -122,12 +129,13 @@ public class MiniBoss : Enemy
                 timerReset = 2f;
                 if (timer > timerReset)
                 {
+                    GenerateLight(luzSword);
                     float[] tempDam = { 2, 4 };
                     float ang = 0;
                     for (int i = 0; i < 16; i++)
                     {
-                        Vector2 dir = new Vector2(Mathf.Cos(ang * Mathf.Deg2Rad), Mathf.Sin(ang * Mathf.Deg2Rad));
-                        GetComponent<ProjectileGen>().Lanzar_Projectil(transform.position, dir, tempDam, knockback);
+                        Vector2 dir = new(Mathf.Cos(ang * Mathf.Deg2Rad), Mathf.Sin(ang * Mathf.Deg2Rad));
+                        GetComponent<ProjectileGen>().Lanzar_Projectil(miniBossSword.transform.position, dir, tempDam, knockback);
                         ang += 22.5f;
                     }
                     timer = 0;
@@ -195,5 +203,16 @@ public class MiniBoss : Enemy
     void EfectoFrames()
     {
         Instantiate(miniBossClone,transform.position,Quaternion.identity); // Consume muchos recursos pero xd!!
+    }
+    void GenerateLight(GameObject luz)
+    {
+        GetComponent<GenLight>().luz = luz; // Cambia la luz a la actual
+        GetComponent<GenLight>().GenerateLight(miniBossSword.transform.position);
+    }
+    IEnumerator ToSwordAttack(float waitseconds)
+    {
+        GenerateLight(luzSword);
+        yield return new WaitForSeconds(waitseconds);
+        
     }
 }
