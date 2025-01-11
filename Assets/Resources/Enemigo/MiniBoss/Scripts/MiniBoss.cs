@@ -91,7 +91,7 @@ public class MiniBoss : Enemy
                 rb.velocity += new Vector2(direction.x * displSpeed * 0.1f, direction.y * displSpeed * 0.1f);
                 break;
             case patterns.attack_sword: // saca una espada y ataca
-                if (distanceToPlayer < 4.5f)
+                if (distanceToPlayer < 8f)
                 {
                     timer += Time.deltaTime;
                 }
@@ -100,7 +100,7 @@ public class MiniBoss : Enemy
                 {
                     timer = 0;
                     countAttacks++;
-                    StartCoroutine(ToSwordAttack(0.3f,strongAttack));
+                    StartCoroutine(ToSwordAttack(0.45f,strongAttack));
                     strongAttack = countAttacks == lastAttack;
                     timerReset = strongAttack ? 2.5f : 0.7f;
                 }
@@ -151,7 +151,7 @@ public class MiniBoss : Enemy
                     PlayClip(audioShoot);
 
                     float[] tempDam = { 2, 4 };
-                    GetComponent<ProjectileGen>().Lanzar_Projectil(miniBossSword.transform.position, direction, tempDam , knockback);
+                    GetComponent<ProjectileGen>().Lanzar_Projectil(miniBossSword.transform.position, direction, tempDam , 15);
                     timer = 0;
                     ShootMovement += 1;
                 }
@@ -176,7 +176,7 @@ public class MiniBoss : Enemy
                     GenerateLight(luzSword);
                     PlayClip(audioShoot);
                     float[] tempDam = { 4, 12 };
-                    GetComponent<ProjectileGen>().Lanzar_Projectil(miniBossSword.transform.position, direction, tempDam, knockback);
+                    GetComponent<ProjectileGen>().Lanzar_Projectil(miniBossSword.transform.position, direction, tempDam, 15);
                     timer = 0;
                     ShootMovement += 1;
                 }
@@ -212,7 +212,7 @@ public class MiniBoss : Enemy
                     for (int i = 0; i < 16; i++)
                     {
                         Vector2 dir = new(Mathf.Cos(ang * Mathf.Deg2Rad), Mathf.Sin(ang * Mathf.Deg2Rad));
-                        GetComponent<ProjectileGen>().Lanzar_Projectil(miniBossSword.transform.position, dir, tempDam, knockback);
+                        GetComponent<ProjectileGen>().Lanzar_Projectil(miniBossSword.transform.position, dir, tempDam, 15);
                         ang += 22.5f;
                     }
                     timer = 0;
@@ -297,22 +297,24 @@ public class MiniBoss : Enemy
         if (strongAttack)
         {
             GenerateLight(luzSwordMaximo);
+            PlayClip(audioSwordStrong);
         }
-        else{ GenerateLight(luzSword); }
+        else{
+            GenerateLight(luzSword);
+            PlayClip(audioSword);
+        }
+        miniBossHitmarker.Comenzar();
+        miniBossSword.Comenzar();
         yield return new WaitForSeconds(waitseconds);
         allowAttack = true;
         if (strongAttack) { 
             HitboxEnemy(transform.position, new(2f, 2f), Mathf.Rad2Deg * Mathf.Atan2(direction.y, direction.x), direction, 1.5f, damage, knockback);
             camara.shakeAllCameras(1);
-            PlayClip(audioSwordStrong);
         }
         else { 
             HitboxEnemy(transform.position, new(2f, 2f), Mathf.Rad2Deg * Mathf.Atan2(direction.y, direction.x), direction, 1.5f, tempDamage, 15);
             camara.shakeAllCameras(0.1f);
-            PlayClip(audioSword);
         }
-        miniBossHitmarker.Comenzar();
-        miniBossSword.Comenzar();
     }
     IEnumerator WaitToChangePattern(float waitseconds) // solo para sword
     {
