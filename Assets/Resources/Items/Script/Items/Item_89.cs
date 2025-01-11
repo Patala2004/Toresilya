@@ -24,7 +24,7 @@ public class Item_89 : Item
 
     public override void grabItem(Player p)
     {
-        base.grabItem2(p, nombre, descripcionRecoger);
+        base.grabItem(p);
         //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM
         Item.debilCritDamage += masCritDamage;
 
