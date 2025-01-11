@@ -131,6 +131,7 @@ MonoBehaviour:
   timer: 0
   timerReset: 1.5
   tipoGoblin: hacha
+  audioAttacking: {fileID: 8300000, guid: 1d95cea1166b87941be10b137800c8c1, type: 3}
 --- !u!50 &5830796725177033867
 Rigidbody2D:
   serializedVersion: 4

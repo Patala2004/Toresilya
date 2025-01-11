@@ -17,6 +17,8 @@ public class Goblin : Enemy
     // Animacion
     Animator ani;
 
+	public AudioClip audioAttacking;
+
     // Start is called before the first frame update
     new void Start()
     {
@@ -59,6 +61,7 @@ public class Goblin : Enemy
             allowAttack = true;
             HitboxEnemy(transform.position, new(1, 2), Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x), dir, 1, this.damage, this.knockback);
             rb.AddForce(dir * attackForce, ForceMode2D.Impulse);
+			PlayClip(audioAttacking);
             timer = timerReset;
             if(tipoGoblin == "espada")
             {
