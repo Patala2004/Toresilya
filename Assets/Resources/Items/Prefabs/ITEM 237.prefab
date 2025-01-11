@@ -101,9 +101,9 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: "Aumenta tu da\xF1o un poco"
   descripcionRecoger: 
-  nombre: 
+  nombre: PIEDRA, PAPEL Y ...
   unique: 0
-  rarity: 
+  rarity: raro
   precio: 0
 --- !u!61 &5063649774396655853
 BoxCollider2D:

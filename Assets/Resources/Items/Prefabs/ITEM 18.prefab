@@ -146,8 +146,8 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: "Al entrar a una sala, los primeros segundos haces m\xE1s da\xF1o"
   descripcionRecoger: 
-  nombre: 
+  nombre: NAVAJA DE ASALTO
   unique: 0
-  rarity: epico
+  rarity: pocoComun
   precio: 33
   addDamage: 0.2

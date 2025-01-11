@@ -12,12 +12,6 @@ public class Item_16 : Item
     {
         //Declaracion del item
         player = GameObject.Find("player").GetComponent<Player>();
-        descriptionItem = "Duplica el knockback a enemigos";
-        descripcionRecoger = "COGIO EL ITEM 16";
-        nombre = "ITEM 16";
-        unique = false;
-        rarity = "";
-        precio = 1;
     }
 
     // Update is called once per frame

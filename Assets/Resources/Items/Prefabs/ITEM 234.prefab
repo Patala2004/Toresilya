@@ -145,8 +145,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   descriptionItem: "Duplica tu probabilidad de cr\xEDtico"
-  descripcionRecoger: ESTO ES UNA DESCRIPCION BUENA
-  nombre: PRUEBA HOLIWI
+  descripcionRecoger: 
+  nombre: "DEMONIO DEL CR\xCDTICO"
   unique: 0
-  rarity: 
+  rarity: legendario
   precio: 0

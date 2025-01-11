@@ -11,12 +11,7 @@ public class Item_162 : Item
     {
         //Declaracion del item
         player = GameObject.Find("player").GetComponent<Player>();
-        descriptionItem = "1223";
-        descripcionRecoger = "";
-        nombre = "Item 162";
-        unique = false;
-        rarity = "";
-        precio = 0;
+        
     }
 
     // Update is called once per frame

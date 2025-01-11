@@ -102,9 +102,9 @@ MonoBehaviour:
   descriptionItem: Existe un 5% de posibilidades de generar el estado CAOS a un enemigo
     tras estar bajo el estado DEBIL
   descripcionRecoger: 
-  nombre: 
+  nombre: ESTRELLA DEL CAOS
   unique: 0
-  rarity: 
+  rarity: legendario
   precio: 0
   intentadoItem91: 0
 --- !u!61 &1877079208246829779

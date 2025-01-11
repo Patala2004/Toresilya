@@ -101,9 +101,9 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: La probabilidad de ejercer el estado DEBIL es el doble
   descripcionRecoger: 
-  nombre: 
+  nombre: DADO DE LA SUERTE
   unique: 0
-  rarity: 
+  rarity: raro
   precio: 0
 --- !u!61 &-6234888301171363389
 BoxCollider2D:

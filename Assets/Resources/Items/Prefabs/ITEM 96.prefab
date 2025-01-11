@@ -146,7 +146,7 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: "Tus ataques cr\xEDticos rompen la defensa del enemigo"
   descripcionRecoger: 
-  nombre: 
+  nombre: DESECHOS RADIACTIVOS
   unique: 0
   rarity: legendario
   precio: 0

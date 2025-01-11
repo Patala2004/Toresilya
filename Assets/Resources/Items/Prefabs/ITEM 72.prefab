@@ -102,9 +102,9 @@ MonoBehaviour:
   descriptionItem: "Resiste un 5% de da\xF1o, el doble si el enemigo tiene el estado
     DEBIL"
   descripcionRecoger: 
-  nombre: 
+  nombre: "CORAZ\xD3N FUERTE"
   unique: 0
-  rarity: 
+  rarity: legendario
   precio: 0
   addDefense: 0.05
   aplicadoItem72: 0

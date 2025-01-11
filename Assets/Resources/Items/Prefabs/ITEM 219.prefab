@@ -101,9 +101,9 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: Aumenta tu velocidad de movimiento un poco
   descripcionRecoger: 
-  nombre: 
+  nombre: "PLUMA DE \xC1GUILA"
   unique: 0
-  rarity: 
+  rarity: pocoComun
   precio: 0
 --- !u!61 &2807508902251425127
 BoxCollider2D:

@@ -102,9 +102,9 @@ MonoBehaviour:
   descriptionItem: "Al atacar, existe una peque\xF1a posibilidad de volverte invulnerable
     por 1 seg"
   descripcionRecoger: 
-  nombre: 
+  nombre: SANGRE DE DIOS
   unique: 0
-  rarity: 
+  rarity: raro
   precio: 0
 --- !u!61 &-8662429403644069019
 BoxCollider2D:

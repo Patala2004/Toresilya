@@ -147,8 +147,8 @@ MonoBehaviour:
   descriptionItem: Tus ataques tienen un 25% mas de ser critico a enemigos bajo el
     estado DEBIL
   descripcionRecoger: 
-  nombre: 
+  nombre: SUPERNOVA
   unique: 0
-  rarity: 
+  rarity: epico
   precio: 0
   masCritDamage: 0.15

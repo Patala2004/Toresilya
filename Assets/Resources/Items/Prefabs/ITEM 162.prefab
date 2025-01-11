@@ -101,9 +101,9 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: "Recibe un poco menos de da\xF1o al tener menos del 40% de vida"
   descripcionRecoger: 
-  nombre: 
+  nombre: LUNA DE LA VIDA
   unique: 0
-  rarity: 
+  rarity: raro
   precio: 0
   aplicadoItem162: 0
 --- !u!61 &8697773497163676636

@@ -13,12 +13,7 @@ public class Item_89 : Item
     {
         //Declaracion del item
         player = GameObject.Find("player").GetComponent<Player>();
-        descriptionItem = "";
-        descripcionRecoger = "SIIIIIIIIIIIIIIIIIIIIII";
-        nombre = "ITEM 89";
-        unique = false;
-        rarity = "";
-        precio = 0;
+        
     }
 
     // Update is called once per frame

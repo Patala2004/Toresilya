@@ -147,7 +147,7 @@ MonoBehaviour:
   descriptionItem: Tu ataque aumenta y tienen una probabilidad del 20% de generar
     el estado DEBIL
   descripcionRecoger: 
-  nombre: 
+  nombre: ESPORAS VENENOSAS
   unique: 0
-  rarity: 
+  rarity: epico
   precio: 0

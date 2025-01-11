@@ -146,7 +146,7 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: Duplia la cantidad de veces que rebotan los rayos entre enemigos
   descripcionRecoger: 
-  nombre: 
+  nombre: DIAMANTE
   unique: 0
-  rarity: 
+  rarity: epico
   precio: 0

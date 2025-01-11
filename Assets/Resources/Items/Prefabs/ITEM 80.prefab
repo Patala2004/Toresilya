@@ -146,8 +146,8 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: El estado DEBIL dura el doble
   descripcionRecoger: 
-  nombre: 
+  nombre: "M\xC1SCARA DE GATO"
   unique: 0
-  rarity: 
+  rarity: epico
   precio: 0
   aumentoDurDebil: 2

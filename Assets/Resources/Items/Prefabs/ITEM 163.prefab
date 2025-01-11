@@ -101,9 +101,9 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: "Recibe menos da\xF1o al tener menos de un 20% de vida"
   descripcionRecoger: 
-  nombre: 
+  nombre: AS BAJO LA MANGA
   unique: 0
-  rarity: 
+  rarity: epico
   precio: 0
   aplicadoItem163: 0
 --- !u!61 &-5201503839946998724

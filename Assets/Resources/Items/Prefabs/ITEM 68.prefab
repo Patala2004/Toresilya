@@ -146,7 +146,7 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: Tu bloqueo perfecto genera el estado DEBIL
   descripcionRecoger: 
-  nombre: 
+  nombre: BOLA DE NAVIDAD
   unique: 0
-  rarity: 
+  rarity: epico
   precio: 0

@@ -12,12 +12,6 @@ public class Item_32 :Item
     {
         //Declaracion del item
         player = GameObject.Find("player").GetComponent<Player>();
-        descriptionItem = "456";
-        descripcionRecoger = "";
-        nombre = "";
-        unique = false;
-        rarity = "";
-        precio = 0;
     }
 
     // Update is called once per frame

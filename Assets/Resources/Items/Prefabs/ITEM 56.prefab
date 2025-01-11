@@ -101,9 +101,9 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: Reduce la velocidad de ataque de los enemigos bloqueados
   descripcionRecoger: 
-  nombre: 
+  nombre: PEGAMENTO ART ATTACK
   unique: 0
-  rarity: 
+  rarity: raro
   precio: 0
   disminuirVelocidad: 0.2
 --- !u!61 &-1847823082676039687

@@ -146,7 +146,7 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: Tu ataque puede generar el estado DEBIL
   descripcionRecoger: 
-  nombre: 
+  nombre: CORONA DEL REY FUERTE
   unique: 0
-  rarity: 
+  rarity: legendario
   precio: 0

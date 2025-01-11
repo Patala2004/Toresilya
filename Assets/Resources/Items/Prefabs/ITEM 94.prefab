@@ -101,9 +101,9 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: "Aumenta tu da\xF1o de los ataques cr\xEDtico"
   descripcionRecoger: 
-  nombre: 
+  nombre: OJO DEMONIACO
   unique: 0
-  rarity: 
+  rarity: epico
   precio: 0
   masCriticalDamage: 0.15
 --- !u!61 &2255816478787161947

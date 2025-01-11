@@ -101,9 +101,9 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: Aumenta tu velocidad de ataque un 50%
   descripcionRecoger: 
-  nombre: 
+  nombre: ROMPETIEMPOS
   unique: 0
-  rarity: 
+  rarity: raro
   precio: 0
 --- !u!61 &2297757818593811298
 BoxCollider2D:

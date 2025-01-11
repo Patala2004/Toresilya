@@ -146,7 +146,7 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: Aumenta tu velocidad de ataque un 100%
   descripcionRecoger: 
-  nombre: 
+  nombre: "RAQUET\xD3N"
   unique: 0
-  rarity: 
+  rarity: epico
   precio: 0

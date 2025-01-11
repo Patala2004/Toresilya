@@ -101,9 +101,9 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: "Te mueves un poco m\xE1s r\xE1pido"
   descripcionRecoger: 
-  nombre: 
+  nombre: BOTAS VELOCES
   unique: 0
-  rarity: 
+  rarity: raro
   precio: 0
 --- !u!61 &-6996798217089370106
 BoxCollider2D:

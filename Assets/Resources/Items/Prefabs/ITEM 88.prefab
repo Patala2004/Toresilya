@@ -147,8 +147,8 @@ MonoBehaviour:
   descriptionItem: Tus ataques tienen un 25% de ser critico a enemigos bajo el estado
     DEBIL
   descripcionRecoger: 
-  nombre: 
+  nombre: BOLA DEL 8
   unique: 0
-  rarity: 
+  rarity: legendario
   precio: 0
   aumentoCrit: 0.25

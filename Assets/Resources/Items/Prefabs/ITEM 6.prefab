@@ -101,9 +101,9 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: "Tus rayos rebotan en m\xE1s enemigos"
   descripcionRecoger: 
-  nombre: 
+  nombre: PELOTA DE GOMA
   unique: 0
-  rarity: legendario
+  rarity: epico
   precio: 0
 --- !u!61 &2176346409663466997
 BoxCollider2D:

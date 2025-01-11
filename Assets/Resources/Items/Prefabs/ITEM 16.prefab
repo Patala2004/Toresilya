@@ -101,9 +101,9 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: Tus ataques empujan un poco mas
   descripcionRecoger: 
-  nombre: 
+  nombre: PALO DE EMPUJE
   unique: 0
-  rarity: 
+  rarity: comun
   precio: 0
 --- !u!61 &4692269985548402285
 BoxCollider2D:

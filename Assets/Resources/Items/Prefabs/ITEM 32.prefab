@@ -146,9 +146,9 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: Evita ser stuneado
   descripcionRecoger: 
-  nombre: PRUEBA HOLIWI
+  nombre: TREBOL DE 4 HOJAS
   unique: 0
-  rarity: 
+  rarity: comun
   precio: 0
   cooldown: 60
   enCooldown: 0

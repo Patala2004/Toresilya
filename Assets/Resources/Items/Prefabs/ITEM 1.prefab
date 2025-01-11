@@ -146,7 +146,7 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: El jugador lanza rayos al atacar
   descripcionRecoger: 
-  nombre: 
+  nombre: DEIDAD DE ZEUS
   unique: 0
   rarity: legendario
   precio: 0

@@ -101,9 +101,9 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: "Los enemigos bajo el estado DEBIL te infligen la mitad de da\xF1o"
   descripcionRecoger: 
-  nombre: 
+  nombre: "PE\xD3N NEGRO"
   unique: 0
-  rarity: 
+  rarity: epico
   precio: 0
   aplicadoItem73: 0
 --- !u!61 &-1560200582911774313

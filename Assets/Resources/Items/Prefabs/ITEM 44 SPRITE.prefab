@@ -146,7 +146,7 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: Aumenta tu defensa un 10%
   descripcionRecoger: 
-  nombre: 
+  nombre: ARMADURA VEGETAL
   unique: 0
   rarity: raro
   precio: 10

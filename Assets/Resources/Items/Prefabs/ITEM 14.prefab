@@ -102,9 +102,9 @@ MonoBehaviour:
   descriptionItem: "Tus ataques hacen un poco m\xE1s de da\xF1o y empujan un poco
     m\xE1s a los enemigos"
   descripcionRecoger: 
-  nombre: 
+  nombre: MICROCHIP DE EMPUJE
   unique: 0
-  rarity: 
+  rarity: raro
   precio: 0
 --- !u!61 &1148459719912258569
 BoxCollider2D:

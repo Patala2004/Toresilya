@@ -14,11 +14,6 @@ public class Item_14 : Item
         //Declaracion del item
         player = GameObject.Find("player").GetComponent<Player>();
         descriptionItem = "Tus ataques hacen mas daño y empujan hacia atras un poco mas a los enemigos";
-        descripcionRecoger = "RAW";
-        nombre = "ITEM 14";
-        unique = false;
-        rarity = "common";
-        precio = 9999999;
     }
 
     // Update is called once per frame

@@ -101,9 +101,9 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: "Tu velocidad de ataque aumenta al m\xE1ximo"
   descripcionRecoger: 
-  nombre: 
+  nombre: DIENTES DE LECHE
   unique: 0
-  rarity: 
+  rarity: legendario
   precio: 0
 --- !u!61 &1176947389431862907
 BoxCollider2D:

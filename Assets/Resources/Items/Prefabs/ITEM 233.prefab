@@ -146,7 +146,7 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: "Aumenta tu probabilidad de cr\xEDtico un 20%"
   descripcionRecoger: 
-  nombre: 
+  nombre: "AMULETO CR\xCDTICO"
   unique: 0
-  rarity: 
+  rarity: comun
   precio: 0
