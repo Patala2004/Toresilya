@@ -116,10 +116,12 @@ public class MiniBoss : Enemy
                 HitboxEnemy(transform.position, new(1.3f, 1.3f), 0, direction, 0, tempDamage, 15);
                 if (timer > timerReset)
                 {
-                    Debug.Log("Te salto!");
-                    PlayClip(audioSword);
-                    allowAttack = true;
+                    // visuales
+                    camara.shakeAllCameras(0.1f);
+                    PlayClip(audioShoot);
                     GenerateLight(luzDisparo);
+
+                    allowAttack = true;
                     rb.AddForce(direction * 80f, ForceMode2D.Impulse);
                     timer = 0;
                 }
@@ -141,6 +143,7 @@ public class MiniBoss : Enemy
                 }
                 if (timer > timerReset)
                 {
+                    // visuales
                     GenerateLight(luzDisparo);
                     PlayClip(audioShoot);
 
