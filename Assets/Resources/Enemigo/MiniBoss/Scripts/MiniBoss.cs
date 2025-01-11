@@ -91,15 +91,18 @@ public class MiniBoss : Enemy
                 rb.velocity += new Vector2(direction.x * displSpeed * 0.1f, direction.y * displSpeed * 0.1f);
                 break;
             case patterns.attack_sword: // saca una espada y ataca
-                timer += Time.deltaTime;
+                if (distanceToPlayer < 4.5f)
+                {
+                    timer += Time.deltaTime;
+                }
                 rb.velocity += new Vector2(direction.x * displSpeed * 0.1f, direction.y * displSpeed * 0.1f);
-                strongAttack = countAttacks == lastAttack;
                 if(timer > timerReset && distanceToPlayer < 3 && countAttacks <= 6)
                 {
-                    timerReset = strongAttack ? 2.5f : 0.7f;
-                    StartCoroutine(ToSwordAttack(0.3f));
                     timer = 0;
                     countAttacks++;
+                    StartCoroutine(ToSwordAttack(0.3f,strongAttack));
+                    strongAttack = countAttacks == lastAttack;
+                    timerReset = strongAttack ? 2.5f : 0.7f;
                 }
                 if(countAttacks > 6 && !cambioSword)
                 {
@@ -226,8 +229,9 @@ public class MiniBoss : Enemy
         }
         else if(distanceToPlayer < 4)
         {
-            int rand = Random.Range(0, 2);
-            if (rand == 0) { patron = patterns.attack_sword; stayOnPattern = true; timerReset = 3; cambioSword = false; }
+            int rand = Random.Range(0, 3);
+            if (rand == 0) { patron = patterns.attack_sword; stayOnPattern = true; timerReset = 2; cambioSword = false; countAttacks = 0; }
+            else if (rand == 1) { StartCoroutine(ChangePattern(patterns.attack_shoot_1, 2.5f)); }
             else { StartCoroutine(ChangePattern(patterns.attack_charge,6)); }
         }
         else if(distanceToPlayer < 10)
@@ -236,7 +240,7 @@ public class MiniBoss : Enemy
             if (rand == 0) { StartCoroutine(ChangePattern(patterns.attack_shoot_1, 4)); }
             else if(rand == 1) { StartCoroutine(ChangePattern(patterns.attack_shoot_especial, 7)); ; }
             else if (rand == 2) {StartCoroutine(ChangePattern(patterns.attack_charge, 6)); }
-            else { patron = patterns.attack_sword; stayOnPattern = true; timerReset = 3; cambioSword = false; }
+            else { patron = patterns.attack_sword; stayOnPattern = true; timerReset = 2; cambioSword = false; countAttacks = 0; }
         }
         else if(distanceToPlayer < 15)
         {
@@ -288,7 +292,7 @@ public class MiniBoss : Enemy
         GetComponent<GenLight>().luz = luz; // Cambia la luz a la actual
         GetComponent<GenLight>().GenerateLight(miniBossSword.transform.position);
     }
-    IEnumerator ToSwordAttack(float waitseconds)
+    IEnumerator ToSwordAttack(float waitseconds,bool strongAttack)
     {
         if (strongAttack)
         {
