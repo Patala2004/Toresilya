@@ -151,3 +151,5 @@ MonoBehaviour:
   unique: 0
   rarity: epico
   precio: 0
+  minPrecio: 110
+  maxPrecio: 120

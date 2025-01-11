@@ -99,12 +99,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  descriptionItem: "Te mueves un poco m\xE1s r\xE1pido"
+  descriptionItem: Te mueves un poco mas rapido
   descripcionRecoger: 
   nombre: BOTAS VELOCES
   unique: 0
   rarity: raro
   precio: 0
+  minPrecio: 70
+  maxPrecio: 90
 --- !u!61 &-6996798217089370106
 BoxCollider2D:
   m_ObjectHideFlags: 0

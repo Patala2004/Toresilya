@@ -32,6 +32,8 @@ public class Item : MonoBehaviour
 
     
     public int precio;
+    public int minPrecio;
+    public int maxPrecio;
 
 
     // Start is called before the first frame update

@@ -144,9 +144,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  descriptionItem: "Tus ataques cr\xEDticos rompen la defensa del enemigo"
+  descriptionItem: Tus ataques criticos rompen la defensa del enemigo
   descripcionRecoger: 
   nombre: DESECHOS RADIACTIVOS
   unique: 0
   rarity: legendario
   precio: 0
+  minPrecio: 140
+  maxPrecio: 150

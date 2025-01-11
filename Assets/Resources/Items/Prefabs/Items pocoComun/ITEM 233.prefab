@@ -144,9 +144,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  descriptionItem: "Aumenta tu probabilidad de cr\xEDtico un 20%"
+  descriptionItem: Aumenta tu probabilidad de critico un 20%
   descripcionRecoger: 
-  nombre: "AMULETO CR\xCDTICO"
+  nombre: AMULETO CRITICO
   unique: 0
   rarity: pocoComun
   precio: 0
+  minPrecio: 40
+  maxPrecio: 50

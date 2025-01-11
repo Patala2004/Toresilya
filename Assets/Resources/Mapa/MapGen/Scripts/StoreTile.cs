@@ -68,7 +68,7 @@ public class StoreTile : MonoBehaviour
         newItem.transform.SetParent(transform, false);
         newItem.transform.localPosition = new Vector2(0,0);
         item = newItem.GetComponent<Item>();
-        precio = item.precio;
+        precio = genRandomPrecio(item.minPrecio, item.maxPrecio);
         priceTag.text = precio.ToString();
         itemDescription.color = colorSegunRareza(item.rarity);
         itemDescription.text = "Press [E] to grab" + '\n' +  item.descriptionItem;
@@ -84,5 +84,11 @@ public class StoreTile : MonoBehaviour
             case "legendario": return new Color32(250, 250, 63, 255); //amarillo -> lengendario
         }
         return new Color32(100, 100, 100, 255); //El mismo que el del precio, imposible que llegue
+    }
+
+    public int genRandomPrecio(int min, int max)
+    {
+        int random = Random.Range(min, max);
+        return random;
     }
 }

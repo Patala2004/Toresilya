@@ -151,4 +151,6 @@ MonoBehaviour:
   unique: 0
   rarity: raro
   precio: 0
+  minPrecio: 70
+  maxPrecio: 90
   aumentoCrit: 0.25

@@ -150,3 +150,5 @@ MonoBehaviour:
   unique: 0
   rarity: legendario
   precio: 0
+  minPrecio: 140
+  maxPrecio: 150
