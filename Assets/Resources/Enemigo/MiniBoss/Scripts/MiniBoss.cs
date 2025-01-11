@@ -188,7 +188,10 @@ public class MiniBoss : Enemy
                 }
                 if (timer > timerReset)
                 {
+                    // visuales
+                    camara.shakeAllCameras(0.1f);
                     GenerateLight(luzSword);
+
                     float[] tempDam = { 2, 4 };
                     float ang = 0;
                     for (int i = 0; i < 16; i++)
@@ -282,8 +285,14 @@ public class MiniBoss : Enemy
         else{ GenerateLight(luzSword); }
         yield return new WaitForSeconds(waitseconds);
         allowAttack = true;
-        if (strongAttack) { HitboxEnemy(transform.position, new(2f, 2f), Mathf.Rad2Deg * Mathf.Atan2(direction.y, direction.x), direction, 1.5f, damage, knockback); }
-        else { HitboxEnemy(transform.position, new(2f, 2f), Mathf.Rad2Deg * Mathf.Atan2(direction.y, direction.x), direction, 1.5f, tempDamage, 15); }
+        if (strongAttack) { 
+            HitboxEnemy(transform.position, new(2f, 2f), Mathf.Rad2Deg * Mathf.Atan2(direction.y, direction.x), direction, 1.5f, damage, knockback);
+            camara.shakeAllCameras(1);
+        }
+        else { 
+            HitboxEnemy(transform.position, new(2f, 2f), Mathf.Rad2Deg * Mathf.Atan2(direction.y, direction.x), direction, 1.5f, tempDamage, 15);
+            camara.shakeAllCameras(0.1f);
+        }
         miniBossHitmarker.Comenzar();
         miniBossSword.Comenzar();
     }
