@@ -15,7 +15,7 @@ public class Item : MonoBehaviour
     public string rarity = "";
     // Duracion estandar de estados (es compartida)
     // Estado debil
-    public static float durDebil = 2f;
+    public static float durDebil = 4f;
     public static float probDebil = 0f;
     public static float debilDefReductionMult = 0.8f;
     public static float debilCritChance = 0f;
@@ -63,7 +63,7 @@ public class Item : MonoBehaviour
         Barra hud = FindObjectOfType<Barra>();
         if (hud != null)
         {
-            hud.ShowItemText(nombre, descripcionRecoger);
+            hud.ShowItemText(nombre, rarity);
         }
         else
         {
