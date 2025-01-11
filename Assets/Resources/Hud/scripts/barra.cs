@@ -53,6 +53,7 @@ public class Barra : MonoBehaviour
     {
          itemText.text = itemName;
          itemText.color = colorSegunRareza(rareza);
+         
          itemProyectado = true;
          timer = 0f; // Reinicia el temporizador
     }
