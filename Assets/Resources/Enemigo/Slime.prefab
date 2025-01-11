@@ -47,9 +47,9 @@ MonoBehaviour:
   m_ComponentVersion: 1
   m_LightType: 1
   m_BlendStyleIndex: 0
-  m_FalloffIntensity: 0.7
-  m_Color: {r: 1, g: 0.96374667, b: 0.6179246, a: 1}
-  m_Intensity: 0.15
+  m_FalloffIntensity: 0.8
+  m_Color: {r: 0.3253131, g: 1, b: 0, a: 1}
+  m_Intensity: 1.2
   m_LightVolumeIntensity: 1
   m_LightVolumeIntensityEnabled: 0
   m_ApplyToSortingLayers: dfa4cf6f
@@ -66,24 +66,25 @@ MonoBehaviour:
   m_ShadowVolumeIntensityEnabled: 0
   m_ShadowVolumeIntensity: 0.75
   m_LocalBounds:
-    m_Center: {x: -0.00080013275, y: -0.0001502037, z: 0}
-    m_Extent: {x: 12.998, y: 12.000851, z: 0}
+    m_Center: {x: 0.0074499846, y: -0.0952, z: 0}
+    m_Extent: {x: 2.0216498, y: 1.9363999, z: 0}
   m_PointLightInnerAngle: 360
   m_PointLightOuterAngle: 360
-  m_PointLightInnerRadius: 0
-  m_PointLightOuterRadius: 8
+  m_PointLightInnerRadius: 0.2
+  m_PointLightOuterRadius: 2
   m_ShapeLightParametricSides: 5
   m_ShapeLightParametricAngleOffset: 0
   m_ShapeLightParametricRadius: 1
-  m_ShapeLightFalloffSize: 10
+  m_ShapeLightFalloffSize: 1.7
   m_ShapeLightFalloffOffset: {x: 0, y: 0}
   m_ShapePath:
-  - {x: -2, y: -2, z: 0}
-  - {x: 2, y: -2, z: 0}
-  - {x: 3, y: 0, z: 0}
-  - {x: 2, y: 2, z: 0}
-  - {x: -2, y: 2, z: 0}
-  - {x: -3, y: 0.013808399, z: 0}
+  - {x: -0.25316858, y: -0.33064362, z: 0}
+  - {x: 0.24118614, y: -0.3300164, z: 0}
+  - {x: 0.331172, y: -0.16658589, z: 0}
+  - {x: 0.2766366, y: 0.08282411, z: 0}
+  - {x: 0.0028934479, y: 0.1405853, z: 0.00000008195639}
+  - {x: -0.28187513, y: 0.08282411, z: 0}
+  - {x: -0.3139596, y: -0.18459073, z: 0}
 --- !u!1 &8484869543311770916
 GameObject:
   m_ObjectHideFlags: 0
@@ -100,6 +101,7 @@ GameObject:
   - component: {fileID: 3678993858170020845}
   - component: {fileID: 4968796170126709865}
   - component: {fileID: -857914473145380433}
+  - component: {fileID: 3475013998330531231}
   m_Layer: 7
   m_Name: Slime
   m_TagString: enemy
@@ -415,3 +417,35 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &3475013998330531231
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8484869543311770916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: dfa4cf6f00000000b38678a579daf1f6671fac114368b43ae77cfb07c5068ded9f32ce92
+  m_ShapePath:
+  - {x: -0.3309176, y: -0.39636886, z: 0}
+  - {x: -0.36637044, y: -0.03451866, z: 0}
+  - {x: -0.21072268, y: 0.18703386, z: 0.00000008195639}
+  - {x: 0.19834757, y: 0.18976098, z: 0.00000008195639}
+  - {x: 0.32819033, y: -0.0345186, z: 0}
+  - {x: 0.32000875, y: -0.39636886, z: 0}
+  m_ShapePathHash: -2138133419
+  m_Mesh: {fileID: 0}
+  m_InstanceId: -714990
+  m_LocalBounds:
+    m_Center: {x: -0.019090056, y: -0.10330394, z: 0}
+    m_Extent: {x: 0.34728038, y: 0.29306492, z: 0}

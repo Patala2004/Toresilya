@@ -16,6 +16,8 @@ GameObject:
   - component: {fileID: 4521119959520301446}
   - component: {fileID: 6526347785837016804}
   - component: {fileID: 4888026041400561974}
+  - component: {fileID: 364509879657964135}
+  - component: {fileID: 2827681042424604962}
   m_Layer: 0
   m_Name: GoblinHacha
   m_TagString: enemy
@@ -334,3 +336,94 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &364509879657964135
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6159802974911976144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 073797afb82c5a1438f328866b10b3f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ComponentVersion: 1
+  m_LightType: 1
+  m_BlendStyleIndex: 0
+  m_FalloffIntensity: 0.5
+  m_Color: {r: 0, g: 0.8264785, b: 0.98039216, a: 1}
+  m_Intensity: 0.2
+  m_LightVolumeIntensity: 1
+  m_LightVolumeIntensityEnabled: 0
+  m_ApplyToSortingLayers: dfa4cf6f
+  m_LightCookieSprite: {fileID: 0}
+  m_DeprecatedPointLightCookieSprite: {fileID: 0}
+  m_LightOrder: 0
+  m_AlphaBlendOnOverlap: 0
+  m_OverlapOperation: 0
+  m_NormalMapDistance: 3
+  m_NormalMapQuality: 2
+  m_UseNormalMap: 0
+  m_ShadowIntensityEnabled: 1
+  m_ShadowIntensity: 0.5
+  m_ShadowVolumeIntensityEnabled: 0
+  m_ShadowVolumeIntensity: 0.75
+  m_LocalBounds:
+    m_Center: {x: -0.00040006638, y: -0.33225012, z: 0}
+    m_Extent: {x: 5.4973, y: 4.33295, z: 0}
+  m_PointLightInnerAngle: 360
+  m_PointLightOuterAngle: 360
+  m_PointLightInnerRadius: 0
+  m_PointLightOuterRadius: 8
+  m_ShapeLightParametricSides: 5
+  m_ShapeLightParametricAngleOffset: 0
+  m_ShapeLightParametricRadius: 1
+  m_ShapeLightFalloffSize: 4
+  m_ShapeLightFalloffOffset: {x: 0, y: 0}
+  m_ShapePath:
+  - {x: -0.7, y: -0.6519821, z: 0}
+  - {x: 0.7, y: -0.666247, z: 0}
+  - {x: 1.5, y: -0.3, z: 0}
+  - {x: 0.7, y: 0, z: 0}
+  - {x: -0.7, y: 0, z: 0}
+  - {x: -1.5, y: -0.3, z: 0}
+--- !u!114 &2827681042424604962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6159802974911976144}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7db70e0ea77f5ac47a8f4565a9406397, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShadowGroup: 0
+  m_ComponentVersion: 1
+  m_HasRenderer: 1
+  m_UseRendererSilhouette: 1
+  m_CastsShadows: 1
+  m_SelfShadows: 0
+  m_ApplyToSortingLayers: dfa4cf6f00000000b38678a579daf1f6671fac114368b43ae77cfb07c5068ded9f32ce92
+  m_ShapePath:
+  - {x: -0.18264866, y: -0.3957095, z: 0}
+  - {x: -0.2795658, y: -0.20573145, z: 0}
+  - {x: -0.2076993, y: -0.022471488, z: 0}
+  - {x: -0.2651925, y: 0.19312847, z: 0}
+  - {x: -0.1995635, y: 0.42567688, z: 0}
+  - {x: 0.04383421, y: 0.4841885, z: 0}
+  - {x: 0.31235313, y: 0.4110369, z: 0}
+  - {x: 0.34926748, y: 0.22546858, z: 0}
+  - {x: 0.25943422, y: 0.08532846, z: 0}
+  - {x: 0.23787403, y: -0.08715147, z: 0}
+  - {x: 0.2594347, y: -0.15542483, z: 0}
+  - {x: 0.26662064, y: -0.21651149, z: 0}
+  - {x: 0.2574196, y: -0.39756018, z: 0}
+  m_ShapePathHash: 1744816127
+  m_Mesh: {fileID: 0}
+  m_InstanceId: 101234
+  m_LocalBounds:
+    m_Center: {x: 0.034850836, y: 0.04331416, z: 0}
+    m_Extent: {x: 0.31441665, y: 0.44087434, z: 0}
