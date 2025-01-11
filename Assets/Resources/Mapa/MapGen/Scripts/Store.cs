@@ -8,6 +8,8 @@ public class Shop : MonoBehaviour
     [SerializeField] private GameObject[] consumableSlots;
 
     private ItemGenerator itemGen;
+
+    List<string> savedItems = new List<string>();
     // Start is called before the first frame update
     void Start()
     {
@@ -19,15 +21,23 @@ public class Shop : MonoBehaviour
             // Get new Item
             StoreTile slotScript = item_slot.GetComponent<StoreTile>();
             slotScript.player = player;
-            slotScript.SetItem(itemGen.getItem());
+            GameObject newItem = itemGen.getItem();
+            int try_limit = 75;
+            while(savedItems.Contains(newItem.GetComponent<Item>().name) && try_limit>0){
+                newItem = itemGen.getItem();
+                try_limit--;
+            }
+            slotScript.SetItem(newItem);
+            savedItems.Add(newItem.GetComponent<Item>().name);
         }
+        savedItems.Clear();
 
         foreach(GameObject cons_slot in consumableSlots){
             // Get new Item
             StoreTile slotScript = cons_slot.GetComponent<StoreTile>();
             slotScript.player = player;
             slotScript.SetItem(itemGen.getConsumable());
-        }
+        }        
     }
 
     // Update is called once per frame
