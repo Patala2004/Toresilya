@@ -38,6 +38,8 @@ public class MapGen: MonoBehaviour{
     private bool mapCanBeRendered = true;
     public String loadingStatus = "";
 
+    private int floor = 0;
+
     void Start(){
         rooms = new GameObject();
         rooms.name = "Rooms";
@@ -45,6 +47,7 @@ public class MapGen: MonoBehaviour{
         generateMap();
     }
     public void generateMap(){
+        floor++;
         StartCoroutine(generateMapCoroutine());
     }
 
@@ -155,7 +158,7 @@ public class MapGen: MonoBehaviour{
 
 
         // Generate room objects
-        RoomCreator.createRooms(allNodes, roomTypes, xoffset, yoffset, rooms, roomPrefabs18x18, roomPrefabs26x26, roomPrefabs18x26, roomPrefabs26x18);
+        RoomCreator.createRooms(allNodes, roomTypes, xoffset, yoffset, rooms, roomPrefabs18x18, roomPrefabs26x26, roomPrefabs18x26, roomPrefabs26x18, floor);
 
         while(!floorJob.IsCompleted || !coorJob.IsCompleted || !wallJob.IsCompleted){
             // Dont block main thread while jobs are running
@@ -1214,7 +1217,7 @@ public class TileRenderer{
 
 public class RoomCreator{
     public static void createRooms(NativeList<NodeStruct> allNodes, NativeList<int> roomType, int xoffset, int yoffset, GameObject rooms
-    , GameObject[] roomPrefab18x18, GameObject[] roomPrefab26x26, GameObject[] roomPrefab18x26, GameObject[] roomPrefab26x18){
+    , GameObject[] roomPrefab18x18, GameObject[] roomPrefab26x26, GameObject[] roomPrefab18x26, GameObject[] roomPrefab26x18, int floor){
         for(int i = 0; i < allNodes.Length; i++){ // AllNodes.Length == roomTypes.Length
             int x = allNodes[i].x - xoffset;
             int y = allNodes[i].y - yoffset;
@@ -1278,6 +1281,9 @@ public class RoomCreator{
             }
             else if(roomType[i] == RoomType.END_ROOM_CODE){
                 GameObject prefab = GameObject.Instantiate(Resources.Load<GameObject>("Mapa/MapGen/Prefabs/EndRoom_1"));
+                if(floor == 3){
+                    prefab = GameObject.Instantiate(Resources.Load<GameObject>("Mapa/MapGen/HabitacionBoss/Habitacion_boss"));
+                }
                 prefab.transform.parent = newRoom.transform; // Set as child            
                 prefab.transform.localPosition = new Vector3(0,0,0);  
             }
