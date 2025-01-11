@@ -22,6 +22,6 @@ public class MiniBossHitmarker : MonoBehaviour
     }
     public void Comenzar()
     {
-        ani.SetTrigger("swipe")
+        ani.SetTrigger("swipe");
     }
 }
