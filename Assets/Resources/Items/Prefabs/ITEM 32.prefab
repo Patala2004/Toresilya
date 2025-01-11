@@ -144,8 +144,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  descriptionItem: 
-  descripcionRecoger: ESTO ES UNA DESCRIPCION BUENA
+  descriptionItem: Evita ser stuneado
+  descripcionRecoger: 
   nombre: PRUEBA HOLIWI
   unique: 0
   rarity: 

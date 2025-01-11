@@ -99,9 +99,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  descriptionItem: 
-  descripcionRecoger: ESTO ES UNA DESCRIPCION BUENA
-  nombre: PRUEBA HOLIWI
+  descriptionItem: "Resiste un 5% de da\xF1o, el doble si el enemigo tiene el estado
+    DEBIL"
+  descripcionRecoger: 
+  nombre: 
   unique: 0
   rarity: 
   precio: 0

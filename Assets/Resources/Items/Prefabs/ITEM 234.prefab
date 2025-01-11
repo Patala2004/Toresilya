@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  descriptionItem: 
+  descriptionItem: "Duplica tu probabilidad de cr\xEDtico"
   descripcionRecoger: ESTO ES UNA DESCRIPCION BUENA
   nombre: PRUEBA HOLIWI
   unique: 0

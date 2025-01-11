@@ -145,8 +145,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 0}
   descriptionItem: Aumenta tu defensa un 10%
-  descripcionRecoger: ESTO ES UNA DESCRIPCION BUENA
-  nombre: PRUEBA HOLIWI
+  descripcionRecoger: 
+  nombre: 
   unique: 0
   rarity: raro
   precio: 10
