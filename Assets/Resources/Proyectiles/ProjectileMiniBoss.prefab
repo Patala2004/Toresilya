@@ -126,8 +126,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0c800e0e5d05e6a43a81d09a6b00ff06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  rb: {fileID: 0}
   direction: {x: -1, y: 0}
-  hitboxSixe: {x: 1, y: 1}
+  hitboxSixe: {x: 0.5, y: 0.5}
   damage:
   - 2
   - 3

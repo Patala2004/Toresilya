@@ -12,6 +12,7 @@ public class MiniBoss : Enemy
     public MiniBossSword miniBossSword;
     public MiniBossHitmarker miniBossHitmarker;
     // Patrones de ataque
+    public float maxHealth;
     public float distanceToPlayer;
     public enum patterns
     {
@@ -35,9 +36,9 @@ public class MiniBoss : Enemy
     public float timerReset = 1;
     public float countAttacks = 0;
     public Vector2 direction;
-    bool cambioSword = true;
+    bool cambioSword = false;
     int lastAttack = 6;
-    bool strongAttack = false;
+    public bool strongAttack = false;
     // Luces
     public GameObject luzDisparo;
     public GameObject luzSword;
@@ -53,6 +54,7 @@ public class MiniBoss : Enemy
     {
         base.Start();
         ani = GetComponent<Animator>();
+        health = maxHealth;
         // carga
         tempDamage[0] = damage[0] / 2f;
         tempDamage[1] = damage[1] / 2f;
@@ -86,14 +88,15 @@ public class MiniBoss : Enemy
             case patterns.attack_sword: // saca una espada y ataca
                 timer += Time.deltaTime;
                 rb.velocity += new Vector2(direction.x * displSpeed * 0.1f, direction.y * displSpeed * 0.1f);
-                timerReset = 2;
-                if(timer > timerReset && distanceToPlayer < 3 && countAttacks <= 4)
+                strongAttack = countAttacks == lastAttack;
+                if(timer > timerReset && distanceToPlayer < 3 && countAttacks <= 6)
                 {
+                    timerReset = strongAttack ? 2.5f : 0.7f;
                     StartCoroutine(ToSwordAttack(0.3f));
                     timer = 0;
                     countAttacks++;
                 }
-                if(countAttacks > 6 && cambioSword)
+                if(countAttacks > 6 && !cambioSword)
                 {
                     StartCoroutine(WaitToChangePattern(0.6f)); // Terminamos la fase de la espada
                 }
@@ -209,7 +212,7 @@ public class MiniBoss : Enemy
         else if(distanceToPlayer < 4)
         {
             int rand = Random.Range(0, 2);
-            if (rand == 0) { patron = patterns.attack_sword; stayOnPattern = true; }
+            if (rand == 0) { patron = patterns.attack_sword; stayOnPattern = true; timerReset = 3; cambioSword = false; }
             else { StartCoroutine(ChangePattern(patterns.attack_charge,6)); }
         }
         else if(distanceToPlayer < 10)
@@ -218,7 +221,7 @@ public class MiniBoss : Enemy
             if (rand == 0) { StartCoroutine(ChangePattern(patterns.attack_shoot_1, 4)); }
             else if(rand == 1) { StartCoroutine(ChangePattern(patterns.attack_shoot_especial, 7)); ; }
             else if (rand == 2) {StartCoroutine(ChangePattern(patterns.attack_charge, 6)); }
-            else { patron = patterns.attack_sword; stayOnPattern = true; }
+            else { patron = patterns.attack_sword; stayOnPattern = true; timerReset = 3; cambioSword = false; }
         }
         else if(distanceToPlayer < 15)
         {
@@ -250,6 +253,7 @@ public class MiniBoss : Enemy
         timer = 0; // para casi todas las fases
         countAttacks = 0; // sword
         saltado = false; // attack shoot especial
+        cambioSword = false; // sword
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("player"), LayerMask.NameToLayer("miniboss"), false); // charge
 
         // cambiar al patron de la llamada a funcion despues de haber esperado
@@ -271,18 +275,22 @@ public class MiniBoss : Enemy
     }
     IEnumerator ToSwordAttack(float waitseconds)
     {
-        GenerateLight(luzSwordMaximo);
+        if (strongAttack)
+        {
+            GenerateLight(luzSwordMaximo);
+        }
+        else{ GenerateLight(luzSword); }
         yield return new WaitForSeconds(waitseconds);
         allowAttack = true;
-        HitboxEnemy(transform.position, new(2f, 2f), Mathf.Rad2Deg * Mathf.Atan2(direction.y, direction.x), direction, 1.5f, tempDamage, knockback);
+        if (strongAttack) { HitboxEnemy(transform.position, new(2f, 2f), Mathf.Rad2Deg * Mathf.Atan2(direction.y, direction.x), direction, 1.5f, damage, knockback); }
+        else { HitboxEnemy(transform.position, new(2f, 2f), Mathf.Rad2Deg * Mathf.Atan2(direction.y, direction.x), direction, 1.5f, tempDamage, 15); }
         miniBossHitmarker.Comenzar();
         miniBossSword.Comenzar();
     }
     IEnumerator WaitToChangePattern(float waitseconds) // solo para sword
     {
-        cambioSword = false;
-        yield return new WaitForSeconds(waitseconds);
         cambioSword = true;
+        yield return new WaitForSeconds(waitseconds);
         stayOnPattern = false;
     }
 }
