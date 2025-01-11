@@ -73,13 +73,15 @@ public class camara : MonoBehaviour
         Debug.Log("SHAKEI");
         shakeMagnitude = Mathf.Clamp(intensity, 0.1f,0.3f);
 
-        shakeDuration = intensity * 0.8f;
+        shakeDuration = intensity * 0.6f;
     }
 
     public static void shakeAllCameras(float intensity){
         Debug.Log(instances.Count);
+        int i = 0;
         foreach(camara c in instances){
-            c.TriggerShake(intensity*1.5f);
+            Debug.Log("INSTANCE" + i++);
+            c.TriggerShake(intensity*2.2f);
         }
     }
 }
