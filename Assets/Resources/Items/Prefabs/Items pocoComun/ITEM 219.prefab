@@ -101,10 +101,12 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: Aumenta tu velocidad de movimiento un poco
   descripcionRecoger: 
-  nombre: "PLUMA DE \xC1GUILA"
+  nombre: PLUMA DE AGUILA
   unique: 0
   rarity: pocoComun
   precio: 0
+  minPrecio: 40
+  maxPrecio: 50
 --- !u!61 &2807508902251425127
 BoxCollider2D:
   m_ObjectHideFlags: 0

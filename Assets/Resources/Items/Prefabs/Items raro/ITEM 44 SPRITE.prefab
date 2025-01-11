@@ -150,4 +150,6 @@ MonoBehaviour:
   unique: 0
   rarity: raro
   precio: 10
+  minPrecio: 70
+  maxPrecio: 90
   addDefense: 0.1

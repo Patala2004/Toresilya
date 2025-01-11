@@ -146,8 +146,10 @@ MonoBehaviour:
   player: {fileID: 0}
   descriptionItem: El estado DEBIL dura el doble
   descripcionRecoger: 
-  nombre: "M\xC1SCARA DE GATO"
+  nombre: MASCARA DE GATO
   unique: 0
   rarity: pocoComun
   precio: 0
+  minPrecio: 40
+  maxPrecio: 50
   aumentoDurDebil: 2

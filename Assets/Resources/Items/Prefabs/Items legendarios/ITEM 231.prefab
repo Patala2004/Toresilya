@@ -99,12 +99,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  descriptionItem: "Tu velocidad de ataque aumenta al m\xE1ximo"
+  descriptionItem: Tu velocidad de ataque aumenta al maximo
   descripcionRecoger: 
   nombre: DIENTES DE LECHE
   unique: 0
   rarity: legendario
   precio: 0
+  minPrecio: 140
+  maxPrecio: 150
 --- !u!61 &1176947389431862907
 BoxCollider2D:
   m_ObjectHideFlags: 0

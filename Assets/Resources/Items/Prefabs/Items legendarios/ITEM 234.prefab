@@ -144,9 +144,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  descriptionItem: "Duplica tu probabilidad de cr\xEDtico"
+  descriptionItem: Duplica tu probabilidad de critico
   descripcionRecoger: 
-  nombre: "DEMONIO DEL CR\xCDTICO"
+  nombre: DEMONIO DEL CRITICO
   unique: 0
   rarity: legendario
   precio: 0
+  minPrecio: 140
+  maxPrecio: 150

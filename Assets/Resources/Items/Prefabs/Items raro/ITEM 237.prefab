@@ -105,6 +105,8 @@ MonoBehaviour:
   unique: 0
   rarity: raro
   precio: 0
+  minPrecio: 70
+  maxPrecio: 90
 --- !u!61 &5063649774396655853
 BoxCollider2D:
   m_ObjectHideFlags: 0

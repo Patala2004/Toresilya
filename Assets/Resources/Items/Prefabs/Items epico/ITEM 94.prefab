@@ -99,12 +99,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  descriptionItem: "Aumenta tu da\xF1o de los ataques cr\xEDtico"
+  descriptionItem: "Aumenta tu da\xF1o de los ataques critico"
   descripcionRecoger: 
   nombre: OJO DEMONIACO
   unique: 0
   rarity: epico
   precio: 0
+  minPrecio: 110
+  maxPrecio: 120
   masCriticalDamage: 0.15
 --- !u!61 &2255816478787161947
 BoxCollider2D:

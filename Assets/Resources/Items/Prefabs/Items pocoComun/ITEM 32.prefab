@@ -150,5 +150,7 @@ MonoBehaviour:
   unique: 0
   rarity: pocoComun
   precio: 0
+  minPrecio: 40
+  maxPrecio: 50
   cooldown: 60
   enCooldown: 0
