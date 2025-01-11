@@ -11,9 +11,9 @@ GameObject:
   - component: {fileID: 2892667571612408742}
   - component: {fileID: 5518895749716777159}
   - component: {fileID: -4293299815600520142}
-  - component: {fileID: 6516880144966536809}
+  - component: {fileID: 1035769945322631565}
   m_Layer: 0
-  m_Name: ITEM 32
+  m_Name: ITEM 37
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -131,7 +131,7 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.32, y: 0.32}
   m_EdgeRadius: 0
---- !u!114 &6516880144966536809
+--- !u!114 &1035769945322631565
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -140,11 +140,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 7131362051955963394}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dbf7d08cfc11bad4f9a9cf3d00e05a89, type: 3}
+  m_Script: {fileID: 11500000, guid: 8a1bd846c7c45d842bafc823d3cda1d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  descriptionItem: Evita ser stuneado
+  descriptionItem: "Al atacar existe una peque\xF1a posibilidad de volverte invulnerable"
   descripcionRecoger: 
   nombre: TREBOL DE 4 HOJAS
   unique: 0
@@ -152,5 +152,3 @@ MonoBehaviour:
   precio: 0
   minPrecio: 40
   maxPrecio: 50
-  cooldown: 60
-  enCooldown: 0
