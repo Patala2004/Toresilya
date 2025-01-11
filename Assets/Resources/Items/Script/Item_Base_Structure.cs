@@ -58,8 +58,7 @@ public class Item_Base_Structure : Item
         if (other.gameObject.CompareTag("player"))
         {
             grabItem(player);
-            Debug.Log("TUS MUERTOS");
-            transform.position = new Vector3(10000, 100000, transform.position.z);// Destruir el objeto después de recogerlo
+            transform.position = new Vector3(10000, 100000, transform.position.z);// Destruir el objeto despuï¿½s de recogerlo
         }
     }
     //FUNCIONES QUE NECESITE EL OBJETO EXTRA

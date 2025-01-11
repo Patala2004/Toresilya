@@ -8,6 +8,7 @@ using UnityEngine.Tilemaps;
 using System.Linq;
 using Unity.Jobs;
 using Unity.Burst;
+using UnityEditor;
 
 
 
@@ -1283,7 +1284,14 @@ public class RoomCreator{
                 prefab.transform.localPosition = new Vector3(0,0,0);  
             }
             else if(roomType[i] == RoomType.END_ROOM_CODE){
-                GameObject prefab = floorNum<3? GameObject.Instantiate(Resources.Load<GameObject>("Mapa/MapGen/Prefabs/EndRoom_1")):GameObject.Instantiate(Resources.Load<GameObject>("Mapa/MapGen/HabitacionBoss/Habitacion_boss"));
+                GameObject prefab = GameObject.Instantiate(Resources.Load<GameObject>("Mapa/MapGen/Prefabs/EndRoom_1"));
+                if(floorNum >= 3){
+                    GameObject.Destroy(prefab);
+                    prefab = GameObject.Instantiate(Resources.Load<GameObject>("Mapa/MapGen/HabitacionBoss/Habitacion_boss"));
+                    roomScript.roomType=RoomType.BOSS_ROOM_CODE;
+                }
+                
+                Debug.Log(floorNum);
                 prefab.transform.parent = newRoom.transform; // Set as child            
                 prefab.transform.localPosition = new Vector3(0,0,0);  
             }
@@ -1829,6 +1837,7 @@ public static class RoomType{
     public const int LARGE_ENEMY_ROOM_CODE = 6;
     public const int STRECHED_ENEMY_ROOM_V_CODE = 7;
     public const int STRECHED_ENEMY_ROOM_H_CODE = 8;
+    public const int BOSS_ROOM_CODE = 9;
 
     // Room sizes
 

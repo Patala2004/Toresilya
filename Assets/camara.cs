@@ -56,7 +56,6 @@ public class camara : MonoBehaviour
             // random ffset
 
             if(this == instances[0]){
-                Debug.Log("true");
                 randShake = Random.insideUnitSphere;
             }
             cameraTrans.localPosition += randShake * shakeMagnitude;
@@ -70,17 +69,14 @@ public class camara : MonoBehaviour
 
         // shake shake
     public void TriggerShake(float intensity){
-        Debug.Log("SHAKEI");
         shakeMagnitude = Mathf.Clamp(intensity, 0.1f,0.3f);
 
         shakeDuration = intensity * 0.6f;
     }
 
     public static void shakeAllCameras(float intensity){
-        Debug.Log(instances.Count);
         int i = 0;
         foreach(camara c in instances){
-            Debug.Log("INSTANCE" + i++);
             c.TriggerShake(intensity*2.2f);
         }
     }

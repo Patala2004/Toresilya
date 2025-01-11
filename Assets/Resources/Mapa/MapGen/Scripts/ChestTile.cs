@@ -48,5 +48,22 @@ public class ChestTile : MonoBehaviour
 
     public void SetText(String description){
         text.text = "Press [E] to grab" + '\n' +  description;
+        
+    }
+    public void SetTextColor(String rareza)
+    {
+        text.color=colorSegunRareza(rareza);
+    }
+    public Color32 colorSegunRareza(string Rareza)
+    {
+        switch (Rareza)
+        {
+            case "comun": return new Color32(165, 165, 165, 255); //Gris oscuro -> comun
+            case "pocoComun": return new Color32(0, 148, 9, 255); //verde oscuro -> pocoComun
+            case "raro": return new Color32(15, 178, 227, 255); //azul -> raro
+            case "epico": return new Color32(142, 32, 239, 255); //morado -> epico
+            case "legendario": return new Color32(250, 250, 63, 255); //amarillo -> lengendario
+        }
+        return new Color32(100, 100, 100, 255); //El mismo que el del precio, imposible que llegue
     }
 }

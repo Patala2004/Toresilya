@@ -5,7 +5,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
-using static UnityEditor.Rendering.CameraUI;
 
 public class Player : MonoBehaviour
 {

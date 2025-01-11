@@ -59,7 +59,6 @@ public class Item_91 : Item
                 int random = Random.Range(1, 101);
                 if (random <=5)
                 {
-                    Debug.Log("aaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
                     e.caosTime = 1;
                     e.isCaos = true;    
                     e.debilTime = 0;

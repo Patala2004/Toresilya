@@ -40,9 +40,12 @@ public class Chest : Golpeable
         itemHolder.SetActive(true);
         itemHolder.GetComponent<ChestTile>().SetText(newItem.GetComponent<Item>().descriptionItem);
         itemHolder.GetComponent<ChestTile>().item = newItem.GetComponent<Item>();
+        itemHolder.GetComponent<ChestTile>().SetTextColor(newItem.GetComponent<Item>().rarity);
         col.enabled = false;
 
         this.enabled = false;
         
     }
+
+    
 }

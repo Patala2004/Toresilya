@@ -22,7 +22,6 @@ public class RegenPotion : Item
 
     public override void grabItem(Player p)
     {
-        Debug.Log(p.gameObject);
         StartCoroutine(Regen(p));
     }
 

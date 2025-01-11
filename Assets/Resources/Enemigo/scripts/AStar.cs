@@ -33,7 +33,6 @@ public class AStar
 
 		foreach (Node node in nodeMatrix)
 		{
-			Debug.Log("iter");
 			if (node == null || !node.isWalkable) 
 				continue;
 

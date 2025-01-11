@@ -15,7 +15,7 @@ public class Item : MonoBehaviour
     public string rarity = "";
     // Duracion estandar de estados (es compartida)
     // Estado debil
-    public static float durDebil = 2f;
+    public static float durDebil = 4f;
     public static float probDebil = 0f;
     public static float debilDefReductionMult = 0.8f;
     public static float debilCritChance = 0f;
@@ -63,7 +63,7 @@ public class Item : MonoBehaviour
         Barra hud = FindObjectOfType<Barra>();
         if (hud != null)
         {
-            hud.ShowItemText(nombre, descripcionRecoger);
+            hud.ShowItemText(nombre, rarity);
         }
         else
         {
@@ -72,23 +72,23 @@ public class Item : MonoBehaviour
 
     }
 
-    public virtual void grabItem2(Player p, string nombre, string descripcion)
-    {
-        // Add stats
+    // public virtual void grabItem2(Player p, string nombre, string descripcion)
+    // {
+    //     // Add stats
 
-        Debug.Log("El metodo grabItem ha sido llamado para el item " + nombre);
-        transform.position = new Vector3(-10000, 10000, 0); // Mover a a tomar por culo para no tener que destruir 
-        Barra hud = FindObjectOfType<Barra>();
-        if (hud != null)
-        {
-            hud.ShowItemText(nombre, descripcion);
-        }
-        else
-        {
-            Debug.LogWarning("No se encontr� el script Barra en la escena.");
-        }
+    //     Debug.Log("El metodo grabItem ha sido llamado para el item " + nombre);
+    //     transform.position = new Vector3(-10000, 10000, 0); // Mover a a tomar por culo para no tener que destruir 
+    //     Barra hud = FindObjectOfType<Barra>();
+    //     if (hud != null)
+    //     {
+    //         hud.ShowItemText(nombre, descripcion);
+    //     }
+    //     else
+    //     {
+    //         Debug.LogWarning("No se encontr� el script Barra en la escena.");
+    //     }
 
-    }
+    // }
 
 
 }
