@@ -49,6 +49,11 @@ public class MiniBoss : Enemy
     // Shoot
     int ShootMovement = 0;
     bool MoverDer = true;
+    // Sonidos
+    public AudioClip audioSwordStrong;
+    public AudioClip audioSword;
+    public AudioClip audioSword2;
+    public AudioClip audioShoot;
     // Start is called before the first frame update
     new void Start()
     {
@@ -112,6 +117,7 @@ public class MiniBoss : Enemy
                 if (timer > timerReset)
                 {
                     Debug.Log("Te salto!");
+                    PlayClip(audioSword);
                     allowAttack = true;
                     GenerateLight(luzDisparo);
                     rb.AddForce(direction * 80f, ForceMode2D.Impulse);
@@ -136,7 +142,8 @@ public class MiniBoss : Enemy
                 if (timer > timerReset)
                 {
                     GenerateLight(luzDisparo);
-                    Debug.Log("Te disparo 1!");
+                    PlayClip(audioShoot);
+
                     float[] tempDam = { 2, 4 };
                     GetComponent<ProjectileGen>().Lanzar_Projectil(miniBossSword.transform.position, direction, tempDam , knockback);
                     timer = 0;
@@ -161,6 +168,7 @@ public class MiniBoss : Enemy
                 if (timer > timerReset)
                 {
                     GenerateLight(luzSword);
+                    PlayClip(audioShoot);
                     float[] tempDam = { 4, 12 };
                     GetComponent<ProjectileGen>().Lanzar_Projectil(miniBossSword.transform.position, direction, tempDam, knockback);
                     timer = 0;
@@ -189,6 +197,7 @@ public class MiniBoss : Enemy
                 if (timer > timerReset)
                 {
                     // visuales
+                    PlayClip(audioSword2);
                     camara.shakeAllCameras(0.1f);
                     GenerateLight(luzSword);
 
@@ -288,10 +297,12 @@ public class MiniBoss : Enemy
         if (strongAttack) { 
             HitboxEnemy(transform.position, new(2f, 2f), Mathf.Rad2Deg * Mathf.Atan2(direction.y, direction.x), direction, 1.5f, damage, knockback);
             camara.shakeAllCameras(1);
+            PlayClip(audioSwordStrong);
         }
         else { 
             HitboxEnemy(transform.position, new(2f, 2f), Mathf.Rad2Deg * Mathf.Atan2(direction.y, direction.x), direction, 1.5f, tempDamage, 15);
             camara.shakeAllCameras(0.1f);
+            PlayClip(audioSword);
         }
         miniBossHitmarker.Comenzar();
         miniBossSword.Comenzar();

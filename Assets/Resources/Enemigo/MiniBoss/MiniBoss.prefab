@@ -164,6 +164,10 @@ MonoBehaviour:
   luzDisparo: {fileID: 5335606718005917581, guid: aff3e040af433544697c3dc05d90982e, type: 3}
   luzSword: {fileID: 5335606718005917581, guid: 29103086d483ce841b92f9374b60af6e, type: 3}
   luzSwordMaximo: {fileID: 5335606718005917581, guid: 8d0c299b141c055498b9d73ca75fa997, type: 3}
+  audioSwordStrong: {fileID: 8300000, guid: c4b2966771f3a31458d6a1e3dcf85918, type: 3}
+  audioSword: {fileID: 8300000, guid: abf93c8f0465b2a4fa2af240c32af1cb, type: 3}
+  audioSword2: {fileID: 8300000, guid: 7abd93a08132629429f6017abf8c8880, type: 3}
+  audioShoot: {fileID: 8300000, guid: 4dfc857f8603f3942b294c4b4c9cbef3, type: 3}
 --- !u!50 &3863602660175568570
 Rigidbody2D:
   serializedVersion: 4
