@@ -32,7 +32,7 @@ public class ItemList : MonoBehaviour
         int totalLines = itemList.Count / 5 + 1;
         foreach(GameObject item in itemList){
             item.transform.SetParent(this.transform);
-            item.transform.GetComponent<RectTransform>().position = new Vector3(lineCounter*200 + 100,-line*200 - 100,0);
+            item.transform.GetComponent<RectTransform>().localPosition = new Vector3(lineCounter*200 + 100,-line*200 - 100,0);
             lineCounter++;
             if(lineCounter >= 5){
                 lineCounter=0;
