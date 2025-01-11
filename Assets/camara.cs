@@ -40,7 +40,7 @@ public class camara : MonoBehaviour
             }
             if (Input.GetKeyUp(KeyCode.N))
             {
-                Instantiate(Resources.Load<GameObject>("Enemigo/MiniBoss/MiniBoss"), new Vector2(player.transform.position.x + 8, player.transform.position.y), Quaternion.identity);
+                Instantiate(Resources.Load<GameObject>("Enemigo/MiniBoss/Miniboss"), new Vector2(player.transform.position.x + 8, player.transform.position.y), Quaternion.identity);
             }
             if (Input.GetKeyUp(KeyCode.M))
             {

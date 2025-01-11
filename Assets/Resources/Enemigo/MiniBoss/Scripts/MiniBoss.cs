@@ -54,6 +54,8 @@ public class MiniBoss : Enemy
     public AudioClip audioSword;
     public AudioClip audioSword2;
     public AudioClip audioShoot;
+    public AudioClip audioCharge;
+    public AudioClip audioChange;
     // Start is called before the first frame update
     new void Start()
     {
@@ -121,7 +123,7 @@ public class MiniBoss : Enemy
                 {
                     // visuales
                     camara.shakeAllCameras(0.1f);
-                    PlayClip(audioShoot);
+                    PlayClip(audioCharge);
                     GenerateLight(luzDisparo);
 
                     allowAttack = true;
@@ -188,6 +190,9 @@ public class MiniBoss : Enemy
                 EfectoFrames();
                 if (timer > 1 && !saltado)
                 {
+                    // Sonidos
+                    PlayClip(audioCharge);
+
                     float ramdomDir;
                     if (Random.Range(0,2) == 0)
                     {
@@ -262,6 +267,9 @@ public class MiniBoss : Enemy
     }
     IEnumerator ChangePattern(patterns patterns,float waitseconds)
     {
+        //sonido
+        PlayClip(audioChange);
+
         stayOnPattern = true;
         patron = patterns.change; // cambiamos de patron
         yield return new WaitForSeconds(2);

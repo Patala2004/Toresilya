@@ -50,16 +50,14 @@ public class Enemy : MonoBehaviour
 	protected List<Node> path;
 
     // Sonido
-    AudioSource aS;
     AudioClip audioHurt;
     // Start is called before the first frame update
     public void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         player = GameObject.Find("player").GetComponent<Player>();
-        aS = GetComponent<AudioSource>();
         audioHurt = Resources.Load<AudioClip>("Enemigo/Sound/audioHurtEnemy");
-        StartCoroutine(StartCooldown(0.7f));
+        StartCoroutine(StartCooldown(1.4f));
         
     }
 
@@ -244,8 +242,10 @@ public class Enemy : MonoBehaviour
     //Sonido
     public void PlayClip(AudioClip audioClip)
     {
-        aS.clip = audioClip;
-        aS.Play();
+        AudioSource newAS = this.AddComponent<AudioSource>();
+        newAS.clip = audioClip;
+        newAS.Play();
+        Destroy(newAS, audioClip.length);
     }
     // IEnumerator para que los enemigos empiecen a moverse un poco tarde
     public IEnumerator StartCooldown(float waitseconds)

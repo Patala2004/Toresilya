@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
@@ -66,20 +67,18 @@ public class Player : MonoBehaviour
 	public bool autoataque;
 	public int enrango;
     // Sonido
-    AudioSource aS;
     public AudioClip audioParry;
     public AudioClip audioAttack;
     public AudioClip audioHurt;
     public AudioClip audioBlock;
 	public AudioClip audioCoin;
-
+    public AudioClip audioBlockIndicator;
     // Start is called before the first frame update
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         sR = rb.GetComponent<SpriteRenderer>();
         ani = GetComponent<Animator>();
-        aS = ani.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -166,6 +165,11 @@ public class Player : MonoBehaviour
         {
             Block();
             parryTime += Time.deltaTime; // a�ade tiempo al parry time para que no puedas spamear el boton de atacar
+        }
+        else if (!attackingAnimation && Input.GetMouseButtonDown(1))
+        {
+            PlayClip(audioBlockIndicator);
+
         }
         else if (parryTime > 0)
         {
@@ -377,8 +381,9 @@ public class Player : MonoBehaviour
     // Audio
     public void PlayClip(AudioClip audioClip)
     {
-        aS.clip = audioClip;
-        aS.Play();
+        AudioSource newAS = this.AddComponent<AudioSource>();
+        newAS.clip = audioClip;
+        newAS.Play();
+        Destroy(newAS, audioClip.length);
     }
-
 }
