@@ -36,6 +36,8 @@ public class MiniBoss : Enemy
     public float countAttacks = 0;
     public Vector2 direction;
     bool cambioSword = true;
+    int lastAttack = 6;
+    bool strongAttack = false;
     // Luces
     public GameObject luzDisparo;
     public GameObject luzSword;
@@ -91,10 +93,9 @@ public class MiniBoss : Enemy
                     timer = 0;
                     countAttacks++;
                 }
-                if(countAttacks > 4 && cambioSword)
+                if(countAttacks > 6 && cambioSword)
                 {
                     StartCoroutine(WaitToChangePattern(0.6f)); // Terminamos la fase de la espada
-                    cambioSword = false;
                 }
                 break;
             case patterns.attack_charge: // carga contra ti saltando en tu direccion
@@ -223,7 +224,7 @@ public class MiniBoss : Enemy
         {
             int rand = Random.Range(0, 4);
             if (rand == 0) { StartCoroutine(ChangePattern(patterns.attack_shoot_1, 6)); }
-            else if (rand == 1) { StartCoroutine(ChangePattern(patterns.follow, 5)); }
+            else if (rand == 1) { StartCoroutine(ChangePattern(patterns.follow, 2)); }
             else if (rand == 2) { StartCoroutine(ChangePattern(patterns.attack_shoot_especial, 7)); }
             else { StartCoroutine(ChangePattern(patterns.attack_shoot_2, 6)); }
         }
@@ -248,7 +249,6 @@ public class MiniBoss : Enemy
         allowAttack = false; // para casi todas las fases
         timer = 0; // para casi todas las fases
         countAttacks = 0; // sword
-        cambioSword = true; // sword
         saltado = false; // attack shoot especial
         Physics2D.IgnoreLayerCollision(LayerMask.NameToLayer("player"), LayerMask.NameToLayer("miniboss"), false); // charge
 
@@ -280,7 +280,9 @@ public class MiniBoss : Enemy
     }
     IEnumerator WaitToChangePattern(float waitseconds) // solo para sword
     {
+        cambioSword = false;
         yield return new WaitForSeconds(waitseconds);
+        cambioSword = true;
         stayOnPattern = false;
     }
 }

@@ -59,6 +59,8 @@ public class Enemy : MonoBehaviour
         player = GameObject.Find("player").GetComponent<Player>();
         aS = GetComponent<AudioSource>();
         audioHurt = Resources.Load<AudioClip>("Enemigo/Sound/audioHurtEnemy");
+        StartCoroutine(StartCooldown(0.7f));
+        
     }
 
 	public void EnableAStar() {
@@ -244,6 +246,17 @@ public class Enemy : MonoBehaviour
     {
         aS.clip = audioClip;
         aS.Play();
+    }
+    // IEnumerator para que los enemigos empiecen a moverse un poco tarde
+    public IEnumerator StartCooldown(float waitseconds)
+    {
+        float elapsedTime = 0;
+        while (elapsedTime < waitseconds)
+        {
+            rb.velocity = Vector2.zero;
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
     }
 
 }
