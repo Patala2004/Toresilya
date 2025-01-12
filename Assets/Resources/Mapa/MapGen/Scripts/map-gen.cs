@@ -56,6 +56,7 @@ public class MapGen: MonoBehaviour{
     int currFloor = 0;
 
     void Start(){
+        RoomCreator.floorNum = 0;
         rooms = new GameObject();
         rooms.name = "Rooms";
         rooms.transform.parent = transform;
@@ -69,6 +70,7 @@ public class MapGen: MonoBehaviour{
     public void clearMap(){
         floorMap.ClearAllTiles();
         wallMap.ClearAllTiles();
+        doorMap.ClearAllTiles();
         foreach (Transform child in rooms.transform){
             Destroy(child.gameObject);
         }
