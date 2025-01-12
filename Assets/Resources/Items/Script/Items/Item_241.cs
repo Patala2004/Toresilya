@@ -34,7 +34,11 @@ public class Item_241 : Item
             p.statCriticalChance += 0.05f;
         }
 
-        if (p.sword.attackSpeed <= 0.2f || (p.sword.attackSpeed - 0.05f) < 0.2f)
+        if (p.sword.attackSpeed < 0.2f)
+        {
+
+        }
+        else if (p.sword.attackSpeed - 0.05f < 0.2f)
         {
             p.sword.attackSpeed = 0.2f;
         }

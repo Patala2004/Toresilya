@@ -25,7 +25,11 @@ public class Item_230 : Item
     {
         base.grabItem(p);
         //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM
-        if (p.sword.attackSpeed <= 0.2f || p.sword.attackSpeed-masVelAtq <0.2f)
+        if (p.sword.attackSpeed < 0.2f)
+        {
+
+        }
+        else if (p.sword.attackSpeed - masVelAtq < 0.2f)
         {
             p.sword.attackSpeed = 0.2f;
         }
