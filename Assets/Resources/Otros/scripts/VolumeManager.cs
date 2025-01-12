@@ -6,7 +6,7 @@ public class VolumeManager : MonoBehaviour
 {
 
 	// Volumen está entre 0 y 1
-	public float volumen {get; set;}
+	public static float volumen {get; set;} = 1;
 
     // Start is called before the first frame update
     void Start()

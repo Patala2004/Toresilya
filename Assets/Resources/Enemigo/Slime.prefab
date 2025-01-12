@@ -156,6 +156,7 @@ MonoBehaviour:
   isCaos: 0
   debilTime: 0
   isDebil: 0
+  audioMixer: {fileID: 24300002, guid: 3193d5b1d4df708bf83c517a8f253fbf, type: 2}
   persecutionRadius: 10
   jumpForce: 700
   jumpTimerInit: 1.5
@@ -200,7 +201,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 984901699
-  m_SortingLayer: 4
+  m_SortingLayer: 6
   m_SortingOrder: 0
   m_Sprite: {fileID: -1641933623, guid: b4d69b9a0b52dc1e685950bb6db18cfd, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -331,7 +332,7 @@ AudioSource:
   m_GameObject: {fileID: 8484869543311770916}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 24300002, guid: 3193d5b1d4df708bf83c517a8f253fbf, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

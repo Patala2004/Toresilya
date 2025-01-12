@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.UIElements;
 
 public class Enemy : MonoBehaviour
@@ -48,6 +49,8 @@ public class Enemy : MonoBehaviour
     Coroutine coroutineIndicatorColor;
 
 	protected List<Node> path;
+
+	public AudioMixerGroup audioMixer;
 
     // Sonido
     AudioClip audioHurt;
@@ -243,6 +246,7 @@ public class Enemy : MonoBehaviour
     public void PlayClip(AudioClip audioClip)
     {
         AudioSource newAS = this.AddComponent<AudioSource>();
+		newAS.outputAudioMixerGroup = audioMixer;
         newAS.clip = audioClip;
         newAS.Play();
         Destroy(newAS, audioClip.length);

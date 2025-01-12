@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.Rendering;
 using UnityEngine.SceneManagement;
 
@@ -72,6 +73,8 @@ public class Player : MonoBehaviour
     public AudioClip audioBlock;
 	public AudioClip audioCoin;
     public AudioClip audioBlockIndicator;
+
+	public AudioMixerGroup audioMixer;
 
     // Start is called before the first frame update
     void Start()
@@ -383,6 +386,7 @@ public class Player : MonoBehaviour
     public void PlayClip(AudioClip audioClip)
     {
         AudioSource newAS = this.AddComponent<AudioSource>();
+		newAS.outputAudioMixerGroup = audioMixer;
         newAS.clip = audioClip;
         newAS.Play();
         Destroy(newAS, audioClip.length);
