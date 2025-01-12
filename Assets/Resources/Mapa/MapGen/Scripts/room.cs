@@ -134,11 +134,10 @@ public class Room : MonoBehaviour
     private void CloseCorridors(){
         int arrSize = 0;
         if(north) arrSize+= RoomType.CORRIDOR_WIDTH;
-        if(east) arrSize+= RoomType.CORRIDOR_WIDTH;
+        if(east) arrSize+= RoomType.CORRIDOR_WIDTH + 2;
         if(south) arrSize+= RoomType.CORRIDOR_WIDTH;
-        if(west) arrSize+= RoomType.CORRIDOR_WIDTH;
-        Tile doorTile = mapManager.doorTile;
-        Tilemap wallMap = mapManager.wallMap;
+        if(west) arrSize+= RoomType.CORRIDOR_WIDTH + 2;
+        Tilemap wallMap = mapManager.doorMap;
 
         // Create arrays
         Vector3Int[] vectors = new Vector3Int[arrSize];
@@ -153,28 +152,28 @@ public class Room : MonoBehaviour
         if(north){
             for(int j = 0; j < RoomType.CORRIDOR_WIDTH; j++){
                 vectors[i] = new Vector3Int(x + halfWidth + j, y + length);
-                tiles[i] = doorTile;
+                tiles[i] = mapManager.topCenterWall;
                 i++;
             }
         }
         if(south){
             for(int j = 0; j < RoomType.CORRIDOR_WIDTH; j++){
                 vectors[i] = new Vector3Int(x + halfWidth + j, y -1);
-                tiles[i] = doorTile;
+                tiles[i] = mapManager.bottomCenterWall;
                 i++;
             }
         }
         if(east){
-            for(int j = 0; j < RoomType.CORRIDOR_WIDTH; j++){
+            for(int j = -1; j < RoomType.CORRIDOR_WIDTH+1; j++){
                 vectors[i] = new Vector3Int(x + width, y + halfLength + j);
-                tiles[i] = doorTile;
+                tiles[i] = mapManager.rightWall;
                 i++;
             }
         }
         if(west){
-            for(int j = 0; j < RoomType.CORRIDOR_WIDTH; j++){
+            for(int j = -1; j < RoomType.CORRIDOR_WIDTH+1; j++){
                 vectors[i] = new Vector3Int(x - 1, y + halfLength + j);
-                tiles[i] = doorTile;
+                tiles[i] = mapManager.leftWall;
                 i++;
             }
         }
@@ -185,11 +184,11 @@ public class Room : MonoBehaviour
      private void OpenCorridors(){
         int arrSize = 0;
         if(north) arrSize+= RoomType.CORRIDOR_WIDTH;
-        if(east) arrSize+= RoomType.CORRIDOR_WIDTH;
+        if(east) arrSize+= RoomType.CORRIDOR_WIDTH + 2;
         if(south) arrSize+= RoomType.CORRIDOR_WIDTH;
-        if(west) arrSize+= RoomType.CORRIDOR_WIDTH;
+        if(west) arrSize+= RoomType.CORRIDOR_WIDTH + 2;
         Tile doorTile = null;
-        Tilemap wallMap = mapManager.wallMap;
+        Tilemap wallMap = mapManager.doorMap;
 
         // Create arrays
         Vector3Int[] vectors = new Vector3Int[arrSize];
@@ -216,14 +215,14 @@ public class Room : MonoBehaviour
             }
         }
         if(east){
-            for(int j = 0; j < RoomType.CORRIDOR_WIDTH; j++){
+            for(int j = -1; j < RoomType.CORRIDOR_WIDTH+1; j++){
                 vectors[i] = new Vector3Int(x + width, y + halfLength + j);
                 tiles[i] = doorTile;
                 i++;
             }
         }
         if(west){
-            for(int j = 0; j < RoomType.CORRIDOR_WIDTH; j++){
+            for(int j = -1; j < RoomType.CORRIDOR_WIDTH+1; j++){
                 vectors[i] = new Vector3Int(x - 1, y + halfLength + j);
                 tiles[i] = doorTile;
                 i++;

@@ -57,14 +57,17 @@ TagManager:
   - name: Obstaculos
     uniqueID: 4143045241
     locked: 0
+  - name: paredes
+    uniqueID: 133922023
+    locked: 0
+  - name: puertas
+    uniqueID: 1851361693
+    locked: 0
   - name: armas
     uniqueID: 296492903
     locked: 0
   - name: player
     uniqueID: 984901699
-    locked: 0
-  - name: paredes
-    uniqueID: 133922023
     locked: 0
   - name: dopamina
     uniqueID: 3985442501

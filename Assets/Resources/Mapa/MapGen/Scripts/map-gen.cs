@@ -9,6 +9,7 @@ using System.Linq;
 using Unity.Jobs;
 using Unity.Burst;
 using UnityEditor;
+using UnityEngine.Assertions;
 
 
 
@@ -16,10 +17,23 @@ public class MapGen: MonoBehaviour{
 
     public Tile[] floorTile;
     public Tile[] corridorTile;
+    public Tile topCenterWall;
+    public Tile topLeftEdgeWall;
+    public Tile topRightEdgeWall;
+    public Tile leftWall;
+    public Tile rightWall;
+    public Tile bottomCenterWall;
+    public Tile bottomLeftEdgeWall;
+    public Tile bottonRightEdgeWall;
+    public Tile topRightEdgeWall2;
+    public Tile topLeftEdgeWall2;
+    public Tile bottomRightEdgeWall2;
+    public Tile bottomLeftEdgeWall2;
     public Tile wallTile;
     public Tile doorTile;
     public Tilemap floorMap;
     public Tilemap wallMap;
+    public Tilemap doorMap;
     public GameObject box; // Box prefab
 
     public GameObject[] roomPrefabs18x18;
@@ -125,12 +139,13 @@ public class MapGen: MonoBehaviour{
         NativeList<int> yCorridorCoords = new NativeList<int>(Allocator.Persistent);
         NativeList<int> xWallCoords = new NativeList<int>(Allocator.Persistent);
         NativeList<int> yWallCoords = new NativeList<int>(Allocator.Persistent);
+        NativeList<int> wallTypes = new NativeList<int>(Allocator.Persistent);
         
 
         RoomTypeGetter roomTypeGetter = new RoomTypeGetter(allNodes, rand, roomTypes, startNodeCoords[0], startNodeCoords[1], endNodeCoords[0], endNodeCoords[1]);
         FloorCoordinateGetter floorCoordinateGetter = new FloorCoordinateGetter(allNodes,roomTypes, xFloorCoords, yFloorCoords,xoffset, yoffset);
         CorridorCoordinateGetter corridorCoordinateGetter = new CorridorCoordinateGetter(allNodes,roomTypes, xCorridorCoords, yCorridorCoords,xoffset, yoffset);
-        WallCoordinateGetter wallCoordinateGetter = new WallCoordinateGetter(allNodes,roomTypes, xWallCoords, yWallCoords, xoffset, yoffset);
+        WallCoordinateGetter wallCoordinateGetter = new WallCoordinateGetter(allNodes,roomTypes, xWallCoords, yWallCoords, wallTypes, xoffset, yoffset);
 
         RoomTypeGeneratorJob roomTypeGenJob = new RoomTypeGeneratorJob{
             roomTypeGetter = roomTypeGetter,
@@ -184,7 +199,8 @@ public class MapGen: MonoBehaviour{
         yield return null; // Give it a frame to update text
 
         TileRenderer tileRenderer = new TileRenderer(xFloorCoords, yFloorCoords, xCorridorCoords, yCorridorCoords, xWallCoords, yWallCoords, 
-        floorTile, corridorTile, wallTile, roomTypes);
+        floorTile, corridorTile, wallTile, topCenterWall, topLeftEdgeWall, topRightEdgeWall, leftWall, rightWall,bottomCenterWall, bottomLeftEdgeWall, bottonRightEdgeWall,
+        topRightEdgeWall2, topLeftEdgeWall2, bottomLeftEdgeWall2, bottomRightEdgeWall2, roomTypes, wallTypes);
         
         floorMap.SetTiles(tileRenderer.vectorCoordinates, tileRenderer.tileArr);
         wallMap.SetTiles(tileRenderer.wallVectorCoordinates, tileRenderer.wallTileArr);
@@ -200,6 +216,7 @@ public class MapGen: MonoBehaviour{
         yCorridorCoords.Dispose();
         xWallCoords.Dispose();
         yWallCoords.Dispose();
+        wallTypes.Dispose();
         allNodes.Dispose();
         startNodeCoords.Dispose();
         endNodeCoords.Dispose();
@@ -916,11 +933,12 @@ public struct WallCoordinateGetter{
     [ReadOnly] public NativeList<int> roomType;
     public NativeList<int> wallxcoordinates;
     public NativeList<int> wallycoordinates;
+    public NativeList<int> wallTypes;
 
     [ReadOnly] int xoffset, yoffset;
 
     public WallCoordinateGetter(NativeList<NodeStruct> allNodes, NativeList<int> roomType,
-    NativeList<int> wallxcoordinates, NativeList<int> wallycoordinates,
+    NativeList<int> wallxcoordinates, NativeList<int> wallycoordinates, NativeList<int> wallTypes,
     int xoffset, int yoffset){
         this.allNodes = allNodes;
         this.roomType = roomType;
@@ -928,6 +946,7 @@ public struct WallCoordinateGetter{
         this.wallycoordinates = wallycoordinates;
         this.xoffset = xoffset;
         this.yoffset = yoffset;
+        this.wallTypes = wallTypes;
     }
 
     public void getWallCoordinates(){
@@ -963,37 +982,70 @@ public struct WallCoordinateGetter{
             if(allNodes[i].north){
                 int woffset = (width - RoomType.CORRIDOR_WIDTH)/2; // So it doesnt have to do a division every single tile (i fucking hate divisions)
                 // Paint north wall with a hole for the corridor
-                for(int a = -1; a < woffset; a++){
+                wallxcoordinates.Add(x-1);
+                wallycoordinates.Add(y+length);
+                wallTypes.Add(WallType.TOP_LEFT);
+                for(int a = 0; a < woffset-1; a++){
                     wallxcoordinates.Add(x + a);
                     wallycoordinates.Add(y + length);
+                    wallTypes.Add(WallType.TOP_CENTER);
                 }
-                for(int a = woffset + RoomType.CORRIDOR_WIDTH; a < width + 1 ; a++){
+                wallxcoordinates.Add(x + woffset-1);
+                wallycoordinates.Add(y+length);
+                wallTypes.Add(WallType.TOP_RIGHT_2);
+
+                wallxcoordinates.Add(x + woffset + RoomType.CORRIDOR_WIDTH);
+                wallycoordinates.Add(y + length);
+                wallTypes.Add(WallType.TOP_LEFT_2);
+                for(int a = woffset + RoomType.CORRIDOR_WIDTH + 1; a < width; a++){
                     wallxcoordinates.Add(x + a);
                     wallycoordinates.Add(y + length);
+                    wallTypes.Add(WallType.TOP_CENTER);
                 }
+                wallxcoordinates.Add(x + width);
+                wallycoordinates.Add(y + length);
+                wallTypes.Add(WallType.TOP_RIGHT);
                 // Paint corridor walls
                 for(int a = 1; a < vertical_corridor_length; a++){
                     wallxcoordinates.Add(x + woffset - 1);
                     wallycoordinates.Add(y + length + a);
                     wallxcoordinates.Add(x + woffset + RoomType.CORRIDOR_WIDTH);
                     wallycoordinates.Add(y + length + a);
+                    wallTypes.Add(WallType.LEFT);
+                    wallTypes.Add(WallType.RIGHT);
                 }
             }
             else{
-                for(int a = -1; a < width + 1; a++){
+                wallxcoordinates.Add(x - 1);
+                wallycoordinates.Add(y + length);
+                wallTypes.Add(WallType.TOP_LEFT);
+                for(int a = 0; a < width; a++){
                     wallxcoordinates.Add(x + a);
                     wallycoordinates.Add(y + length);
+                    wallTypes.Add(WallType.TOP_CENTER);
                 }
+                wallxcoordinates.Add(x + width);
+                wallycoordinates.Add(y + length);
+                wallTypes.Add(WallType.TOP_RIGHT);
             }
             if(allNodes[i].east){
                 int loffset = (length - RoomType.CORRIDOR_WIDTH)/2;
-                for(int a = 0; a < loffset; a++){
+                for(int a = 0; a < loffset-1; a++){
                     wallxcoordinates.Add(x + width);
                     wallycoordinates.Add(y + a);
+                    wallTypes.Add(WallType.RIGHT);
                 }
-                for(int a = loffset + RoomType.CORRIDOR_WIDTH; a < length; a++){
+                wallxcoordinates.Add(x + width);
+                wallycoordinates.Add(y + loffset-1);
+                wallTypes.Add(WallType.BOTTOM_LEFT_2);
+
+                wallxcoordinates.Add(x + width);
+                wallycoordinates.Add(y + loffset + RoomType.CORRIDOR_WIDTH);
+                wallTypes.Add(WallType.TOP_LEFT_2);
+                for(int a = loffset + RoomType.CORRIDOR_WIDTH+1; a < length; a++){
                     wallxcoordinates.Add(x + width);
-                    wallycoordinates.Add(y + a);                    
+                    wallycoordinates.Add(y + a);
+                    wallTypes.Add(WallType.RIGHT);              
                 }
                 // Paint corridor walls
                 for(int a = 1; a < horizontal_corridor_length; a++){
@@ -1001,47 +1053,83 @@ public struct WallCoordinateGetter{
                     wallycoordinates.Add(y + loffset - 1);
                     wallxcoordinates.Add(x + width + a);
                     wallycoordinates.Add(y + loffset + RoomType.CORRIDOR_WIDTH);
+                    wallTypes.Add(WallType.BOTTOM_CENTER);
+                    wallTypes.Add(WallType.TOP_CENTER);
                 }
             }
             else{
                 for(int a = 0; a < length; a++){
                     wallxcoordinates.Add(x + width);
-                    wallycoordinates.Add(y + a);                          
+                    wallycoordinates.Add(y + a); 
+                    wallTypes.Add(WallType.RIGHT);                         
                 }
             }
             if(allNodes[i].south){
                 int woffset = (width - RoomType.CORRIDOR_WIDTH)/2;
-                for(int a = -1; a < woffset; a++){
+                wallxcoordinates.Add(x - 1);
+                wallycoordinates.Add(y - 1);
+                wallTypes.Add(WallType.BOTTOM_LEFT);
+                for(int a = 0; a < woffset-1; a++){
                     wallxcoordinates.Add(x + a);
                     wallycoordinates.Add(y - 1);
+                    wallTypes.Add(WallType.BOTTOM_CENTER);
                 }
-                for(int a = woffset + RoomType.CORRIDOR_WIDTH; a < width + 1 ; a++){
+                wallxcoordinates.Add(x + woffset-1);
+                wallycoordinates.Add(y - 1);
+                wallTypes.Add(WallType.BOTTOM_RIGHT_2);
+
+                wallxcoordinates.Add(x + woffset + RoomType.CORRIDOR_WIDTH);
+                wallycoordinates.Add(y - 1);
+                wallTypes.Add(WallType.BOTTOM_LEFT_2);
+                for(int a = woffset + RoomType.CORRIDOR_WIDTH+1; a < width; a++){
                     wallxcoordinates.Add(x + a);
                     wallycoordinates.Add(y - 1);
+                    wallTypes.Add(WallType.BOTTOM_CENTER);
                 }
+                wallxcoordinates.Add(x + width);
+                wallycoordinates.Add(y - 1);
+                wallTypes.Add(WallType.BOTTOM_RIGHT);
                 // Paint corridor walls
                 for(int a = 2; a < vertical_corridor_length+1; a++){
                     wallxcoordinates.Add(x + woffset - 1);
                     wallycoordinates.Add(y - a);
                     wallxcoordinates.Add(x + woffset + RoomType.CORRIDOR_WIDTH);
                     wallycoordinates.Add(y - a);
+                    wallTypes.Add(WallType.LEFT);
+                    wallTypes.Add(WallType.RIGHT);
                 }
             }
             else{
-                for(int a = -1; a < width + 1; a++){
+                wallxcoordinates.Add(x - 1);
+                wallycoordinates.Add(y - 1);
+                wallTypes.Add(WallType.BOTTOM_LEFT);
+                for(int a = 0; a < width; a++){
                     wallxcoordinates.Add(x + a);
                     wallycoordinates.Add(y - 1);
+                    wallTypes.Add(WallType.BOTTOM_CENTER);
                 }
+                wallxcoordinates.Add(x + width);
+                wallycoordinates.Add(y - 1);
+                wallTypes.Add(WallType.BOTTOM_RIGHT);
             }
             if(allNodes[i].west){
                 int loffset = (length - RoomType.CORRIDOR_WIDTH)/2;
-                for(int a = 0; a < loffset; a++){
+                for(int a = 0; a < loffset-1; a++){
                     wallxcoordinates.Add(x - 1);
                     wallycoordinates.Add(y + a);
+                    wallTypes.Add(WallType.LEFT);
                 }
-                for(int a = loffset + RoomType.CORRIDOR_WIDTH; a < length; a++){
+                wallxcoordinates.Add(x - 1);
+                wallycoordinates.Add(y + loffset-1);
+                wallTypes.Add(WallType.BOTTOM_RIGHT_2);
+
+                wallxcoordinates.Add(x - 1);
+                wallycoordinates.Add(y + loffset + RoomType.CORRIDOR_WIDTH);
+                wallTypes.Add(WallType.TOP_RIGHT_2);
+                for(int a = loffset + RoomType.CORRIDOR_WIDTH+1; a < length; a++){
                     wallxcoordinates.Add(x - 1);
-                    wallycoordinates.Add(y + a);                    
+                    wallycoordinates.Add(y + a);   
+                    wallTypes.Add(WallType.LEFT);                 
                 }
                 // Paint corridor walls
                 for(int a = 2; a < horizontal_corridor_length+1; a++){
@@ -1049,14 +1137,21 @@ public struct WallCoordinateGetter{
                     wallycoordinates.Add(y + loffset - 1);
                     wallxcoordinates.Add(x - a);
                     wallycoordinates.Add(y + loffset + RoomType.CORRIDOR_WIDTH);
+                    wallTypes.Add(WallType.BOTTOM_CENTER);
+                    wallTypes.Add(WallType.TOP_CENTER);
                 }
             }
             else{
                 for(int a = 0; a < length; a++){
                     wallxcoordinates.Add(x - 1);
-                    wallycoordinates.Add(y + a);                          
+                    wallycoordinates.Add(y + a);      
+                    wallTypes.Add(WallType.LEFT);                    
                 }
             }
+        }
+        if(wallxcoordinates.Length != wallycoordinates.Length || wallxcoordinates.Length != wallTypes.Length){
+            Debug.LogError("ERROR A LA HORA DE GENERAR LOS TIPOS DE PARED");
+            return;
         }
     }
 }
@@ -1157,6 +1252,18 @@ public class TileRenderer{
     public Tile[] floorTile;
     public Tile[] corridorTile;
     public Tile wallTile;
+    public Tile topCenterWall;
+    public Tile topLeftEdgeWall;
+    public Tile topRightEdgeWall;
+    public Tile leftWall;
+    public Tile rightWall;
+    public Tile bottomCenterWall;
+    public Tile bottomLeftEdgeWall;
+    public Tile bottonRightEdgeWall;
+    public Tile topRightEdgewall2;
+    public Tile topLeftEdgeWall2;
+    public Tile bottomLeftEdgeWall2;
+    public Tile bottomRightEdgeWall2;
     public NativeList<int> floorxCoordinates;
     public NativeList<int> flooryCoordinates;
     public NativeList<int> corridorxCoordinates;
@@ -1169,6 +1276,7 @@ public class TileRenderer{
     public Vector3Int[] wallVectorCoordinates;
     public Tile[] tileArr;
     public Tile[] wallTileArr;
+    public NativeList<int> wallTypes;
 
     private Tile randCorridorTile(){
         return corridorTile[UnityEngine.Random.Range(0,corridorTile.Length)];
@@ -1180,7 +1288,8 @@ public class TileRenderer{
 
     public TileRenderer(NativeList<int> floorxCoordinates, NativeList<int> flooryCoordinates, NativeList<int> corridorxCoordinates, 
     NativeList<int> corridoryCoordinates, NativeList<int> wallxCoordinates, NativeList<int> wallyCoordinates,
-    Tile[] floorTile, Tile[] corridorTile, Tile wallTile, NativeList<int> roomTypes){
+    Tile[] floorTile, Tile[] corridorTile, Tile wallTile, Tile topCenterWall, Tile topLeftEdgeWall, Tile topRightEdgeWall, Tile leftWall, Tile rightWall, Tile bottomCenterWall, Tile bottomLeftEdgeWall, 
+    Tile bottonRightEdgeWall, Tile topRightEdgewall2, Tile topLeftEdgeWall2, Tile bottomLeftEdgeWall2, Tile bottomRightEdgeWall2, NativeList<int> roomTypes, NativeList<int> wallTypes){
         this.floorxCoordinates = floorxCoordinates;
         this.flooryCoordinates = flooryCoordinates;
         this.corridorxCoordinates = corridorxCoordinates;
@@ -1191,6 +1300,19 @@ public class TileRenderer{
         this.corridorTile = corridorTile;
         this.floorTile = floorTile;
         this.wallTile = wallTile;
+        this.topCenterWall = topCenterWall;
+        this.topLeftEdgeWall = topLeftEdgeWall;
+        this.topRightEdgeWall = topRightEdgeWall;
+        this.leftWall = leftWall;
+        this.rightWall = rightWall;
+        this.bottomCenterWall = bottomCenterWall;
+        this.bottomLeftEdgeWall = bottomLeftEdgeWall;
+        this.bottonRightEdgeWall = bottonRightEdgeWall;
+        this.wallTypes = wallTypes;
+        this.topRightEdgewall2 = topRightEdgewall2;
+        this.topLeftEdgeWall2 = topRightEdgewall2;
+        this.bottomLeftEdgeWall2 = topRightEdgewall2;
+        this.bottomRightEdgeWall2 = topRightEdgewall2;
 
         int arrLens = floorxCoordinates.Length + corridorxCoordinates.Length;
         vectorCoordinates = new Vector3Int[arrLens];
@@ -1211,7 +1333,44 @@ public class TileRenderer{
 
         for(int i = 0; i < wallxCoordinates.Length; i++){
             wallVectorCoordinates[i] = new Vector3Int(wallxCoordinates[i], wallyCoordinates[i], 0);
-            wallTileArr[i] = wallTile;
+            Tile thisWallTile = wallTile;
+            if(wallTypes[i] == WallType.TOP_CENTER){
+                thisWallTile = topCenterWall;
+            }
+            else if(wallTypes[i] == WallType.TOP_LEFT){
+                thisWallTile = topLeftEdgeWall;
+            }
+            else if(wallTypes[i] == WallType.TOP_RIGHT){
+                thisWallTile = topRightEdgeWall;
+            }
+            else if(wallTypes[i] == WallType.LEFT){
+                thisWallTile = leftWall;
+            }
+            else if(wallTypes[i] == WallType.RIGHT){
+                thisWallTile = rightWall;
+            }
+            else if(wallTypes[i] == WallType.BOTTOM_CENTER){
+                thisWallTile = bottomCenterWall;
+            }
+            else if(wallTypes[i] == WallType.BOTTOM_LEFT){
+                thisWallTile = bottomLeftEdgeWall;
+            }
+            else if(wallTypes[i] == WallType.BOTTOM_RIGHT){
+                thisWallTile = bottonRightEdgeWall;
+            }
+            else if(wallTypes[i] == WallType.BOTTOM_RIGHT_2){
+                thisWallTile = bottomRightEdgeWall2;
+            }
+            else if(wallTypes[i] == WallType.BOTTOM_LEFT_2){
+                thisWallTile = bottomLeftEdgeWall2;
+            }
+            else if(wallTypes[i] == WallType.TOP_LEFT_2){
+                thisWallTile = topLeftEdgeWall2;
+            }
+            else if(wallTypes[i] == WallType.TOP_RIGHT_2){
+                thisWallTile = topRightEdgewall2;
+            }
+            wallTileArr[i] = thisWallTile;
         }
     }
 }
@@ -1851,6 +2010,22 @@ public static class RoomType{
 
     public const int LARGE_ROOM_WIDTH = 30;
     public const int LARGE_ROOM_LENGTH = 30;
+}
+
+public static class WallType{
+    public const int TOP_LEFT = 0;
+    public const int TOP_CENTER = 1;
+    public const int TOP_RIGHT = 2;
+    public const int TOP_LEFT_2 = 9;
+    public const int TOP_RIGHT_2 = 10;
+    public const int LEFT = 3;
+    public const int RIGHT = 4;
+    public const int BOTTOM_RIGHT = 5;
+    public const int BOTTOM_CENTER = 6;
+    public const int BOTTOM_LEFT = 7;
+    public const int BOTTOM_RIGHT_2 = 11;
+    public const int BOTTOM_LEFT_2 = 12;
+    public const int OTHER = 8;
 }
 
 
