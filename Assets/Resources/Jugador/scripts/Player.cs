@@ -34,7 +34,7 @@ public class Player : MonoBehaviour
     public float velWalk = 5f; //velocidad jugador
     public float velBlock = 2.5f;
     public float statCriticalChance;
-    public float statCriticalDamage = 2;
+    public float statCriticalDamage;
     public float ang; // angulo en grados respecto al cursor (0-180,-0-180)
     Vector2 velImpulse;
     Vector2 velMovimiento;
@@ -79,6 +79,7 @@ public class Player : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sR = rb.GetComponent<SpriteRenderer>();
         ani = GetComponent<Animator>();
+        statCriticalDamage = 1.5f;
     }
 
     // Update is called once per frame

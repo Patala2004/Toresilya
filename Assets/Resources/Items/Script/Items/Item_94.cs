@@ -6,7 +6,7 @@ using UnityEngine;
 public class Item_94 : Item
 {
     //Declaramos stats o cosas que modificara el item
-    public float masCriticalDamage = 0.15f;
+    public float masCriticalDamage = 0.3f;
     // Start is called before the first frame update
     void Start()
     {
@@ -25,7 +25,7 @@ public class Item_94 : Item
     {
         base.grabItem(p);
         //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM
-        p.statCriticalDamage += (p.statCriticalDamage* masCriticalDamage);
+        p.statCriticalDamage += masCriticalDamage;
 
     }
 

@@ -21,7 +21,7 @@ public class Enemy : MonoBehaviour
     public float multiplicadorVelocidad = 1f; //Modificar velocidad de los scripts de los bichos para que se basen en un multiplicador de velocidad este asi modificarse.
     
     //Defensa enemigo funciona como player
-    public float defensa = 1; //Fluctua de 1 a 2. para el jugador mejor mostrarle que el % como tal creo 
+    public float defensa = 1; //Fluctua de 0 a 1. para el jugador mejor mostrarle que el % como tal creo 
     public float multiplicadorDefensa = 1; //Si esto llega a 2 no recibe da�o, si es menor que 1 recibe mas dano
 
     //Cosas que se han anadido por los items

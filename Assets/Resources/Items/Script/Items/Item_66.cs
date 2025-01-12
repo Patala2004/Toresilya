@@ -5,8 +5,8 @@ using UnityEngine;
 public class Item_66 : Item
 {
     //Declaramos stats o cosas que modificara el item
-    float addDamage = 0.05f;
-    float addProbDebil = 20f;
+    float addDamage = 0.15f;
+    float addProbDebil = 30f;
 
     // Start is called before the first frame update
     void Start()

@@ -26,6 +26,7 @@ public class Item_1 : Item
     public override void grabItem(Player p)
     {
         base.grabItem(p);
+        ItemGenerator.anadirRayos();
         player.attackMechanics.Add(lanzarRayo);
  
     }

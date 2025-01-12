@@ -5,7 +5,7 @@ using UnityEngine;
 public class Item_16 : Item
 {
     //Declaramos stats o cosas que modificara el item
-    float attackKNC = 0.15f;
+    float attackKNC = 0.25f;
 
     // Start is called before the first frame update
     void Start()

@@ -34,9 +34,13 @@ public class Item_96 : Item
     {
         foreach (Enemy e in eList)
         {
-            if (e.multiplicadorDefensa > 0)
+            if(e.defensa - 0.2f < 0)
             {
-                e.multiplicadorDefensa -= 0.2f;
+                e.defensa = 0;
+            }
+            else 
+            {
+                e.defensa -= 0.2f;
             }
         }
     }

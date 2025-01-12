@@ -38,7 +38,7 @@ public class Item_37 : Item
             if (33<= random && random <38) //5% de posibilidades
             {
                 found = true;
-                player.GetInvulnerable(3f);
+                player.GetInvulnerable(5f);
             }
         }
     }

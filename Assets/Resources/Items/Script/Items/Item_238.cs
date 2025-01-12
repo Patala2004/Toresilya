@@ -26,8 +26,8 @@ public class Item_238 : Item
         base.grabItem(p);
         //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM
 
-        p.healthMax += 5f;
-        p.health += 5f;
+        p.healthMax += 10f;
+        p.health += 10f;
 
 
     }

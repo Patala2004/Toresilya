@@ -73,7 +73,7 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -309524795
-  m_SortingLayer: 6
+  m_SortingLayer: 7
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: e5545f8c54c81dd45adafcfff36f12d9, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -144,7 +144,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 0}
-  descriptionItem: Tu ataque aumenta y tienen una probabilidad del 20% de generar
+  descriptionItem: Tu ataque aumenta y tienen una probabilidad del 30% de generar
     el estado DEBIL
   descripcionRecoger: 
   nombre: ESPORAS VENENOSAS

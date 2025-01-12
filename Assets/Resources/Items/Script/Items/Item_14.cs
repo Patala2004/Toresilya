@@ -5,8 +5,8 @@ using UnityEngine;
 public class Item_14 : Item
 {
     //Declaramos stats o cosas que modificar� el item
-    float attackDMGMult = 0.1f; //Aumentaremos el 10%
-    float attackKNC = 0.05f; //Aumentaremos el 15%
+    float attackDMGMult = 0.2f; //Aumentaremos el 20%
+    float attackKNC = 0.05f; //Aumentaremos el 5%
 
     // Start is called before the first frame update
     void Start()

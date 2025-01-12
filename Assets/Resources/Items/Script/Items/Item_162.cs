@@ -32,12 +32,12 @@ public class Item_162 : Item
     {
         if (player.health <= 0.4f * player.healthMax && !aplicadoItem162)
         {
-            player.multiplicadorDefensa += 0.1f;
+            player.defensa += 0.3f;
             aplicadoItem162 = true;
         }
         else if (player.health > 0.4f * player.healthMax &&aplicadoItem162 )
         {
-            player.multiplicadorDefensa -= 0.1f;
+            player.defensa -= 0.3f;
             aplicadoItem162 = false;
         }
     }

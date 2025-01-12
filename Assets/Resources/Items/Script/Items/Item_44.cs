@@ -5,7 +5,7 @@ using UnityEngine;
 public class Item_44 : Item
 {
     //Declaramos stats o cosas que modificara el item
-    public float addDefense = 0.1f;
+    public float addDefense = 0.2f;
 
     // Start is called before the first frame update
     void Start()
@@ -25,7 +25,7 @@ public class Item_44 : Item
     {
         base.grabItem(p);
         //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM
-        p.multiplicadorDefensa += addDefense;
+        p.defensa += addDefense;
 
 
     }

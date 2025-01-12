@@ -26,10 +26,9 @@ public class Item_77 : Item
     {
         base.grabItem(p);
         //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM
-        if (probDebil != 0)
-        {
+       
             probDebil *= 2;
-        }
+      
     }
 
 
