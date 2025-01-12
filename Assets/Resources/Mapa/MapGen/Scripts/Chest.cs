@@ -32,7 +32,7 @@ public class Chest : Golpeable
 
     public void OpenChest(){
         
-        GameObject newItem = itemGen.getItem();
+        GameObject newItem = itemGen.getItemForChests();
         newItem.transform.SetParent(this.transform, false);
         newItem.transform.localPosition = new Vector2(0,0);
         Destroy(BoxSprite);

@@ -44,6 +44,24 @@ public class ItemGenerator : MonoBehaviour
         
     }
 
+    public GameObject getItemForChests()
+    {
+        int rand = Random.Range(0, 100);
+        if (rand >= 0 && rand < 70)
+        {
+            return Instantiate(itemspocoComunes[UnityEngine.Random.Range(0, itemspocoComunes.Length)]);
+        }
+        else if (rand >= 70 && rand < 90)
+        {
+            return Instantiate(itemsEpicos[UnityEngine.Random.Range(0, itemsEpicos.Length)]);
+        }
+        else
+        {
+            return Instantiate(itemsLegendarios[UnityEngine.Random.Range(0, itemsLegendarios.Length)]);
+        }
+
+    }
+
     public GameObject getConsumable(){
         return Instantiate(consumables[UnityEngine.Random.Range(0,consumables.Length)]);
     }
