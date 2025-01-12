@@ -22,5 +22,6 @@ public class HealingPotion_Tier1 : HealingPotion
     public override void grabItem(Player p)
     {
         p.health += healingAmm;
+        transform.position = new(4000, 5000, 0);
     }
 }
