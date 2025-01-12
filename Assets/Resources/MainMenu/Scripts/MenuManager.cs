@@ -4,12 +4,14 @@ using UnityEngine.SceneManagement;
 public class MenuManager : MonoBehaviour
 {
 
-    private AsyncOperation preloadOperation;
+    bool options = false;
 
+    public GameObject menuPrincipal;
+    public GameObject menuOpciones;
     // Start is called before the first frame update
     void Start()
     {
-        PreloadScene(); // Llamar para que se empieze a cargar el juego
+        
     }
 
     // Update is called once per frame
@@ -18,28 +20,26 @@ public class MenuManager : MonoBehaviour
         
     }
 
-    void PreloadScene(){
-        if (preloadOperation == null)
-        {
-            preloadOperation = SceneManager.LoadSceneAsync("SampleScene");
-            preloadOperation.allowSceneActivation = false; // Don't activate immediately
-        }
+    public void PreloadScene(){
+        SceneManager.LoadScene("SampleScene");
     }
 
         // Load the preloaded scene
-    public void LoadPreloadedScene()
+    public void Opciones()
     {
-        if (preloadOperation != null)
+        if (!options)
         {
-            preloadOperation.allowSceneActivation = true; // Activate the scene
-
+            menuOpciones.SetActive(true);
+            menuPrincipal.SetActive(false);
+            options = true;
         }
         else
         {
-            Debug.LogWarning("No scene has been preloaded!");
+            menuOpciones.SetActive(false);
+            menuPrincipal.SetActive(true);
+            options = false;
         }
     }
-
 
     public void QuitGame(){
         #if UNITY_EDITOR

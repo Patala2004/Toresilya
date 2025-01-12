@@ -357,7 +357,7 @@ public class Player : MonoBehaviour
     // Funcion que se llama cuando el jugador muere
     private void ToDie()
     {
-        SceneManager.LoadScene("SampleScene");
+        SceneManager.LoadScene("DeathScreen");
     }
 
     //Metodo para aplicar stun al jugador durante 1,5 seg
