@@ -78,7 +78,7 @@ public class Lobo : Enemy
 	void Chase()
     {
         Vector2 direction = (player.transform.position - transform.position).normalized;
-        rb.velocity = new Vector2(direction.x * displSpeed, direction.y * displSpeed);
+        rb.velocity += new Vector2(direction.x * displSpeed * 0.1f, direction.y * displSpeed * 0.1f);
         ani.SetBool("Running", true);
         ani.SetBool("Idle", false);
     }

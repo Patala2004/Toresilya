@@ -724,9 +724,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f94887dac54a32479b0e2e4aceea341, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  randomized: 0
+  randomized: 1
   enemies:
   - {fileID: 7502524114904027516, guid: c9dcc9e7305b66b4b9208feaa7e1b520, type: 3}
+  - {fileID: 6159802974911976144, guid: d083456b95d910594a105c299a2cd312, type: 3}
 --- !u!1 &2300629457962733735
 GameObject:
   m_ObjectHideFlags: 0
