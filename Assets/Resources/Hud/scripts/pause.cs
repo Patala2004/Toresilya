@@ -9,6 +9,8 @@ public class pause : MonoBehaviour
     [SerializeField] private GameObject pauseMenu;
     [SerializeField] private Volume blurrVolume;
 
+    public ItemList itemMenu;
+
     public bool isPaused = false;
     // Start is called before the first frame update
     void Start()
@@ -24,6 +26,7 @@ public class pause : MonoBehaviour
                 pauseMenu.SetActive(true);
                 blurrVolume.enabled = true;
                 isPaused = true;
+                itemMenu.PrepareItemList();
             }
             else{
                 unPause();
