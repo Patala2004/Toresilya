@@ -256,7 +256,7 @@ public class Room : MonoBehaviour
         minimapCameraWide.transform.position = new Vector3(roomX*3 - 1000,roomY*3 - 1000, -40);
 
         // Add symbols
-        if(roomType == 0){
+        if(roomType == RoomType.START_ROOM_CODE){
             minimapRoom.transform.GetChild(0).gameObject.GetComponent<SpriteRenderer>().sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/casita");
         }
         // Add symbols for neightboring rooms
@@ -264,49 +264,100 @@ public class Room : MonoBehaviour
             // Find northern room script
             Room otherRoom = GameObject.Find("room " + roomX + "," + (roomY + 1)).GetComponent<Room>();
             Sprite sprite = null;
-            if(otherRoom.roomType == 2 || otherRoom.roomType == 3 || otherRoom.roomType == 4){
-                sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/cajita");
+            if(otherRoom.roomType == RoomType.HEALING_ROOM_CODE){
+                sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/Curacion");
                 minimapRoom.transform.GetChild(1).GetChild(1).gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
             }
-            else if(otherRoom.roomType == 1){
+            else if(otherRoom.roomType == RoomType.STORE_ROOM_CODE){
+                sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/BolsaDinero");
+                minimapRoom.transform.GetChild(1).GetChild(1).gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+            }
+            else if(otherRoom.roomType == RoomType.CHEST_ROOM_CODE){
+                sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/cofre");
+                minimapRoom.transform.GetChild(1).GetChild(1).gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+            }
+            else if(otherRoom.roomType == RoomType.END_ROOM_CODE){
                 sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/portalito");
+                minimapRoom.transform.GetChild(1).GetChild(1).gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+            }
+            else if(otherRoom.roomType == RoomType.BOSS_ROOM_CODE){
+                sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/icono");
                 minimapRoom.transform.GetChild(1).GetChild(1).gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
             }
         }
         if(east){
             Room otherRoom = GameObject.Find("room " + (roomX+1) + "," + roomY).GetComponent<Room>();
             Sprite sprite = null;
-            if(otherRoom.roomType == 2 || otherRoom.roomType == 3 || otherRoom.roomType == 4){
-                sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/cajita");
+             if(otherRoom.roomType == RoomType.HEALING_ROOM_CODE){
+                sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/Curacion");
                 minimapRoom.transform.GetChild(2).GetChild(1).gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
             }
-            else if(otherRoom.roomType == 1){
+            else if(otherRoom.roomType == RoomType.STORE_ROOM_CODE){
+                sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/BolsaDinero");
+                minimapRoom.transform.GetChild(2).GetChild(1).gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+            }
+            else if(otherRoom.roomType == RoomType.CHEST_ROOM_CODE){
+                sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/cofre");
+                minimapRoom.transform.GetChild(2).GetChild(1).gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+            }
+            else if(otherRoom.roomType == RoomType.END_ROOM_CODE){
                 sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/portalito");
+                minimapRoom.transform.GetChild(2).GetChild(1).gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+            }
+            else if(otherRoom.roomType == RoomType.BOSS_ROOM_CODE){
+                sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/icono");
                 minimapRoom.transform.GetChild(2).GetChild(1).gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
             }
         }
         if(south){
             Room otherRoom = GameObject.Find("room " + roomX + "," + (roomY - 1)).GetComponent<Room>();
             Sprite sprite = null;
-            if(otherRoom.roomType == 2 || otherRoom.roomType == 3 || otherRoom.roomType == 4){
-                sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/cajita");
+            if(otherRoom.roomType == RoomType.HEALING_ROOM_CODE){
+                sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/Curacion");
                 minimapRoom.transform.GetChild(3).GetChild(1).gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
             }
-            else if(otherRoom.roomType == 1){
+            else if(otherRoom.roomType == RoomType.STORE_ROOM_CODE){
+                sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/BolsaDinero");
+                minimapRoom.transform.GetChild(3).GetChild(1).gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+            }
+            else if(otherRoom.roomType == RoomType.CHEST_ROOM_CODE){
+                sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/cofre");
+                minimapRoom.transform.GetChild(3).GetChild(1).gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+            }
+            else if(otherRoom.roomType == RoomType.END_ROOM_CODE){
                 sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/portalito");
+                minimapRoom.transform.GetChild(3).GetChild(1).gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+            }
+            else if(otherRoom.roomType == RoomType.BOSS_ROOM_CODE){
+                sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/icono");
                 minimapRoom.transform.GetChild(3).GetChild(1).gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
             }
         }
         if(west){
             Room otherRoom = GameObject.Find("room " + (roomX-1) + "," + roomY).GetComponent<Room>();
             Sprite sprite = null;
-            if(otherRoom.roomType == 2 || otherRoom.roomType == 3 || otherRoom.roomType == 4){
-                sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/cajita");
+            if(otherRoom.roomType == RoomType.HEALING_ROOM_CODE){
+                sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/Curacion");
                 minimapRoom.transform.GetChild(4).GetChild(1).gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
             }
-            else if(otherRoom.roomType == 1){
+            else if(otherRoom.roomType == RoomType.STORE_ROOM_CODE){
+                sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/BolsaDinero");
+                minimapRoom.transform.GetChild(4).GetChild(1).gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+            }
+            else if(otherRoom.roomType == RoomType.CHEST_ROOM_CODE){
+                sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/cofre");
+                minimapRoom.transform.GetChild(4).GetChild(1).gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+            }
+            else if(otherRoom.roomType == RoomType.END_ROOM_CODE){
                 sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/portalito");
                 minimapRoom.transform.GetChild(4).GetChild(1).gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+            }
+            else if(otherRoom.roomType == RoomType.BOSS_ROOM_CODE){
+                sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/icono");
+                minimapRoom.transform.GetChild(4).GetChild(1).gameObject.GetComponent<SpriteRenderer>().sprite = sprite;
+            }
+            else if(otherRoom.roomType == RoomType.BOSS_ROOM_CODE){
+                sprite = Resources.Load<Sprite>("Mapa/Minimap/Symbol_Sprites/icono");
             }
         }
     }
