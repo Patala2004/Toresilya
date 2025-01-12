@@ -10,7 +10,7 @@ public class VolumenControl : MonoBehaviour
 	public TextMeshProUGUI text;
 	public bool subir;
 
-	private const float step = 0.01f;
+	private const float step = 0.09f;
 
 	public AudioMixer audioMixer;
 
