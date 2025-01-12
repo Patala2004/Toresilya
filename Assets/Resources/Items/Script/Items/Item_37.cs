@@ -32,13 +32,12 @@ public class Item_37 : Item
 
     public void randomAttackToInmune(Enemy[] enemylist)
     {
-        bool found = false;
-        for(int i = 0; i < enemylist.Length && !found; i++){
+        
+        for(int i = 0; i < enemylist.Length; i++){
             int random = Random.Range(1, 101);
             if (33<= random && random <38) //5% de posibilidades
             {
-                found = true;
-                player.GetInvulnerable(5f);
+                player.GetInvulnerable(3f);
             }
         }
     }
