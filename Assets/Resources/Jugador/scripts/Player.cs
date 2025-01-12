@@ -72,6 +72,7 @@ public class Player : MonoBehaviour
     public AudioClip audioBlock;
 	public AudioClip audioCoin;
     public AudioClip audioBlockIndicator;
+
     // Start is called before the first frame update
     void Start()
     {

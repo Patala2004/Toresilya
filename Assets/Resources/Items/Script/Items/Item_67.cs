@@ -24,6 +24,7 @@ public class Item_67 : Item
     public override void grabItem(Player p)
     {
         base.grabItem(p);
+        ItemGenerator.activarDebil();
         //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM   
         if (Item.probDebil == 0)
         {

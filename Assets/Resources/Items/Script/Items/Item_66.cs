@@ -25,6 +25,7 @@ public class Item_66 : Item
     public override void grabItem(Player p)
     {
         base.grabItem(p);
+        ItemGenerator.activarDebil();
         //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM
         p.sword.dmgMultiplicator += addDamage;
         if (Item.probDebil == 0)

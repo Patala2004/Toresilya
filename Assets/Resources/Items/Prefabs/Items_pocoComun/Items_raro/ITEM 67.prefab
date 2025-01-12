@@ -148,7 +148,8 @@ MonoBehaviour:
   descripcionRecoger: 
   nombre: CORONA DEL REY FUERTE
   unique: 0
-  rarity: epico
+  rarity: raro
   precio: 0
   minPrecio: 90
   maxPrecio: 110
+  codigoItem: 

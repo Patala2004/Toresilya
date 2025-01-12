@@ -21,6 +21,7 @@ public class Item_68 : Item
     public override void grabItem(Player p)
     {
         base.grabItem(p);
+        ItemGenerator.activarDebil();
         //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM   
         p.perfectParryMechanics.Add(perfectParryToDebil);
         

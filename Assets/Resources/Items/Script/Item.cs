@@ -35,10 +35,12 @@ public class Item : MonoBehaviour
     public int minPrecio;
     public int maxPrecio;
 
+   
 
     // Start is called before the first frame update
     void Start()
     {
+        
     }
 
     // Update is called once per frame
@@ -57,7 +59,6 @@ public class Item : MonoBehaviour
         listElement.transform.position = new Vector3(67000,-69420);
         ItemList.itemList.Add(listElement);
         //ItemList.instance.PrepareItemList();
-
         Debug.Log("El metodo grabItem ha sido llamado para el item " + nombre);
         transform.position = new Vector3(-10000, 10000, 0); // Mover a a tomar por culo para no tener que destruir 
         Barra hud = FindObjectOfType<Barra>();
@@ -90,5 +91,7 @@ public class Item : MonoBehaviour
 
     // }
 
+    
 
+    
 }
