@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 587415396537413309}
   - component: {fileID: 6398320129879071004}
   m_Layer: 0
-  m_Name: EstatuaEspada
+  m_Name: EstatuaEscudo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: -309524795
   m_SortingLayer: 7
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 06e615cdf9bcde943bd132b419ea8371, type: 3}
+  m_Sprite: {fileID: 21300000, guid: acacae200b274c647a8bf2d48ff1137b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -166,7 +166,7 @@ MonoBehaviour:
   - {x: 0.12537324, y: -3.4437246, z: 0}
   m_ShapePathHash: -1489087989
   m_Mesh: {fileID: 0}
-  m_InstanceId: 95518
+  m_InstanceId: 95298
   m_LocalBounds:
     m_Center: {x: -0.062758476, y: -1.3879983, z: 0}
     m_Extent: {x: 0.43006554, y: 2.0683653, z: 0}
@@ -270,7 +270,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Click Izquierdo para atacar
+  m_text: Click Derecho para BLOQUEAR
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}

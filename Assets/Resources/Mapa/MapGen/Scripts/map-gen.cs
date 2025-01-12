@@ -1452,9 +1452,13 @@ public class RoomCreator{
                     roomScript.roomType=RoomType.BOSS_ROOM_CODE;
                 }
                 
-                Debug.Log(floorNum);
                 prefab.transform.parent = newRoom.transform; // Set as child            
                 prefab.transform.localPosition = new Vector3(0,0,0);  
+            }
+            else if(roomType[i] == RoomType.START_ROOM_CODE){
+                GameObject prefab = GameObject.Instantiate(Resources.Load<GameObject>("Mapa/MapGen/Prefabs/StartRoom"));
+                prefab.transform.parent = newRoom.transform; // Set as child            
+                prefab.transform.localPosition = new Vector3(0,0,0); 
             }
             else if(roomType[i] == RoomType.HEALING_ROOM_CODE){
                 GameObject prefab = GameObject.Instantiate(Resources.Load<GameObject>("Mapa/MapGen/Prefabs/HealingRoom_1"));
