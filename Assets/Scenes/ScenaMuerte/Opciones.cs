@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 public class Opciones : MonoBehaviour
 {
     AudioSource aS;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +22,7 @@ public class Opciones : MonoBehaviour
     public void Reiniciar()
     {
         SceneManager.LoadScene("SampleScene");
+
     }
     public void Menu()
     {
