@@ -26,6 +26,10 @@ public class VolumenControl : MonoBehaviour
         audioMixer.SetFloat("Volume", dB);
     }
 
+	public void Start() {
+		text.text = VolumeManager.volumen + "";
+	}
+
 	public void onClick() {
 		if(subir && VolumeManager.volumen < 100) {
 			VolumeManager.volumen += step;
