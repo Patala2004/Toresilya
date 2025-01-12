@@ -6,7 +6,7 @@ using UnityEngine;
 public class Item_56 : Item
 {
     //Declaramos stats o cosas que modificara el item
-    public float disminuirVelocidad = 0.2f;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -26,16 +26,10 @@ public class Item_56 : Item
     {
         base.grabItem(p);
         //ANADIMOS LAS STATS O LO QUE HAGA EL ITEM
-        p.parryMechanics.Add(metodoDisminuirVelocidad);
+        p.statCriticalChance += 0.4f;
 
     }
 
-    public void metodoDisminuirVelocidad(Enemy e)
-    {
-        e.multiplicadorVelocidad -= disminuirVelocidad;
-        if (e.multiplicadorVelocidad< 0){
-            e.multiplicadorVelocidad = 0;
-        }
-    }
+    
 
 }
