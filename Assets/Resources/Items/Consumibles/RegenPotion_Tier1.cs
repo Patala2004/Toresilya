@@ -10,8 +10,8 @@ public class RegenPotion_Tier1 : RegenPotion
     public override void Start()
     {
         base.Start();
-        hps = 5;
-        duration = 30f;
+        hps = 1;
+        duration = 20f;
     }
 
     // Update is called once per frame

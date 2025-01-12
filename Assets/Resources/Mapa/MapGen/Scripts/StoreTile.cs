@@ -28,7 +28,7 @@ public class StoreTile : MonoBehaviour
 
     void FixedUpdate(){
         if(precio > player.monedas){
-            priceTag.color = new Color32(200,0,0,255);
+            priceTag.color = new Color32(255,0,0,255);
         }
         else{
             priceTag.color = new Color32(255,255,255,255);
