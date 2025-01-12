@@ -66,11 +66,11 @@ public class Sword : MonoBehaviour
                 {
                     dam *= (player.statCriticalDamage+ +(enemy.isDebil ? Item.debilCritDamage : 0));
                     criticallyHitEnemies.Add(enemy);
-                    enemy.TakeDamage(dam, player.ang, attackKnockback * (knockbackMultiplicator < 0 ? 0 : knockbackMultiplicator),new(1,0.39f,0));
+                    enemy.TakeDamage(dam, player.ang, attackKnockback * (knockbackMultiplicator <= 1 ? 1 : knockbackMultiplicator),new(1,0.39f,0));
                 }
                 else
                 {
-                    enemy.TakeDamage(dam, player.ang, attackKnockback * (knockbackMultiplicator < 0 ? 0 : knockbackMultiplicator));
+                    enemy.TakeDamage(dam, player.ang, attackKnockback * (knockbackMultiplicator <= 1 ? 1 : knockbackMultiplicator));
                 }
             }
             if (collider.collider.CompareTag("golpeable"))
