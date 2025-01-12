@@ -93,7 +93,7 @@ public class MiniBoss : Enemy
                 rb.velocity += new Vector2(direction.x * displSpeed * 0.1f, direction.y * displSpeed * 0.1f);
                 break;
             case patterns.attack_sword: // saca una espada y ataca
-                if (distanceToPlayer < 8f)
+                if (distanceToPlayer < 12f)
                 {
                     timer += Time.deltaTime;
                 }
