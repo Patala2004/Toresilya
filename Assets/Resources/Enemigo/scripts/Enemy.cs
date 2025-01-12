@@ -52,6 +52,8 @@ public class Enemy : MonoBehaviour
 
 	public AudioMixerGroup audioMixer;
 
+    public bool StartingOnCooldown = true;
+
     // Sonido
     AudioClip audioHurt;
     // Start is called before the first frame update
@@ -261,6 +263,7 @@ public class Enemy : MonoBehaviour
             elapsedTime += Time.deltaTime;
             yield return null;
         }
+        StartingOnCooldown = false;
     }
 
 }

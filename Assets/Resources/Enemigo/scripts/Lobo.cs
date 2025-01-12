@@ -44,7 +44,13 @@ public class Lobo : Enemy
     // Update is called once per frame
     new void FixedUpdate()
     {
-		base.FixedUpdate();
+        if (StartingOnCooldown)
+        {
+            ani.SetBool("Running", false);
+            ani.SetBool("Idle", true);
+            return;
+        }
+        base.FixedUpdate();
 		float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
 
         if (isJumping) {

@@ -37,6 +37,12 @@ public class Goblin : Enemy
     // Update is called once per frame
     new void FixedUpdate()
     {
+        if(StartingOnCooldown)
+        {
+            ani.SetBool("Running", false);
+            ani.SetBool("Idle", true);
+            return;
+        }
 		base.FixedUpdate();
 		float distanceToPlayer = Vector2.Distance(transform.position, player.transform.position);
         //Timers
