@@ -23,6 +23,7 @@ public class RegenPotion : Item
     public override void grabItem(Player p)
     {
         StartCoroutine(Regen(p));
+        transform.position = new(4000, 5000, 0);
     }
 
     public IEnumerator Regen(Player p){
