@@ -49,7 +49,7 @@ public class Slime : Enemy
         float elapsedTime = 0;
         while (elapsedTime < waitseconds)
         {
-            HitboxEnemy(transform.position, transform.localScale, 0, (player.gameObject.transform.position - gameObject.transform.position).normalized, 0, this.damage, this.knockback);
+            HitboxEnemy(transform.position, new(1.2f,1.2f), 0, (player.gameObject.transform.position - gameObject.transform.position).normalized, 0, this.damage, this.knockback);
             elapsedTime += Time.deltaTime;
             yield return null;
         }
