@@ -283,8 +283,8 @@ MonoBehaviour:
   knockback: 25
   knockbackResistance: 0
   damage:
-  - 3
-  - 6
+  - 2
+  - 4
   room: {fileID: 0}
   multiplicadorVelocidad: 1
   defensa: 1
