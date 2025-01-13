@@ -361,6 +361,7 @@ public class Player : MonoBehaviour
     // Funcion que se llama cuando el jugador muere
     private void ToDie()
     {
+        ItemList.itemList = new List<GameObject>();
         SceneManager.LoadScene("DeathScreen");
     }
 
