@@ -5,18 +5,14 @@ using UnityEngine;
 public class ItemList : MonoBehaviour
 {
 
-    public static List<GameObject> itemList = new List<GameObject>();
+    public static List<GameObject> itemList;
 
     public static ItemList instance = null;
     // Start is called before the first frame update
     void Awake()
     {
-        if(instance == null){
-            instance = this;
-        }
-        else{
-            Destroy(gameObject); // Solo puede haber uno >:)
-        }
+        itemList = new List<GameObject>();
+        instance = this;
     }
 
     // Update is called once per frame
